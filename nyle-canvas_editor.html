@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Nyle-canvas editor</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="btn-group">
+    <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i> <span class="caret"></span></button>
+      <ul class="dropdown-menu" id="font-size">
+        <li><a href="#" data-size="10">Small</a></li>
+        <li><a href="#" data-size="12">Normal</a></li>
+        <li><a href="#" data-size="14">Large</a></li>
+      </ul>
+    </div>
+    <button id="bold" class="btn btn-default"><i class="glyphicon glyphicon-bold"></i></button>
+    <button id="save" class="btn btn-default"><i class="glyphicon glyphicon-floppy-save"></i></button>
+    <button id="load" class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></button>
+  </div>
+
+  <div id="disp"> </div>
+
+  <div id="editor" style="height: 600px; width: 100%"  ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+  <script>
+    var editor = ace.edit("editor");
+    editor.$blockScrolling = Infinity;
+    // editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/html");
+
+    $('#font-size').click(function(e) {
+      editor.setFontSize($(e.target).data('size'));
+    });
+
+    $('#bold').click(function(e) {
+      editor.insert('<strong>' + editor.getCopyText() + '</strong>');
+      alert(location.pathname)
+    });
+
+    $('#save').click(function(e) {
+      var text = editor.getValue();
+      var tag_script = 'script';
+      const HTML_TAGS =
+`
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<${tag_script} type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></${tag_script}>
+<${tag_script} type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></${tag_script}>
+<${tag_script} type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></${tag_script}>
+<${tag_script} type="text/javascript" src="https://spoolkitamura.github.io/nyle.rb.js"></${tag_script}>
+<${tag_script} type="text/ruby">
+${text}
+</${tag_script}>
+</head>
+</html>
+`;
+
+      var blob = new Blob([HTML_TAGS], {type: 'text/html'});   // for HTML
+
+      // var disp = document.getElementById("disp");
+      if (window.URL) {
+        disp.innerHTML = '<a href="' + window.URL.createObjectURL(blob) + '" target="_blank">Download</a>';
+        window.open(window.URL.createObjectURL(blob), '_blank');
+      } else if (window.webkitURL) {
+        disp.innerHTML = '<a href="' + window.webkitURL.createObjectURL(blob) + '" target="_blank">Download</a>';
+        window.open(window.webkitURL.createObjectURL(blob), '_blank');
+      }
+      // alert("done.");
+
+    });
+
+    $('#load').click(function(e) {
+      if (!confirm('load template?')) return;
+
+      disp.innerHTML = '';
+      const CODE =
+`
+s = Nyle.create_screen()
+
+def s.setup
+  # your setup code here  (初期化用のコード)
+  
+end
+
+def s.draw
+  # your draw code here   (描画用のコード)
+  
+end
+
+def s.update
+  # your update code here (更新用のコード)
+  
+end
+
+s.start
+`;
+      editor.setValue(CODE, -1);
+    });
+  </script>
+
+
+  <script type="text/javascript">
+    function onDrop(event) {
+
+      var file = event.dataTransfer.files[0];
+
+      // 初期化
+      // editor.setValue('', -1);
+
+      // FileReaderオブジェクトの生成
+      var reader = new FileReader();
+
+      // エラー発生時の処理
+      reader.onerror = function (evt) {
+        alert('Error: file read');
+      }
+
+      // テキストファイルの処理
+      if (file.type.match('text.*')) {
+        // ファイル読取が完了した際に呼ばれる処理
+        if (!confirm('load the dropping file?')) {
+          // ブラウザ上でファイルを展開する挙動を抑止
+          event.preventDefault();
+          return;
+        }
+        reader.onload = function (evt) {
+          // FileReaderが取得したテキストを editorにセット
+          disp.innerHTML = '';
+          editor.setValue(reader.result, -1);
+        }
+        // readAsTextメソッドでファイルの内容を取得
+        reader.readAsText(file, 'utf-8');
+      }
+
+      // ブラウザ上でファイルを展開する挙動を抑止
+      // alert('drop');
+      event.preventDefault();
+    }
+    function onDragOver(event) {
+      // ブラウザ上でファイルを展開する挙動を抑止
+      //alert('dragover');
+      event.preventDefault();
+    }
+  </script>
+
+</body>
+</html>
+
