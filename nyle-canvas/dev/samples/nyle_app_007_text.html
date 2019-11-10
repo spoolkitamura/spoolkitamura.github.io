@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+s = Nyle.create_screen()
+
+def s.setup
+  
+end
+
+def s.draw
+  Nyle.draw_line( 20, 410, 620, 410, {color: :GRAY, a: 0.1})
+  Nyle.draw_line( 20, 440, 620, 440, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 410, "'Nyle-canvas'", {size: 24})
+  Nyle.draw_text(120, 440, "using Opal and HTML5 Canvas", {size: 24})
+
+  Nyle.draw_line( 20,  50, 620,  50, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80,  50, "Nyle", {size: 18, font: "sans-serif"})
+  Nyle.draw_text(140,  50, "Nyle", {size: 24, font: "sans-serif"})
+  Nyle.draw_text(220,  50, "Nyle", {size: 32, font: "sans-serif", bold: true})
+  Nyle.draw_text(320,  50, "Nyle", {size: 42, font: "sans-serif", italic: true})
+  Nyle.draw_text(440,  50, "Nyle", {size: 48, font: "sans-serif", italic: true, bold: true})
+
+  Nyle.draw_line( 20, 110, 620, 110, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 110, "Nyle", {size: 18, a: 1.0, font: "sans-serif"})
+  Nyle.draw_text(140, 110, "Nyle", {size: 24, a: 0.8, font: "sans-serif"})
+  Nyle.draw_text(220, 110, "Nyle", {size: 32, a: 0.6, font: "sans-serif", bold: true})
+  Nyle.draw_text(320, 110, "Nyle", {size: 42, a: 0.4, font: "sans-serif", italic: true})
+  Nyle.draw_text(440, 110, "Nyle", {size: 48, a: 0.2, font: "sans-serif", italic: true, bold: true})
+
+  Nyle.draw_line( 20, 170, 620, 170, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 170, "Nyle", {size: 18, color: :RED, font: "serif"})
+  Nyle.draw_text(140, 170, "Nyle", {size: 24, color: :RED, font: "serif"})
+  Nyle.draw_text(220, 170, "Nyle", {size: 32, color: :RED, font: "serif", bold: true})
+  Nyle.draw_text(320, 170, "Nyle", {size: 42, color: :RED, font: "serif", italic: true})
+  Nyle.draw_text(440, 170, "Nyle", {size: 48, color: :RED, font: "serif", italic: true, bold: true})
+
+  Nyle.draw_line( 20, 230, 620, 230, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 230, "Nyle", {size: 18, color: :FORESTGREEN, font: "serif"})
+  Nyle.draw_text(140, 230, "Nyle", {size: 24, color: :FORESTGREEN, font: "serif"})
+  Nyle.draw_text(220, 230, "Nyle", {size: 32, color: :FORESTGREEN, font: "serif", bold: true})
+  Nyle.draw_text(320, 230, "Nyle", {size: 42, color: :FORESTGREEN, font: "serif", italic: true})
+  Nyle.draw_text(440, 230, "Nyle", {size: 48, color: :FORESTGREEN, font: "serif", italic: true, bold: true})
+
+  Nyle.draw_line( 20, 290, 620, 290, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 290, "Nyle", {size: 18, color: :MEDIUMBLUE, font: "monospace"})
+  Nyle.draw_text(140, 290, "Nyle", {size: 24, color: :MEDIUMBLUE, font: "monospace"})
+  Nyle.draw_text(220, 290, "Nyle", {size: 32, color: :MEDIUMBLUE, font: "monospace", bold: true})
+  Nyle.draw_text(320, 290, "Nyle", {size: 42, color: :MEDIUMBLUE, font: "monospace", italic: true})
+  Nyle.draw_text(440, 290, "Nyle", {size: 48, color: :MEDIUMBLUE, font: "monospace", italic: true, bold: true})
+
+  Nyle.draw_line( 20, 350, 620, 350, {color: :GRAY, a: 0.1})
+  Nyle.draw_text( 80, 350, "Nyle", {size: 18, color: '#ffd800', font: "monospace"})                             # :SCHOOL_BUS_YELLOW
+  Nyle.draw_text(140, 350, "Nyle", {size: 24, color: '#ffd800', font: "monospace"})                             # :SCHOOL_BUS_YELLOW
+  Nyle.draw_text(220, 350, "Nyle", {size: 32, color: '#ffd800', font: "monospace", bold: true})                 # :SCHOOL_BUS_YELLOW
+  Nyle.draw_text(320, 350, "Nyle", {size: 42, color: '#ffd800', font: "monospace", italic: true})               # :SCHOOL_BUS_YELLOW
+  Nyle.draw_text(440, 350, "Nyle", {size: 48, color: '#ffd800', font: "monospace", italic: true, bold: true})   # :SCHOOL_BUS_YELLOW
+end
+
+def s.update
+  
+end
+
+s.start
+</script>
+</head>
+</html>

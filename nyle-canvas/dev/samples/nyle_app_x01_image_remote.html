@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+s = Nyle.create_screen()
+
+def s.setup
+  @img = Nyle.load_image('https://www.google.co.jp/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png')
+  @th = 0
+end
+
+def s.draw
+  Nyle.draw_image(@dx, @dy, @img, {pos: :CENTER})
+end
+
+def s.update
+  @dx = 320 + 50 * Math.cos(@th / 180.0 * Math::PI)
+  @dy = 240 + 50 * Math.sin(@th / 180.0 * Math::PI)
+  @th += 6
+end
+
+s.start
+</script>
+</head>
+</html>

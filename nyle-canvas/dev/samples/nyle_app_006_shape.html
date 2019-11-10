@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+module Points
+  def star(x, y)
+    [
+     [x,      y - 50],
+     [x + 14, y - 20],
+     [x + 47, y - 15],
+     [x + 23, y +  7],
+     [x + 29, y + 40],
+     [x,      y + 25],
+     [x - 29, y + 40],
+     [x - 23, y +  7],
+     [x - 47, y - 15],
+     [x - 14, y - 20]
+    ]
+  end
+
+  def para_star(x, y)
+    rl, rm, rs = 70, 50, 30       # radius(large, middle, small)
+    count = 10
+    angle = 360.0 / (count * 4)   # central angle of each vertex
+    deg = Math::PI / 180.0
+
+    points = []
+    for i in 1..count
+      points << [x + rs * Math.cos((i * 4 - 3) * angle * deg), y + rs * Math.sin((i * 4 - 3) * angle * deg)]
+      points << [x + rm * Math.cos((i * 4 - 2) * angle * deg), y + rm * Math.sin((i * 4 - 2) * angle * deg)]
+      points << [x + rs * Math.cos((i * 4 - 1) * angle * deg), y + rs * Math.sin((i * 4 - 1) * angle * deg)]
+      points << [x + rl * Math.cos((i * 4 - 0) * angle * deg), y + rl * Math.sin((i * 4 - 0) * angle * deg)]
+    end
+    points
+  end
+
+  def wave(x, y)
+    points = []
+    for deg in 0..(360 * 6)
+      th = -deg * (Math::PI / 180)
+      points << [deg / 5 + x, Math.sin(th) * 20 + y]
+    end
+    points
+  end
+end
+
+
+s = Nyle.create_screen()
+
+s.extend(Points)
+
+def s.setup
+  
+end
+
+def s.draw
+  Nyle.draw_shape(star(160, 100),      {color: 'gold',          weight: 5, close: true, cap: 'round'})
+  Nyle.draw_shape(star(320, 100),      {color: 'gold',          weight: 5, close: true, fill: true})
+  Nyle.draw_shape(star(480, 100),      {color: 'gold', a: 0.5,  weight: 5, close: true, fill: true})
+
+  Nyle.draw_shape(para_star(160, 240), {color: 'brown',         weight: 3, close: true, cap: 'round'})
+  Nyle.draw_shape(para_star(320, 240), {color: 'brown',         weight: 3, close: true, fill: true})
+  Nyle.draw_shape(para_star(480, 240), {color: 'brown', a: 0.5, weight: 3, close: true, fill: true})
+
+  Nyle.draw_shape(wave(100, 360),      {color: 'skyblue',       weight: 5, cap: 'round'})
+  Nyle.draw_shape(wave(100, 410),      {color: 'skyblue',       weight: 5, cap: 'round', fill: true})
+end
+
+def s.update
+  
+end
+
+s.start
+</script>
+</head>
+</html>

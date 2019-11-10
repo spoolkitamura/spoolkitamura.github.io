@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+s = Nyle.create_screen(300, 200)
+
+def s.setup
+  @theta = nil                                  # rotation angle
+end
+
+def s.draw
+  @theta = _map(Nyle.mouse_x, 0, @width, 0, Math::PI/2)
+  Nyle.save do                                  # ★saveブロックでくくる
+    Nyle.translate(@width / 2, @height);
+    _branch(60)
+  end
+end
+
+def s.update
+  
+end
+
+# ★インスタンス's'の特異メソッドとして定義
+def s._map(v, s1, e1, s2, e2)
+  v = v.to_f   # if v.integer?                  # Convert integer into float   ★'.integer?'エラー？
+  (v - s1) / (e1 - s1) * (e2 - s2) + s2         # Adjust v in between s1 and e1 to between s2 and e2
+end
+
+# ★インスタンス's'の特異メソッドとして定義
+def s._branch(len)
+  sw = _map(len, 2, 120, 1, 10)                 # adjust weight as length of branch
+  Nyle.draw_line(0, 0, 0, -len, {weight: sw})   # draw branch
+  Nyle.translate(0, -len)                       # move origin
+  len *= 0.66                                   # adjust length (two-thirds)
+  if len > 2
+    Nyle.save do
+      Nyle.rotate(@theta)                       # rotate
+      _branch(len)
+    end
+    Nyle.save do
+      Nyle.rotate(-@theta)                      # rotate
+      _branch(len)
+    end
+  end
+end
+
+s.start
+
+  </script>
+</head>
+</html>

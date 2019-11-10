@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+s = Nyle.create_screen(240, 240, {bgcolor: 'forestgreen'})
+
+def s.setup
+  @radius = 0.42
+  Nyle.scale(Nyle.screen_width, Nyle.screen_height);   # Gtk3版では draw()内でも可？
+  Nyle.translate(0.5, 0.5);                            # Gtk3版では draw()内でも可？
+end
+
+def s.draw
+  Nyle.draw_circle(0, 0, @radius, {color: 'white', fill: true})
+  Nyle.draw_circle(0, 0, @radius, {weight: 0.05})
+
+  # clock ticks
+  for i in (0...12) do 
+    inset = (i % 3 == 0 ? 0.05 : 0.03)
+    Nyle.draw_line((@radius - inset) * Math::cos(i * Math::PI / 6),
+                   (@radius - inset) * Math::sin(i * Math::PI / 6),
+                   (@radius)         * Math::cos(i * Math::PI / 6),
+                   (@radius)         * Math::sin(i * Math::PI / 6), {cap: 'round', weight: inset})
+  end
+
+  # store the current time
+  tm = Time.now
+  # puts "#{tm.hour} #{tm.min} #{tm.sec}"
+
+  # compute the angles of the indicators of our clock
+  hours   = tm.hour * Math::PI /  6;
+  minutes = tm.min  * Math::PI / 30;
+  seconds = tm.sec  * Math::PI / 30;
+
+  # draw the hours hand
+  Nyle.draw_line(0, 0,  Math::sin(hours + minutes / 12) * (@radius * 0.5),
+                       -Math::cos(hours + minutes / 12) * (@radius * 0.5), {cap: 'round', color: 'forestgreen', weight: 0.05})
+
+  # draw the minutes hand
+  Nyle.draw_line(0, 0,  Math::sin(minutes + seconds / 60) * (@radius * 0.8),
+                       -Math::cos(minutes + seconds / 60) * (@radius * 0.8), {cap: 'round', color: 'blue', weight: 0.05})
+
+  # draw the seconds hand
+  Nyle.draw_line(0, 0,  Math::sin(seconds) * (@radius * 0.9),
+                       -Math::cos(seconds) * (@radius * 0.9), {cap: 'round', color: 'red', weight: 0.05 / 3})
+
+  # draw a little dot in the middle
+  Nyle.draw_circle(0, 0, 0.05 / 2, {fill: true})
+end
+
+def s.update
+  
+end
+
+s.start(1000)
+</script>
+</head>
+</html>

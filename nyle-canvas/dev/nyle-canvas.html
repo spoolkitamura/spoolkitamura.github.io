@@ -37,11 +37,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
   <script>
+    let mode = 'dev';   // default (temporary...)
     let qs   = getQueryString();
-    let mode = qs['mode'];
-    if (!mode) {
-      mode = 'pub';   // default
+    if (qs) {
+      if (qs['mode']) {
+        mode = qs['mode']
+      }
     }
+    console.log(`mode: ${mode}`);
     let srcjs = `https://spoolkitamura.github.io/nyle-canvas/${mode}/nyle-canvas.js`;
 
     let filename;
@@ -70,7 +73,7 @@
         filename = `rb_${timestamp}.html`;
       }
 
-      console.log(filename);
+      console.log(`filename: ${filename}`);
       let code = _buildHtml();
       let blob = new Blob([code], {type: 'text/html'});   // for html
       let link = document.createElement('a');
@@ -86,7 +89,7 @@
       code = _buildTemplate();
       editor.setValue(code, -1);
       filename = null;
-      console.log(filename);
+      console.log(`filename: ${filename}`);
     });
 
     $('#execute').click(function(e) {
@@ -142,13 +145,13 @@
     // Startup parameters
     function getQueryString() {
       if (1 < document.location.search.length) {
-        var query = document.location.search.substring(1);      // except first letter('?')
-        var parameters = query.split('&');                      // split the parameters
-        var result = new Object();
-        for (var i = 0; i < parameters.length; i++) {
-          var element    = parameters[i].split('=');            // split into key and value
-          var paramName  = decodeURIComponent(element[0]);
-          var paramValue = decodeURIComponent(element[1]);
+        let query = document.location.search.substring(1);      // except first letter('?')
+        let parameters = query.split('&');                      // split the parameters
+        let result = new Object();
+        for (let i = 0; i < parameters.length; i++) {
+          let element    = parameters[i].split('=');            // split into key and value
+          let paramName  = decodeURIComponent(element[0]);
+          let paramValue = decodeURIComponent(element[1]);
           result[paramName] = decodeURIComponent(paramValue);   // add key and value to hash
         }
         return result;
@@ -179,7 +182,7 @@
           }
           editor.setValue(code, -1);
           filename = file.name;
-          console.log(filename);
+          console.log(`filename: ${filename}`);
         }
         reader.readAsText(file, 'utf-8');   // get file contents
       }
