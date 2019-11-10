@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<!--
+  'Nyle-canvas editor'
+
+  Copyright (c) 2019 Koki Kitamura
+  Released under the MIT license
+  https://opensource.org/licenses/mit-license.php
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Nyle-canvas editor</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="btn-group">
+    <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="フォントサイズ; font-size"><i class="glyphicon glyphicon-text-width"></i> <span class="caret"></span></button>
+      <ul class="dropdown-menu" id="font-size">
+        <li><a href="#" data-size="14">フォント (小) ; font-size small</a></li>
+        <li><a href="#" data-size="16">フォント (中) ; font-size normal</a></li>
+        <li><a href="#" data-size="18">フォント (大) ; font-size large</a></li>
+      </ul>
+    </div>
+    <button id="download" class="btn btn-default" title="保存(ダウンロード) ; save(download)"><i class="glyphicon glyphicon-save"></i></button>
+    <button id="template" class="btn btn-default" title="テンプレート ; template">            <i class="glyphicon glyphicon-file"></i></button>
+    <button id="execute"  class="btn btn-default" title="実行 ; execute">                     <i class="glyphicon glyphicon-play"></i></button>
+  </div>
+
+  <div id="editor" style="height: 800px; width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+
+  <script>
+    let qs   = getQueryString();
+    let mode = qs['mode'];
+    if (!mode) {
+      mode = 'pub';   // default
+    }
+    let srcjs = `https://spoolkitamura.github.io/nyle-canvas/${mode}/nyle-canvas.js`;
+
+    let filename;
+
+    let editor = ace.edit("editor");
+    editor.$blockScrolling = Infinity;
+    editor.setTheme("ace/theme/chrome");
+    editor.getSession().setMode("ace/mode/ruby");
+    editor.getSession().setTabSize(2);
+    editor.setFontSize(16);
+
+    $('#font-size').click(function(e) {
+      editor.setFontSize($(e.target).data('size'));
+    });
+
+    $('#download').click(function(e) {
+      if (!filename) {
+        let current = new Date();
+        let yyyy = current.getFullYear();
+        let mm = ('0' + (current.getMonth() + 1)).slice(-2);
+        let dd = ('0' +  current.getDate()).slice(-2);
+        let hh = ('0' +  current.getHours()).slice(-2);
+        let ms = ('0' +  current.getMinutes()).slice(-2);
+        let ss = ('0' +  current.getSeconds()).slice(-2);
+        let timestamp = `${yyyy}${mm}${dd}_${hh}${ms}${ss}`;
+        filename = `rb_${timestamp}.html`;
+      }
+
+      console.log(filename);
+      let code = _buildHtml();
+      let blob = new Blob([code], {type: 'text/html'});   // for html
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+
+      if (!confirm(`ファイルを保存(ダウンロード)しますか？ ; Save(Download) the file?\n\n -->  ${link.download}`)) return;
+      link.click()
+    });
+
+    $('#template').click(function(e) {
+      if (!confirm('テンプレートを読み込みますか？ ; Load the template?')) return;
+      code = _buildTemplate();
+      editor.setValue(code, -1);
+      filename = null;
+      console.log(filename);
+    });
+
+    $('#execute').click(function(e) {
+      let code = _buildHtml();
+      let blob = new Blob([code], {type: 'text/html'});   // for html
+      if (window.URL) {
+        window.open(window.URL.createObjectURL(blob), '_blank');
+      } else if (window.webkitURL) {
+        window.open(window.webkitURL.createObjectURL(blob), '_blank');
+      }
+    });
+
+    function _buildHtml() {
+      let html_content = `<!DOCTYPE html>\n`
+                      + `<html lang="ja">\n`
+                      + `<head>\n`
+                      + `<meta charset="UTF-8">\n`
+                      + `<title>Nyle-canvas</title>\n`
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"><\/script>\n`
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load(\'opal-parser\')"><\/script>\n`
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load(\'native\')"><\/script>\n`
+                      + `<script type="text/javascript" src="${srcjs}"><\/script>\n`
+                      + `<script type="text/ruby">\n`
+                      + editor.getValue()
+                      + `<\/script>\n`
+                      + `</head>\n`
+                      + `</html>\n`;
+      return html_content;
+    }
+
+    function _buildTemplate() {
+      let template = `s = Nyle.create_screen()\n`
+                   + `\n`
+                   + `def s.setup\n`
+                   + `  # 初期化用のコード (your setup code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.draw\n`
+                   + `  # 描画用のコード (your draw code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.update\n`
+                   + `  # データ更新用のコード (your update code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `s.start\n`;
+      return template;
+    }
+
+    // Startup parameters
+    function getQueryString() {
+      if (1 < document.location.search.length) {
+        var query = document.location.search.substring(1);      // except first letter('?')
+        var parameters = query.split('&');                      // split the parameters
+        var result = new Object();
+        for (var i = 0; i < parameters.length; i++) {
+          var element    = parameters[i].split('=');            // split into key and value
+          var paramName  = decodeURIComponent(element[0]);
+          var paramValue = decodeURIComponent(element[1]);
+          result[paramName] = decodeURIComponent(paramValue);   // add key and value to hash
+        }
+        return result;
+      }
+      return null;
+    }
+
+    // Drop
+    function onDrop(event) {
+      let file = event.dataTransfer.files[0];   // only one file in the first
+
+      let reader = new FileReader();
+      reader.onerror = function(e) {
+        alert('Error: unable to read the file');
+      }
+
+      if (file.type.match('text.*')) {
+        if (!confirm('ドロップされたファイルを読み込みますか？ ; Load the dropped file?')) {
+          event.preventDefault();   // suppress file expansion behavior on browser
+          return;
+        }
+        reader.onload = function(e) {
+          let pattern = /<script type="text\/ruby">\n([\s\S]*)<\/script>/i;   // across multi-line
+          let code = reader.result;
+          let match = code.match(pattern);
+          if (match) {
+            code = match[1];   // extract Ruby code
+          }
+          editor.setValue(code, -1);
+          filename = file.name;
+          console.log(filename);
+        }
+        reader.readAsText(file, 'utf-8');   // get file contents
+      }
+      event.preventDefault();   // suppress file expansion behavior on browser
+    }
+
+    // DragOver
+    function onDragOver(event) {
+      event.preventDefault();   // suppress file expansion behavior on browser
+    }
+  </script>
+
+</body>
+</html>
+

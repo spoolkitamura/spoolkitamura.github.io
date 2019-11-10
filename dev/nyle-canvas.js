@@ -235,16 +235,16 @@ class JsNyle {
     return this.images[index];
   }
 
-  draw_image(x, y, image, {position = 'corner'} = {}) {
+  draw_image(x, y, image, {pos = 'corner'} = {}) {
     do {
       // var status = image.complete;
       // console.log("complete: " + status);
     } while(! image.complete);
     // console.log(image, image.complete, image.width, image.height);
-    if (position != 'center') {
-      this.context.drawImage(image, x, y);
-    } else {
+    if (pos.toLowerCase() == 'center') {
       this.context.drawImage(image, x - image.width / 2, y - image.height / 2);
+    } else {
+      this.context.drawImage(image, x, y);
     }
   }
 
