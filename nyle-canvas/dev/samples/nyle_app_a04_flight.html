@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby">
+class Tree
+  include Nyle   ###
+  def initialize(x, y, z)
+    @x, @y, @z = x, y, z
+    @image = Nyle.load_image('./images/n_fl_tree32.png')   ###
+  end
+
+  def draw(altitude)
+    dx =  ((@x - 320) / @z)
+    dy = (((@y - 240) / @z - 60) * ((altitude - 100) / 300.0) - (altitude - 230))
+    Nyle.save do
+      Nyle.translate(dx, dy)
+      Nyle.scale(5 / @z, 5 / @z)
+      Nyle.draw_image(0, 0, @image)
+    end
+  end
+
+  def update
+    @z -= 0.15
+    @z < 0.5 ? true : false   # delete tree by 'delete_if' method when true
+  end
+
+  def reset                  ###
+    @x = rand(2000) - 1000   ###
+    @y = 500                 ###
+    @z = 5.0                 ###
+  end                        ###
+end
+
+class Ground
+  include Nyle               ###
+  def initialize
+    @altitude    = 200
+    @angle       =   0
+    @trees       = Array.new(30).map{Tree.new(rand(2000) - 1000, 500, 5.0)}   ###
+    @trees_order = []                                                         ###
+  end
+
+  def draw
+    Nyle.save do
+      # draw ground
+      Nyle.translate(320, 240)
+      Nyle.rotate(@angle)
+      Nyle.draw_rect(-500, 240 - @altitude, 1000, 600, {color: 'forestgreen', fill: true})
+
+      # draw trees
+      @trees_order.unshift(@trees.pop) unless @trees.empty?   ###
+      @trees_order.each do |tree|                             ###
+        tree.draw(@altitude)
+        if tree.update                                        ###
+          @trees_order.delete(tree)     # delete once
+          tree.reset                    # reset
+          @trees_order.unshift(tree)    # add it to header of Array (to draw from behind)
+        end
+      end
+    end
+    Nyle.draw_text(10, 30, "altitude: #{@altitude}   angle: #{"%2.1f" % (@angle * 180 / Math::PI) }", {color: 'red', size: 20})
+  end
+
+  def update(angle, altitude)
+    @angle -= (1.8 * angle / 180 * Math::PI)
+    if @angle < (-60.0 / 180 * Math::PI) then
+      @angle = (-60.0 / 180 * Math::PI)
+    end
+    if @angle > (60.0 / 180 * Math::PI) then
+      @angle = (60.0 / 180 * Math::PI)
+    end
+    @altitude -= (5 * altitude)
+    @altitude = 400 if @altitude > 400
+    @altitude = 100 if @altitude < 100
+  end
+end
+
+
+s = Nyle.create_screen({bgcolor: 'lightcyan'})
+
+def s.setup
+  @ground = Ground.new
+end
+
+def s.draw
+  @ground.draw
+  puts "#{Nyle.mouse_x}, #{Nyle.mouse_y}"
+end
+
+def s.update
+  @ground.update(Nyle.cursor_x, Nyle.cursor_y)
+end
+
+s.start(16)
+</script>
+</head>
+</html>
