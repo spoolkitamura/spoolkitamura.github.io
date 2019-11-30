@@ -13,7 +13,20 @@
   <meta charset="UTF-8">
   <title>Nyle-canvas editor</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
+  <style type="text/css">
+    .li {
+      display: flex;
+      margin: 5px auto;
+      border: 1px solid #cccccc;
+    }
+    .cell {
+      margin: auto 5px;
+      padding: 3px;
+    }
+    .last {
+      margin-left: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -26,28 +39,43 @@
         <li><a href="#" data-size="18">フォント (大) ; font-size large</a></li>
       </ul>
     </div>
+    <!--
+    <button id="template" class="btn btn-default" title="テンプレート ; template">            <i class="glyphicon glyphicon-repeat"></i></button>
+     -->
     <button id="download" class="btn btn-default" title="保存(ダウンロード) ; save(download)"><i class="glyphicon glyphicon-save"></i></button>
-    <button id="template" class="btn btn-default" title="テンプレート ; template">            <i class="glyphicon glyphicon-file"></i></button>
     <button id="execute"  class="btn btn-default" title="実行 ; execute">                     <i class="glyphicon glyphicon-play"></i></button>
   </div>
 
-  <div id="editor" style="height: 800px; width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+  <div id="editor"     style="height: 600px; width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+  <div id="thumbnails" style="height: 100%;  width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
   <script>
-    let mode = 'dev';   // default (temporary...)
-    let qs   = getQueryString();
+    let version = '0.6.1';
+
+    let mode = 'dev';   // default
+    let qs = getQueryString();
     if (qs) {
       if (qs['mode']) {
         mode = qs['mode']
       }
     }
     console.log(`mode: ${mode}`);
-    let srcjs = `https://spoolkitamura.github.io/nyle-canvas/${mode}/nyle-canvas.js`;
+    let srcjs;
+    if (mode == 'local') {
+      srcjs = `./nyle-canvas.js`;
+    } else {
+      srcjs = `https://spoolkitamura.github.io/nyle-canvas/${mode}/nyle-canvas.js`;
+    }
 
     let filename;
+
+    let res_prefix   = '_____nyle__canvas__resources__';   // should not use characters that require escaping
+    let res_suffix   = '_____data';
+    let res_suffix_w = '_____w';
+    let res_suffix_h = '_____h';
 
     let editor = ace.edit("editor");
     editor.$blockScrolling = Infinity;
@@ -56,91 +84,7 @@
     editor.getSession().setTabSize(2);
     editor.setFontSize(16);
 
-    $('#font-size').click(function(e) {
-      editor.setFontSize($(e.target).data('size'));
-    });
-
-    $('#download').click(function(e) {
-      if (!filename) {
-        let current = new Date();
-        let yyyy = current.getFullYear();
-        let mm = ('0' + (current.getMonth() + 1)).slice(-2);
-        let dd = ('0' +  current.getDate()).slice(-2);
-        let hh = ('0' +  current.getHours()).slice(-2);
-        let ms = ('0' +  current.getMinutes()).slice(-2);
-        let ss = ('0' +  current.getSeconds()).slice(-2);
-        let timestamp = `${yyyy}${mm}${dd}_${hh}${ms}${ss}`;
-        filename = `rb_${timestamp}.html`;
-      }
-
-      console.log(`filename: ${filename}`);
-      let code = _buildHtml();
-      let blob = new Blob([code], {type: 'text/html'});   // for html
-      let link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = filename;
-
-      if (!confirm(`ファイルを保存(ダウンロード)しますか？ ; Save(Download) the file?\n\n -->  ${link.download}`)) return;
-      link.click()
-    });
-
-    $('#template').click(function(e) {
-      if (!confirm('テンプレートを読み込みますか？ ; Load the template?')) return;
-      code = _buildTemplate();
-      editor.setValue(code, -1);
-      filename = null;
-      console.log(`filename: ${filename}`);
-    });
-
-    $('#execute').click(function(e) {
-      let code = _buildHtml();
-      let blob = new Blob([code], {type: 'text/html'});   // for html
-      if (window.URL) {
-        window.open(window.URL.createObjectURL(blob), '_blank');
-      } else if (window.webkitURL) {
-        window.open(window.webkitURL.createObjectURL(blob), '_blank');
-      }
-    });
-
-    function _buildHtml() {
-      let html_content = `<!DOCTYPE html>\n`
-                      + `<html lang="ja">\n`
-                      + `<head>\n`
-                      + `<meta charset="UTF-8">\n`
-                      + `<title>Nyle-canvas</title>\n`
-                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"><\/script>\n`
-                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load(\'opal-parser\')"><\/script>\n`
-                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load(\'native\')"><\/script>\n`
-                      + `<script type="text/javascript" src="${srcjs}"><\/script>\n`
-                      + `<script type="text/ruby">\n`
-                      + editor.getValue()
-                      + `<\/script>\n`
-                      + `</head>\n`
-                      + `</html>\n`;
-      return html_content;
-    }
-
-    function _buildTemplate() {
-      let template = `s = Nyle.create_screen()\n`
-                   + `\n`
-                   + `def s.setup\n`
-                   + `  # 初期化用のコード (your setup code here)\n`
-                   + `  \n`
-                   + `end\n`
-                   + `\n`
-                   + `def s.draw\n`
-                   + `  # 描画用のコード (your draw code here)\n`
-                   + `  \n`
-                   + `end\n`
-                   + `\n`
-                   + `def s.update\n`
-                   + `  # データ更新用のコード (your update code here)\n`
-                   + `  \n`
-                   + `end\n`
-                   + `\n`
-                   + `s.start\n`;
-      return template;
-    }
+    template();
 
     // Startup parameters
     function getQueryString() {
@@ -159,39 +103,372 @@
       return null;
     }
 
+    // Template
+    function template() {
+      code = _buildTemplate();
+      editor.setValue(code, -1);
+      filename = null;
+      console.log(`filename: ${filename}`);
+
+      // initialize localStrage (delete files named 'res_prefix(.*)')
+      remove_all_images();
+      show_image_list();
+    }
+
+    // Font size
+    $('#font-size').click(function(e) {
+      editor.setFontSize($(e.target).data('size'));
+    });
+
+    // Download
+    $('#download').click(function(e) {
+      if (!filename) {
+        let current = new Date();
+        let yyyy = current.getFullYear();
+        let mm = ('0' + (current.getMonth() + 1)).slice(-2);
+        let dd = ('0' +  current.getDate()).slice(-2);
+        let hh = ('0' +  current.getHours()).slice(-2);
+        let ms = ('0' +  current.getMinutes()).slice(-2);
+        let ss = ('0' +  current.getSeconds()).slice(-2);
+        let timestamp = `${yyyy}${mm}${dd}_${hh}${ms}${ss}`;
+        filename = `rb_${timestamp}.html`;
+      }
+      console.log(`filename: ${filename}`);
+      let code = _buildHtml();
+      let blob = new Blob([code], {type: 'text/html'});   // for html
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+
+      if (!confirm(`ファイルを保存(ダウンロード)しますか？ ; Save(Download) the file?\n\n -->  ${link.download}`)) {
+        filename = undefined
+        return;
+      }
+      link.click()
+    });
+
+    // Execute
+    $('#execute').click(function(e) {
+      let code = _buildHtml();
+      let blob = new Blob([code], {type: 'text/html'});   // for html
+      if (window.URL) {
+        window.open(window.URL.createObjectURL(blob), '_blank');
+      } else if (window.webkitURL) {
+        window.open(window.webkitURL.createObjectURL(blob), '_blank');
+      }
+    });
+
+    // Template
+    function _buildTemplate() {
+      let template = `s = Nyle.create_screen(640, 480, {bgcolor: :WHITE})\n`
+                   + `\n`
+                   + `def s.setup\n`
+                   + `  # 初期設定用のコード (your setup code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.draw\n`
+                   + `  # 画面描画用のコード (your draw code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.update\n`
+                   + `  # データ更新用のコード (your update code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `s.start\n`;
+      return template;
+    }
+
+    // HTML contents
+    function _buildHtml() {
+      let html_content = `<!DOCTYPE html>\n`
+                      + `<html lang="ja">\n`
+                      + `<head>\n`
+                      + `<meta charset="UTF-8">\n`
+                      + `<title>Nyle-canvas</title>\n`
+                      + `<!-- Nyle-canvas editor v${version} -->\n`
+                      + `</head>\n`
+                      + `<body>\n`
+                      + _build_loading()    // Loading animation
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"><\/script>\n`
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"><\/script>\n`
+                      + `<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"><\/script>\n`
+                      + `<script type="text/javascript" src="${srcjs}"><\/script>\n`
+                      + _build_resource()   // Recources(Images)
+                      + `<script type="text/ruby">\n`
+                      + editor.getValue()   // Ruby code
+                      + `<\/script>\n`
+                      + `</body>\n`
+                      + `</html>\n`;
+      return html_content;
+    }
+
+    // Loading animation
+    function _build_loading() {
+      let loading = '';
+      if (count_images() != 0) {
+        loading = `<\script>\n`
+                + `  let css = document.createElement('style');\n`
+                + `  let ready = '@keyframes ready {' +\n`
+                + `    '  0% { opacity: 1 }' +\n`
+                + `    '100% { opacity: 0 }';\n`
+                + `  let rules = document.createTextNode(ready);\n`
+                + `  css.type = 'text/css';\n`
+                + `  css.appendChild(rules);\n`
+                + `  document.head.appendChild(css);\n`
+                + `  let showloading = document.createElement('div');\n`
+                + `  showloading.textContent     = 'L O A D I N G'\n`
+                + `  showloading.style.color     = '#ccccff';\n`
+                + `  showloading.style.fontSize  = '36px';\n`
+                + `  showloading.style.animation = 'ready .5s infinite alternate';\n`
+                + `  document.body.appendChild(showloading);\n`
+                + `<\/script>\n`;
+      }
+      return loading;
+    }
+
+    // Resource contents
+    function _build_resource() {
+      let sortedArray = sort_image_list();
+      let regist = '';
+      for (let i = 0; i < sortedArray.length; i++) {
+        let key   = sortedArray[i];
+        let w     = localStorage.getItem(res_prefix + key + res_suffix_w);
+        let h     = localStorage.getItem(res_prefix + key + res_suffix_h);
+        let value = localStorage.getItem(res_prefix + key + res_suffix);
+        regist += `Nyle::Resource::set_image('${key}', ${w}, ${h}, '${value}')\n`;
+      }
+      let resource = `<script type="text/ruby" section="resource">\n`
+                   + `${regist}`
+                   + `<\/script>\n`;
+      //console.log(resource);
+      return resource;
+    }
+
     // Drop
     function onDrop(event) {
-      let file = event.dataTransfer.files[0];   // only one file in the first
+      let text_dropped = false;   // only one file in the first
+      let files = event.dataTransfer.files;
+      for (let i=0; i< files.length; i++) {
+        let file = files[i];
+        if (file.type.match('text.*') && !text_dropped) {
+          type_text(event, file);
+          text_dropped = true;
+        }
+        if (file.type.match('image.*')) {
+          type_image(event, file);
+        }
+        event.preventDefault();   // suppress file expansion behavior on browser
+      }
+    }
 
+    // Drop for text
+    function type_text(event, file) {
+      if (!confirm(`${file.name}\n\nドロップされたファイルを読み込みますか？ ; Load the dropped file?`)) {
+        event.preventDefault();   // suppress file expansion behavior on browser
+        return;
+      }
       let reader = new FileReader();
       reader.onerror = function(e) {
         alert('Error: unable to read the file');
       }
+      reader.onload = function(e) {
+        let pattern = /<script type="text\/ruby">\n([\s\S]*)<\/script>/i;   // across multi-line
+        let code = reader.result;
+        let match = code.match(pattern);
+        if (match) {
+          code = match[1];   // extract Ruby code
+        }
+        editor.setValue(code, -1);
+        filename = file.name;
+        console.log(`filename: ${filename}`);
 
-      if (file.type.match('text.*')) {
-        if (!confirm('ドロップされたファイルを読み込みますか？ ; Load the dropped file?')) {
-          event.preventDefault();   // suppress file expansion behavior on browser
-          return;
-        }
-        reader.onload = function(e) {
-          let pattern = /<script type="text\/ruby">\n([\s\S]*)<\/script>/i;   // across multi-line
-          let code = reader.result;
-          let match = code.match(pattern);
-          if (match) {
-            code = match[1];   // extract Ruby code
+        // localStrageの初期化(res_prefix付きのファイルを削除)
+        remove_all_images();
+        show_image_list();
+
+        // read resources in the dropped file
+        // e.g. Nyle::Resource::set_image('foo.jpg', 'data:image/jpeg;base64,/9j/4AAQS...')
+        let res_pattern1 = /Nyle::Resource::set_image\('(.*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*)'/g;
+        let res_pattern2 = /Nyle::Resource::set_image\('(.*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*)'/;
+        let res_match = reader.result.match(res_pattern1);
+        if (res_match) {   // res_match is an Array because it is affected by the 'g' option
+          // console.log(res_match);
+          for (let i = 0; i < res_match.length; i++) {
+            // console.log(res_match[i]);
+            let res_keyval = res_match[i].match(res_pattern2);
+            if (res_keyval) {
+              let res_key = res_keyval[1];   // key
+              let res_w   = res_keyval[2];   // w
+              let res_h   = res_keyval[3];   // h
+              let res_val = res_keyval[4];   // value
+              // console.log(res_key);
+              // console.log(res_val);
+              localStorage.setItem(res_prefix + res_key + res_suffix,   res_val);
+              localStorage.setItem(res_prefix + res_key + res_suffix_w, res_w);
+              localStorage.setItem(res_prefix + res_key + res_suffix_h, res_h);
+            }
           }
-          editor.setValue(code, -1);
-          filename = file.name;
-          console.log(`filename: ${filename}`);
+          show_image_list();
         }
-        reader.readAsText(file, 'utf-8');   // get file contents
       }
-      event.preventDefault();   // suppress file expansion behavior on browser
+      reader.readAsText(file, 'utf-8');   // get file contents
+    }
+
+    // Drop for image
+    function type_image(event, file) {
+      let reader = new FileReader();
+      reader.onerror = function(e) {
+        alert('Error: unable to read the file');
+      }
+      reader.onload = function (evt) {
+        //console.log(evt.target.fileName);
+        //console.log(evt.target.result);
+        localStorage.setItem(res_prefix + evt.target.fileName + res_suffix, evt.target.result);
+        show_image_list();
+      }
+      reader.fileName = file.name;
+      reader.readAsDataURL(file);
     }
 
     // DragOver
     function onDragOver(event) {
       event.preventDefault();   // suppress file expansion behavior on browser
+    }
+
+    // Remove image
+    function remove_image(id) {
+      if (!confirm(`${id}\n画像をリストから除外しますか？ ; Remove the image from the list?`)) return;
+      localStorage.removeItem(res_prefix + id + res_suffix);
+      localStorage.removeItem(res_prefix + id + res_suffix_w);
+      localStorage.removeItem(res_prefix + id + res_suffix_h);
+      show_image_list();
+    }
+
+    // Count images
+    function count_images() {
+      let pattern = new RegExp(`^${res_prefix}.*${res_suffix}`);
+      let count = 0;
+      for (let key in localStorage) {
+        console.log('Exists : ' + key)
+        if (key.match(pattern)) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    // Remove all images
+    function remove_all_images() {
+      let pattern = new RegExp(`^${res_prefix}`);   // no need suffix
+      for (let key in localStorage) {
+        console.log('Exists : ' + key)
+        if (key.match(pattern)) {
+          localStorage.removeItem(key);
+          console.log('Remove : ' + key)
+        }
+      }
+    }
+
+    // Sort image list
+    function sort_image_list() {
+      let pattern = new RegExp(`^${res_prefix}(.*)${res_suffix}$`);
+      let array   = [];
+      for (let i = 0;i < localStorage.length; i++) {
+        let match = localStorage.key(i).match(pattern);
+        if (match) {
+          // if key starts ${res_prefix} and ends ${res_suffix}, then delete prefix and push into array
+          array.push(match[1]);
+        }
+      }
+      return array.sort();
+    }
+
+    // Control callback
+    function isAllLoaded(images, callback) {
+      if (images.length == 0) {
+        callback();
+      } else {
+        var count = 0;
+        for (var i = 0; i < images.length; i++) {
+          images[i].onload = function() {
+            count++;
+            if (count == images.length) {
+              // all images have been loaded
+              callback();
+            }
+          };
+        }
+      }
+    }
+
+    // Show image list
+    function show_image_list() {
+      let sortedArray = sort_image_list();
+      let images = [];
+      for (let key of sortedArray) {
+        images.push(new Image());
+      }
+      isAllLoaded(images, _show_image_list)
+      for (let i = 0; i < images.length; i++) {
+        let key = sortedArray[i];
+        let value = localStorage.getItem(res_prefix + key + res_suffix);
+        images[i].src = value;
+      }
+    }
+
+    // Show image list (internal)
+    function _show_image_list() {
+      thumbnails.textContent = null;  // clear thumbnails
+      let sortedArray = sort_image_list();
+      for (let key of sortedArray) {
+        let value = localStorage.getItem(res_prefix + key + res_suffix);
+
+        let li     = document.createElement('li');
+        let img    = document.createElement('img');
+        let p      = document.createElement('p');
+        let p2     = document.createElement('p');
+        let button = document.createElement('input');
+
+        img.src = value;
+
+        let w = img.width;
+        let h = img.height;
+      //console.log(key, w, h);
+        img.width  = 50;
+        img.height = 50;
+        img.classList.add('cell')
+      //console.log(key, img.complete, img.width, img.height);
+
+        let imgname = document.createTextNode(`"${key}"`);
+        p.appendChild(imgname);
+        p.classList.add('cell')
+
+        localStorage.setItem(res_prefix + key + res_suffix_w, w);
+        localStorage.setItem(res_prefix + key + res_suffix_h, h);
+
+        let imgsize = document.createTextNode(`(${w} x ${h})`);
+        p2.appendChild(imgsize);
+        p2.classList.add('cell')
+        p2.classList.add('last')
+
+        button.type  = 'button';
+        button.value = '除外 (remove)';
+        button.id    = key;
+        button.onclick = function(){ remove_image(this.id); };
+        button.classList.add('cell')
+      //button.classList.add('last')
+
+        li.appendChild(img);
+        li.appendChild(p);
+        li.appendChild(p2);
+        li.appendChild(button);
+        li.classList.add('li')
+        thumbnails.appendChild(li);
+      }
+      document.body.appendChild(thumbnails);
     }
   </script>
 
