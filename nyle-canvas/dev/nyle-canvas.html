@@ -152,7 +152,7 @@
       let code = _buildHtml();
       let blob = new Blob([code], {type: 'text/html'});   // for html
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(blob, '__.html');
+        window.navigator.msSaveOrOpenBlob(blob, '__nyle-canvas__.html');
       } else if (window.URL) {
         window.open(window.URL.createObjectURL(blob), '_blank');
       } else if (window.webkitURL) {
@@ -457,7 +457,7 @@
         p2.classList.add('last')
 
         button.type  = 'button';
-        button.value = '除外 (remove)';
+        button.value = '取消 (cancel)';
         button.id    = key;
         button.onclick = function(){ remove_image(this.id); };
         button.classList.add('cell')

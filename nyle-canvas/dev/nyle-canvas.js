@@ -557,7 +557,7 @@ class JsNyle {
       }
     }
 
-    console.log(imgList);
+    //console.log(imgList);
     return imgList;
   }
 
@@ -815,9 +815,11 @@ Opal.eval(`
     module_function def load_image(*args)
       # args[0] ... id
       # args[1] ... options
+      uniq = rand(1000000).to_s   # make it unique
       id = args[0]
       args[0] = Resource::get_image_data(id)
-      args.unshift(id)
+#      args.unshift(id)
+      args.unshift("#{id}_#{uniq}")
       # args[0] ... id
       # args[1] ... data
       # args[2] ... options
@@ -841,7 +843,9 @@ Opal.eval(`
         w = base_property.width
         h = base_property.height
       end
-      return Resource::ImageProperty.new("#{id}", w, h, nil)
+#p "#{id}_#{uniq}"
+#p id
+      return Resource::ImageProperty.new("#{id}_#{uniq}", w, h, nil)
     end
 
     module_function def load_image_tiles(*args)
@@ -849,16 +853,16 @@ Opal.eval(`
       # args[1] ... m
       # args[2] ... n
       # args[3] ... options
+      uniq = rand(1000000).to_s   # make it unique
       id = args[0]
       m  = args[1]
       n  = args[2]
       list = []
       m.times do |i|
         n.times do |j|
-          list << "#{id}_#{i}_#{j}"
+          list << "#{id}_#{uniq}_#{i}_#{j}"
         end
       end
-
       args[0] = Resource::get_image_data(id)
       args.unshift(list)
       # args[0] ... id
@@ -871,15 +875,17 @@ Opal.eval(`
 
       # Ruby側は load_image_tiles()の戻り値として、イメージの属性が取得できるインスタンスの配列が必要(list_property)
       # JavaScript側は、画像情報にアクセスするためのキー情報(文字列)の配列が必要(list)
-      list_property = []
+      list_property =  Array.new(m).map{ Array.new(n) }   # 2D Array
       base_property = Resource::get_image_instance(id)
       w = (base_property.width / m).to_i
       h = (base_property.height / n).to_i
       m.times do |i|
         n.times do |j|
-          list_property << Resource::ImageProperty.new("#{id}_#{i}_#{j}", w, h, nil)
+          list_property[i][j] = Resource::ImageProperty.new("#{id}_#{uniq}_#{i}_#{j}", w, h, nil)
         end
       end
+#p list
+#p id
       return list_property
     end
 
