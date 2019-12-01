@@ -42,7 +42,8 @@ class JsNyle {
     this.canvas.style.border = '1px solid';
     this.canvas.oncontextmenu = function () {return false;}
 
-    document.write("<body></body>");
+    // document.write("<body></body>");
+    document.body = document.createElement('body');
     document.body.appendChild(this.canvas);
 
     this.context    = this.surface.context;
