@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.6.1 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby" section="resource">
+</script>
+<script type="text/ruby">
+s = Nyle.create_screen(600, 600)
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  @colors         = _color_list
+  @bar_w          = 200
+  @bar_h          =  30
+  @items_per_page = Nyle.screen_height.div(@bar_h)
+  @pages          = @colors.length.div(@items_per_page) + (@colors.length % @items_per_page == 0 ? 0 : 1)
+  @start_index    =   0
+  @end_index      = _end_index
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  (@start_index..@end_index).each do |i|
+    y =  (i - @start_index) * @bar_h
+    hex = Nyle.color_info(@colors[i].to_s, 'hex')
+    Nyle.draw_rect(0,          y, @bar_w / 2, @bar_h, {color: hex,        fill: true})
+    Nyle.draw_rect(@bar_w / 2, y, @bar_w / 2, @bar_h, {color: @colors[i], fill: true})
+    Nyle.draw_text(@bar_w +  10, y + @bar_h - 10, "(#{hex})", {font: "monospace",             color: :BLACK, size: 16})
+    Nyle.draw_text(@bar_w + 110, y + @bar_h - 10, ":#{@colors[i].to_s}",                   {font: "monospace", bold: true, color: :BLACK, size: 16})
+  end
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  if Nyle.key_press?(:UP) or Nyle.mouse_press?(:R)
+    @start_index -= (Nyle.screen_height / @bar_h)
+    @start_index = @items_per_page * (@pages - 1) if @start_index < 0
+    @end_index   = _end_index
+  end
+
+  if Nyle.key_press?(:DOWN) or Nyle.mouse_press?(:L)
+    @start_index += @items_per_page
+    @start_index = 0 if @start_index >= @colors.length
+    @end_index   = _end_index
+  end
+end
+
+def _end_index
+  index = @start_index + @items_per_page - 1
+  index = @colors.length - 1 if index >= @colors.length
+  index
+end
+
+def _color_list
+  [
+    :SNOW,
+    :ROSYBROWN,
+    :LIGHTCORAL,
+    :INDIANRED,
+    :BROWN,
+    :FIREBRICK,
+    :RED,
+    :DARKRED,
+    :MAROON,
+    :MISTYROSE,
+    :SALMON,
+    :TOMATO,
+    :DARKSALMON,
+    :CORAL,
+    :ORANGERED,
+    :LIGHTSALMON,
+    :SIENNA,
+    :SEASHELL,
+    :CHOCOLATE,
+    :SADDLEBROWN,
+    :SANDYBROWN,
+    :PEACHPUFF,
+    :PERU,
+    :LINEN,
+    :BISQUE,
+    :DARKORANGE,
+    :BURLYWOOD,
+    :ANTIQUEWHITE,
+    :TAN,
+    :NAVAJOWHITE,
+    :BLANCHEDALMOND,
+    :PAPAYAWHIP,
+    :MOCCASIN,
+    :ORANGE,
+    :WHEAT,
+    :OLDLACE,
+    :FLORALWHITE,
+    :DARKGOLDENROD,
+    :GOLDENROD,
+    :CORNSILK,
+    :GOLD,
+    :LEMONCHIFFON,
+    :KHAKI,
+    :PALEGOLDENROD,
+    :DARKKHAKI,
+    :IVORY,
+    :BEIGE,
+    :LIGHTYELLOW,
+    :LIGHTGOLDENRODYELLOW,
+    :YELLOW,
+    :OLIVE,
+    :THISTLE,
+    :PLUM,
+    :VIOLET,
+    :MAGENTA,
+    :FUCHSIA,
+    :DARKMAGENTA,
+    :PURPLE,
+    :ORCHID,
+    :MEDIUMVIOLETRED,
+    :DEEPPINK,
+    :HOTPINK,
+    :LAVENDERBLUSH,
+    :PALEVIOLETRED,
+    :CRIMSON,
+    :PINK,
+    :LIGHTPINK,
+    :OLIVEDRAB,
+    :YELLOWGREEN,
+    :DARKOLIVEGREEN,
+    :GREENYELLOW,
+    :CHARTREUSE,
+    :LAWNGREEN,
+    :HONEYDEW,
+    :DARKSEAGREEN,
+    :PALEGREEN,
+    :LIGHTGREEN,
+    :FORESTGREEN,
+    :LIMEGREEN,
+    :LIME,
+    :GREEN,
+    :DARKGREEN,
+    :SEAGREEN,
+    :MEDIUMSEAGREEN,
+    :SPRINGGREEN,
+    :MINTCREAM,
+    :MEDIUMSPRINGGREEN,
+    :MEDIUMAQUAMARINE,
+    :AQUAMARINE,
+    :TURQUOISE,
+    :LIGHTSEAGREEN,
+    :MEDIUMTURQUOISE,
+    :AZURE,
+    :LIGHTCYAN,
+    :PALETURQUOISE,
+    :DARKSLATEGRAY,
+    :CYAN,
+    :AQUA,
+    :DARKCYAN,
+    :TEAL,
+    :DARKTURQUOISE,
+    :CADETBLUE,
+    :POWDERBLUE,
+    :LIGHTBLUE,
+    :DEEPSKYBLUE,
+    :SKYBLUE,
+    :LIGHTSKYBLUE,
+    :STEELBLUE,
+    :ALICEBLUE,
+    :DODGERBLUE,
+    :LIGHTSLATEGRAY,
+    :SLATEGRAY,
+    :LIGHTSTEELBLUE,
+    :CORNFLOWERBLUE,
+    :ROYALBLUE,
+    :GHOSTWHITE,
+    :LAVENDER,
+    :MIDNIGHTBLUE,
+    :BLUE,
+    :MEDIUMBLUE,
+    :DARKBLUE,
+    :NAVY,
+    :SLATEBLUE,
+    :DARKSLATEBLUE,
+    :MEDIUMSLATEBLUE,
+    :MEDIUMPURPLE,
+    :BLUEVIOLET,
+    :INDIGO,
+    :DARKORCHID,
+    :DARKVIOLET,
+    :MEDIUMORCHID,
+    :WHITE,
+    :WHITESMOKE,
+    :GAINSBORO,
+    :LIGHTGRAY,
+    :SILVER,
+    :DARKGRAY,
+    :GRAY,
+    :DIMGRAY,
+    :BLACK,
+  ]
+end
+
+s.start
+</script>
+</body>
+</html>

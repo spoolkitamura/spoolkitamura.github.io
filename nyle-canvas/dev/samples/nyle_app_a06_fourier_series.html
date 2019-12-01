@@ -3,10 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Nyle-canvas</title>
-<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal.min.js" onload="Opal.load('opal')"></script>
-<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
-<script type="text/javascript" src="https://cdn.opalrb.com/opal/current/native.min.js" onload="Opal.load('native')"></script>
+<!-- Nyle-canvas editor v0.6.1 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
 <script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby" section="resource">
+</script>
 <script type="text/ruby">
 class Slider
   include Nyle   # ■追加
@@ -33,7 +38,7 @@ class Slider
   def value
     Nyle.draw_line(@x, @y, @x + 120, @y, {color: :GRAY, weight: 4})
 
-    if Nyle.mouse_down?(MOUSE_L) and _dist(Nyle.mouse_x, Nyle.mouse_y, @rectx, @recty) < 20
+    if Nyle.mouse_down?(:L) and _dist(Nyle.mouse_x, Nyle.mouse_y, @rectx, @recty) < 20
       @rectx = Nyle.mouse_x - 5
     end
     @rectx = _constrain(@rectx, (@x..@x + 120))
@@ -120,5 +125,5 @@ end
 
 s.start
 </script>
-</head>
+</body>
 </html>

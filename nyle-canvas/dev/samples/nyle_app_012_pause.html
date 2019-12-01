@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.6.1 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby" section="resource">
+</script>
+<script type="text/ruby">
+s = Nyle.create_screen(320, 320, {bgcolor: :ALICEBLUE, trace: true})
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  @draw    = true
+  @rt_last = 0
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  if @draw
+    x = rand(Nyle.w)
+    y = rand(Nyle.h)
+    r = rand(3..50)
+    c = rand(0..0xFFFFFF)
+    a = rand(1..5)
+    Nyle.draw_circle(x, y, r, {fill: true, color: "#%06x" % c, a: a / 10.0})
+  end
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  @rt = Nyle.running_time
+  if (@rt - @rt_last) >= 2000
+    @rt_last = @rt
+    @draw    = !@draw
+    Nyle.clear if @draw
+  end
+end
+
+s.start
+</script>
+</body>
+</html>

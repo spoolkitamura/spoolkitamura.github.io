@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.6.1 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby" section="resource">
+</script>
+<script type="text/ruby">
+s = Nyle.create_screen(270, 240)
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  Nyle.draw_rect( 10,  10, 50, 50, {fill: true, color: :RED       })
+  Nyle.draw_rect( 60,  60, 50, 50, {fill: true, color: :GREEN     })
+  Nyle.draw_rect(110, 110, 50, 50, {fill: true, color: :BLUE      })
+  Nyle.draw_rect( 10, 110, 50, 50, {fill: true, color: :GOLD      })
+  Nyle.draw_rect(110,  10, 50, 50, {fill: true, color: :BLACK     })
+  Nyle.draw_rect(160,  60, 50, 50, {fill: true, color: :CHOCOLATE })
+  Nyle.draw_rect(210, 110, 50, 50, {fill: true, color: :ORANGE    })
+  Nyle.draw_rect(210,  10, 50, 50, {fill: true, color: :SILVER    })
+
+  x, y = Nyle.mouse_x, Nyle.mouse_y
+  if Nyle.pixel?(x, y, :WHITE)   # :WHITE まだ色名称未対応★
+    Nyle.draw_text(10, 220, 'Move mouse pointer over any tile', {size: 14})
+  else
+    color = Nyle.pixel(x, y)
+    info = "(x=%3d, y=%3d)  %s" % [x, y, color]
+    Nyle.draw_text(10, 220, info, {size: 18, color: color})
+  end
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  
+end
+
+s.start
+</script>
+</body>
+</html>

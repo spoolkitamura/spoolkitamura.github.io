@@ -43,23 +43,25 @@ class Walker
   end
 end
 
-
 s = Nyle.create_screen(320, 240, {bgcolor: :BLACK, trace: true})
 
 def s.setup
+  # 初期設定用のコード (your setup code here)
+  super(320, 240, {bgcolor: :BLACK})
   @walker = Walker.new(@width, @height)
 end
 
 def s.draw
+  # 画面描画用のコード (your draw code here)
   @walker.draw
-  Nyle.draw_rect(0, 0, @width, @height, {fill: true, color: :BLACK, a: 0.02})
 end
 
 def s.update
+  # データ更新用のコード (your update code here)
   @walker.move
 end
 
-s.start(30)
+s.start
 </script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.6.1 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev/nyle-canvas.js"></script>
+<script type="text/ruby" section="resource">
+</script>
+<script type="text/ruby">
+s = Nyle.create_screen(320, 320, {bgcolor: :BLACK, trace: true})
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  @th      = 0
+  @c1      = :RED
+  @c2      = :ORANGE
+  @c3      = '#ffd800'
+  @x       = Nyle.w / 2
+  @y       = Nyle.h / 2
+  @rt_last = 0
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  Nyle.draw_circle(@x + Math::cos(@th) *  30, @y + Math::sin(@th) *  30, 30, {weight: 10, color: @c1})
+  Nyle.draw_circle(@x + Math::cos(@th) *  75, @y + Math::sin(@th) *  75, 30, {weight: 10, color: @c2})
+  Nyle.draw_circle(@x + Math::cos(@th) * 120, @y + Math::sin(@th) * 120, 30, {weight: 10, color: @c3})
+  Nyle.draw_rect(0, 0, Nyle.w, Nyle.h, {color: :BLACK, fill: true, a: 0.05})
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  @rt = Nyle.running_time
+  if (@rt - @rt_last) >= 3000
+    @rt_last = @rt
+    @c1, @c2, @c3 = @c2, @c3, @c1
+  end
+  @th += Math::PI / 128
+end
+
+s.start
+</script>
+</body>
+</html>
