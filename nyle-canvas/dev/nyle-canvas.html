@@ -151,7 +151,7 @@
     $('#execute').click(function(e) {
       let code = _buildHtml();
       let blob = new Blob([code], {type: 'text/html'});   // for html
-      if (window.navigator) {
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(blob, '__.html');
       } else if (window.URL) {
         window.open(window.URL.createObjectURL(blob), '_blank');
