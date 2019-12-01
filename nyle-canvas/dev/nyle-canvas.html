@@ -152,7 +152,7 @@
       let code = _buildHtml();
       let blob = new Blob([code], {type: 'text/html'});   // for html
       if (window.navigator) {
-        window.navigator.msSaveOrOpenBlob(blob);
+        window.navigator.msSaveOrOpenBlob(blob, '__.html');
       } else if (window.URL) {
         window.open(window.URL.createObjectURL(blob), '_blank');
       } else if (window.webkitURL) {
