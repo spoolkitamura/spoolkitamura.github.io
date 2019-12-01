@@ -828,6 +828,8 @@ Opal.eval(`
 
       # Ruby側は load_image()の戻り値として、イメージの属性が取得できるインスタンスが必要(ImageProperty)
       # JavaScript側は、画像情報にアクセスするためのキー情報(文字列)の配列が必要(id)
+      w = nil
+      h = nil
       base_property = Resource::get_image_instance(id)
       if (args[2])
         if args[2][:cw] and args[2][:ch]
@@ -875,10 +877,17 @@ Opal.eval(`
 
       # Ruby側は load_image_tiles()の戻り値として、イメージの属性が取得できるインスタンスの配列が必要(list_property)
       # JavaScript側は、画像情報にアクセスするためのキー情報(文字列)の配列が必要(list)
+      w = nil
+      h = nil
       list_property =  Array.new(m).map{ Array.new(n) }   # 2D Array
       base_property = Resource::get_image_instance(id)
-      w = (base_property.width / m).to_i
-      h = (base_property.height / n).to_i
+      if (args[4])
+        w = (base_property.width  / m * (args[4][:sx] ? args[4][:sx] : 1.0)).to_i
+        h = (base_property.height / n * (args[4][:sy] ? args[4][:sy] : 1.0)).to_i
+      else
+        w = (base_property.width  / m).to_i
+        h = (base_property.height / n).to_i
+      end
       m.times do |i|
         n.times do |j|
           list_property[i][j] = Resource::ImageProperty.new("#{id}_#{uniq}_#{i}_#{j}", w, h, nil)
