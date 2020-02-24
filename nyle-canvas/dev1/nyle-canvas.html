@@ -268,7 +268,7 @@
         let w     = localStorage.getItem(resPrefix + key + resSuffixW);
         let h     = localStorage.getItem(resPrefix + key + resSuffixH);
         let value = localStorage.getItem(resPrefix + key + resSuffix);
-        regist += `Store::createImage('${key}', ${w}, ${h}, '${value}')\n`;
+        regist += `Store.createImage('${key}', ${w}, ${h}, '${value}')\n`;
       }
       let resource = `<script type="text/javascript">\n`
                    + `${regist}`
