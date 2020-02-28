@@ -1051,52 +1051,52 @@ Opal.eval(`
       DX::core.runningTime()
     end
 
-    module_function def draw_line(x1, y1, x2, y2, color, z = 0)
+    module_function def draw_line(x1, y1, x2, y2, color)
       color = DX::_conv_color(color)
       DX::core.drawLine(x1, y1, x2, y2, {color: color, weight: 1})
     end
 
-    module_function def draw_box(x1, y1, x2, y2, color, z = 0)
+    module_function def draw_box(x1, y1, x2, y2, color)
       color = DX::_conv_color(color)
       DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, fill: false, weight: 1})
     end
 
-    module_function def draw_box_fill(x1, y1, x2, y2, color, z = 0)
+    module_function def draw_box_fill(x1, y1, x2, y2, color)
       color = DX::_conv_color(color)
       DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, fill: true, weight: 1})
     end
 
-    module_function def draw_circle(x, y, r, color, z = 0)
+    module_function def draw_circle(x, y, r, color)
       color = DX::_conv_color(color)
       DX::core.drawCircle(x, y, r, {color: color, fill: false, weight: 1})
     end
 
-    module_function def draw_circle_fill(x, y, r, color, z = 0)
+    module_function def draw_circle_fill(x, y, r, color)
       color = DX::_conv_color(color)
       DX::core.drawCircle(x, y, r, {color: color, fill: true, weight: 1})
     end
 
-    module_function def draw_pixel(x, y, color, z = 0)
+    module_function def draw_pixel(x, y, color)
       color = DX::_conv_color(color)
       DX::core.drawCircle(x, y, 1, {color: color, fill: true, weight: 1})
     end
 
-    module_function def draw_font(x, y, string, font, alpha: 255.0, color: :WHITE)
+    module_function def draw_font(x, y, string, font, color: DX::C_WHITE)
       color = DX::_conv_color(color)
-      DX::core.drawText(x, y, string, {color: color, alpha: alpha / 255.0, size: font.size, font: font.font_name, bold: font.weight, italic: font.italic})
+      DX::core.drawText(x, y, string, {color: color, size: font.size, font: font.font_name, bold: font.weight, italic: font.italic})
     end
 
-    module_function def draw(x, y, image, z = 0)
+    module_function def draw(x, y, image)
       DX::core.drawImage(x, y, image.id)
     end
 
-    module_function def draw_scale(x, y, image, scale_x, scale_y, center_x = nil, center_y = nil, z = 0)
+    module_function def draw_scale(x, y, image, scale_x, scale_y, center_x = nil, center_y = nil)
       center_x = (center_x ? center_x : image.width  / 2)   # nilの場合は画像の中心座標x(画像左上からの相対値)
       center_y = (center_y ? center_y : image.height / 2)   # nilの場合は画像の中心座標y(画像左上からの相対値)
       self.draw_ex(x, y, image, {scale_x: scale_x, scale_y: scale_y, center_x: center_x, center_y: center_y})
     end
 
-    module_function def draw_rot(x, y, image, angle, center_x = nil, center_y = nil, z = 0)
+    module_function def draw_rot(x, y, image, angle, center_x = nil, center_y = nil)
       center_x = (center_x ? center_x : image.width  / 2)   # nilの場合は画像の中心座標x(画像左上からの相対値)
       center_y = (center_y ? center_y : image.height / 2)   # nilの場合は画像の中心座標y(画像左上からの相対値)
       self.draw_ex(x, y, image, {angle: angle, center_x: center_x, center_y: center_y})
