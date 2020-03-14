@@ -31,6 +31,9 @@
 
 <body>
   <div class="btn-group">
+    <div class="btn-group"  style="margin-left: 0px">
+      <button id="help" class="btn btn-primary" title="ヘルプ ; help">Help <span class="badge">?</span></button>
+    </div>
     <div class="btn-group">
       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="フォントサイズ; font-size"><i class="glyphicon glyphicon-text-width"></i> <span class="caret"></span></button>
       <ul class="dropdown-menu" id="font-size">
@@ -39,9 +42,6 @@
         <li><a href="#" data-size="18">フォント (大) ; font-size large</a></li>
       </ul>
     </div>
-    <!--
-    <button id="template" class="btn btn-default" title="テンプレート ; template">            <i class="glyphicon glyphicon-repeat"></i></button>
-     -->
     <button id="download" class="btn btn-default" title="保存(ダウンロード) ; save(download)"><i class="glyphicon glyphicon-save"></i></button>
     <button id="execute"  class="btn btn-default" title="実行 ; execute">                     <i class="glyphicon glyphicon-play"></i></button>
   </div>
@@ -287,7 +287,9 @@
     // ---------------------------------------------------------------
     // Template(Nyle)
     const _buildTemplateNyle = () => {
-      let template = `s = Nyle.create_screen(640, 480, {bgcolor: :WHITE})\n`
+      let template = `include Nyle\n`
+                   + `\n`
+                   + `s = Nyle.create_screen(640, 480, {bgcolor: :WHITE})\n`
                    + `\n`
                    + `def s.setup\n`
                    + `  # 初期設定用のコード (your setup code here)\n`
@@ -313,7 +315,7 @@
       let template = `# 初期設定用のコード (your setup code here)\n`
                    + `Window.width   = 640\n`
                    + `Window.height  = 480\n`
-                   + `Window.bgcolor = DX::C_WHITE\n`
+                   + `Window.bgcolor = DX::C_BLACK\n`
                    + `\n`
                    + `Window.loop do\n`
                    + `  # 画面描画用のコード (your draw code here)\n`
@@ -349,11 +351,16 @@
     // ---------------------------------------------------------------
     let version = '0.7.0';
 
-    let mode  = 'dev1';   // default
-    let style = 'nyle';   // default
+    let site  = 'web';      // default
+    let phase = 'dev1';     // default
+    let mode  = 'ruby';     // default
+    let style = 'nyle';     // default
 
     let qs = getQueryString();
     if (qs) {
+      if (qs['phase']) {
+        phase = qs['phase']
+      }
       if (qs['mode']) {
         mode  = qs['mode']
       }
@@ -361,16 +368,12 @@
         style = qs['style']
       }
     }
+    console.log(`phase: ${phase}`);
     console.log(`mode : ${mode}`);
     console.log(`style: ${style}`);
+    console.log(`protocol+host: ${location.protocol}//${location.host}`);
 
-    let srcjs;
-    if (mode == 'local') {
-      srcjs = `./nyle-canvas.js`;
-    } else {
-      srcjs = `https://spoolkitamura.github.io/nyle-canvas/${mode}/nyle-canvas.js`;
-    }
-
+    let srcjs = `${location.protocol}//${location.host}/${phase}/nyle-canvas.js`;
     let filename;
 
     let resPrefix  = '_____nyle__canvas__resources__';   // should not use characters that require escaping
@@ -436,6 +439,14 @@
       }
     });
 
+    // Help
+    $('#help').click((e) => {
+      if (style == 'dx') {
+        window.open('_site/_man_api_dx/index.html', '_blank');
+      } else {
+        window.open('_site/_man_api_nyle/index.html', '_blank');
+      }
+    });
 
     // ---------------------------------------------------------------
     //  Action on Drop

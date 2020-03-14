@@ -376,20 +376,26 @@ const Store = (() => {
 class Surface {
   constructor({w = 640, h = 480, bgcolor = 'white', trace = false} = {}) {
     this.canvas = document.createElement('canvas');
-    this.canvas.width = w;
+    this.canvas.width  = w;
     this.canvas.height = h;
+    this.bgcolor       = bgcolor;
   //this.canvas.style.backgroundColor = bgcolor;   // cannot get color data by 'getImageData()'
     this.canvas.style.position = 'absolute';
 
     this.context = this.canvas.getContext('2d');
-    this.bgcolor = bgcolor;
     this.clear();
   }
-  canvas() {
+  getCanvas() {
     return this.canvas;
   }
-  context() {
+  getContext() {
     return this.context;
+  }
+  getBgcolor() {
+    return this.bgcolor;
+  }
+  setBgcolor(bgcolor) {
+    this.bgcolor = bgcolor;
   }
   clear() {
     this.context.beginPath();
@@ -404,15 +410,15 @@ class Surface {
 class Core {
   constructor({w = 640, h = 480, bgcolor = 'white', trace = false} = {}) {
     this.surface       = new Surface({w: w, h: h, bgcolor: bgcolor, trace: trace});
-    this.canvas        = this.surface.canvas;
-    this.canvas.id     = 'nyle_canvas';
-    this.canvas.width  = w;
-    this.canvas.height = h;
-    this.canvas.style.backgroundColor = bgcolor;
-    this.canvas.style.position = 'absolute';
-    this.canvas.style.border = '1px solid';
-    this.canvas.oncontextmenu = function () {return false;}
-    this.context       = this.surface.context;
+    this.canvas        = this.surface.getCanvas();
+    this.canvas.id     = 'nyle-canvas';
+//    this.canvas.width  = w;
+//    this.canvas.height = h;
+//    this.canvas.style.backgroundColor = bgcolor;
+//    this.canvas.style.position = 'absolute';
+    this.canvas.style.border = '1px solid';   // show border in main screen (should not set general in Surface instance)
+    this.canvas.oncontextmenu = () => {return false;}
+    this.context       = this.surface.getContext();
 
     this.trace         = trace;
     this.startTime     = new Date();
@@ -432,16 +438,28 @@ class Core {
     document.body.appendChild(this.canvas);
   }
 
-  setWidth(w) {
+  getScreenWidth() {
+    return this.canvas.width;
+  }
+
+  setScreenWidth(w) {
     this.canvas.width  = w;
   }
 
-  setHeight(h) {
+  getScreenHeight() {
+    return this.canvas.height;
+  }
+
+  setScreenHeight(h) {
     this.canvas.height = h;
   }
 
+  getBgcolor() {
+    return this.surface.getBgcolor();
+  }
+
   setBgcolor(bgcolor) {
-    this.surface.bgcolor = bgcolor;
+    this.surface.setBgcolor(bgcolor);
   }
 
   setFps(val) {
@@ -838,13 +856,16 @@ class Core {
     return imgList;
   }
 
-  drawImage(x, y, id, {pos = 'corner'} = {}) {
+  drawImage(x, y, id, {a = 1.0, pos = 'corner'} = {}) {
     let image = Store.getImage(id);
+    this.context.save()
+    this.context.globalAlpha = a;   // it is possible to specify 'alpha' for image
     if (pos.toLowerCase() == 'center') {
       this.context.drawImage(image.data, x - image.width / 2, y - image.height / 2);
     } else {
       this.context.drawImage(image.data, x, y);
     }
+    this.context.restore()
   }
 
   // under construction...
@@ -860,6 +881,14 @@ class Core {
   //  sound.currentTime = 0;
   //  sound.play();
   //}
+
+  colorRGB(color) {
+    return ColorMap.rgb(color);
+  }
+
+  colorHex(color) {
+    return ColorMap.hex(color);
+  }
 
   translate(x, y) {
     this.context.translate(x, y);
@@ -879,18 +908,6 @@ class Core {
 
   restore() {
     this.context.restore();
-  }
-
-  windowWidth() {
-    return this.context.canvas.width;
-  }
-
-  screenWidth() {
-    return this.context.canvas.width;
-  }
-
-  screenHeight() {
-    return this.context.canvas.height;
   }
 }
 
@@ -989,11 +1006,11 @@ Opal.eval(`
     K_Z         =  90
 
     # utilities for internal
-    def self._conv_color(color_array)
-      # [r, g, b]    → "rgba(r, g, b, 255)"
-      # [a, r, g, b] → "rgba(r, g, b, a)"
-      return "rgba(#{color_array[0]}, #{color_array[1]}, #{color_array[2]}, 255)"               if color_array.size == 3
-      return "rgba(#{color_array[1]}, #{color_array[2]}, #{color_array[3]}, #{color_array[0]})" if color_array.size == 4
+    def self._conv_color(color)
+      # [r, g, b]    → [1.0, "rgba(r, g, b, 255)"]
+      # [a, r, g, b] → [a,   "rgba(r, g, b, a)"]
+      return [1.0,                "rgb(#{color[0]}, #{color[1]}, #{color[2]})"] if color.size == 3
+      return [(color[0] / 255.0), "rgb(#{color[1]}, #{color[2]}, #{color[3]})"] if color.size == 4
     end
 
     class << self
@@ -1019,27 +1036,27 @@ Opal.eval(`
     end
 
     module_function def width
-      DX::core.canvas.width      # attribute
+      DX::core.getScreenWidth()
     end
 
     module_function def height
-      DX::core.canvas.height     # attribute
+      DX::core.getScreenHeight()
     end
 
-    module_function def bgcolor
-      DX::core.surface.bgcolor   # attribute
-    end
+    #module_function def bgcolor
+    #  DX::core.getBgcolor()   // "rgb(r, g, b)" 形式
+    #end
 
     module_function def width=(w)
-      DX::core.setWidth(w)
+      DX::core.setScreenWidth(w)
     end
 
     module_function def height=(h)
-      DX::core.setHeight(h)
+      DX::core.setScreenHeight(h)
     end
 
     module_function def bgcolor=(bgcolor)
-      bgcolor = DX::_conv_color(bgcolor)
+      a, bgcolor = DX::_conv_color(bgcolor)
       DX::core.setBgcolor(bgcolor)
     end
 
@@ -1052,38 +1069,38 @@ Opal.eval(`
     end
 
     module_function def draw_line(x1, y1, x2, y2, color)
-      color = DX::_conv_color(color)
-      DX::core.drawLine(x1, y1, x2, y2, {color: color, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawLine(x1, y1, x2, y2, {color: color, a: a, weight: 2})
     end
 
     module_function def draw_box(x1, y1, x2, y2, color)
-      color = DX::_conv_color(color)
-      DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, fill: false, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, a: a, fill: false, weight: 2})
     end
 
     module_function def draw_box_fill(x1, y1, x2, y2, color)
-      color = DX::_conv_color(color)
-      DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, fill: true, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawRect(x1, y1, (x2 - x1), (y2 - y1), {color: color, a: a, fill: true, weight: 2})
     end
 
     module_function def draw_circle(x, y, r, color)
-      color = DX::_conv_color(color)
-      DX::core.drawCircle(x, y, r, {color: color, fill: false, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawCircle(x, y, r, {color: color, a: a, fill: false, weight: 2})
     end
 
     module_function def draw_circle_fill(x, y, r, color)
-      color = DX::_conv_color(color)
-      DX::core.drawCircle(x, y, r, {color: color, fill: true, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawCircle(x, y, r, {color: color, a: a, fill: true, weight: 2})
     end
 
     module_function def draw_pixel(x, y, color)
-      color = DX::_conv_color(color)
-      DX::core.drawCircle(x, y, 1, {color: color, fill: true, weight: 1})
+      a, color = DX::_conv_color(color)
+      DX::core.drawCircle(x, y, 1, {color: color, a: a, fill: true, weight: 1})
     end
 
     module_function def draw_font(x, y, string, font, color: DX::C_WHITE)
-      color = DX::_conv_color(color)
-      DX::core.drawText(x, y, string, {color: color, size: font.size, font: font.font_name, bold: font.weight, italic: font.italic})
+      a, color = DX::_conv_color(color)
+      DX::core.drawText(x, y, string, {color: color, a: a, size: font.size, font: font.font_name, bold: font.weight, italic: font.italic})
     end
 
     module_function def draw(x, y, image)
@@ -1102,14 +1119,14 @@ Opal.eval(`
       self.draw_ex(x, y, image, {angle: angle, center_x: center_x, center_y: center_y})
     end
 
-    module_function def draw_ex(x, y, image, center_x: image.width/2, center_y: image.height/2, scale_x: 1.0, scale_y: 1.0, angle: 0.0)
+    module_function def draw_ex(x, y, image, center_x: image.width/2, center_y: image.height/2, scale_x: 1.0, scale_y: 1.0, angle: 0.0, alpha: 255)
       center_x = (center_x ? center_x : image.width  / 2)   # nilの場合は画像の中心座標x(画像左上からの相対値)
       center_y = (center_y ? center_y : image.height / 2)   # nilの場合は画像の中心座標y(画像左上からの相対値)
       DX::core.save()
       DX::core.translate(x + center_x, y + center_y)
       DX::core.rotate(angle / 180.0 * Math::PI)
       DX::core.scale(scale_x, scale_y)
-      DX::core.drawImage(-center_x, -center_y, image.id)
+      DX::core.drawImage(-center_x, -center_y, image.id, {a: alpha / 255.0})
       DX::core.restore()
     end
   end
@@ -1221,9 +1238,7 @@ Opal.eval(`
       :RIGHT     =>  39,
       :DOWN      =>  40,
       :PAGEUP    =>  33,
-      :PAGE_UP   =>  33,
       :PAGEDOWN  =>  34,
-      :PAGE_DOWN =>  34,
       :INSERT    =>  45,
       :DELETE    =>  46,
       :F1        => 112,
@@ -1303,15 +1318,32 @@ Opal.eval(`
     Image = Struct.new(:id, :width, :height)
 
     # wrapper
-    module_function def cr                      ; @nyle.context            ; end
-    module_function def draw_line(*args)        ; @nyle.drawLine(*args)    ; end
-    module_function def draw_rect(*args)        ; @nyle.drawRect(*args)    ; end
-    module_function def draw_circle(*args)      ; @nyle.drawCircle(*args)  ; end
-    module_function def draw_shape(*args)       ; @nyle.drawShape(*args)   ; end
-    module_function def draw_text(*args)        ; @nyle.drawText(*args)    ; end
+    module_function def cr
+      @nyle.context
+    end
 
-    module_function def draw_image(x, y, image, pos: :CORNER)
-      @nyle.drawImage(x, y, image.id, {pos: pos})
+    module_function def draw_line(x1, y1, x2, y2, color: 'black', weight: 2, cap: 'butt', a: 1.0)
+      @nyle.drawLine(x1, y1, x2, y2, {color: color, weight: weight, cap: cap, a: a})
+    end
+
+    module_function def draw_rect(x, y, w, h, color: 'black', fill: false, weight: 2, a: 1.0, round:0)
+      @nyle.drawRect(x, y, w, h, {color: color, fill: fill, weight: weight, a: a, round: round})
+    end
+
+    module_function def draw_circle(x, y, r, color: 'black', fill: false, weight: 2, a: 1.0)
+      @nyle.drawCircle(x, y, r, {color: color, fill: fill, weight: weight, a: a})
+    end
+
+    module_function def draw_shape(points, weight: 2, cap: 'butt', color: 'black', a: 1.0, close: false, fill: false)
+      @nyle.drawShape(points, {weight: weight, cap: cap, color: color, a: a, close: close, fill: fill})
+    end
+
+    module_function def draw_text(x, y, text, color: 'black', a: 1.0, size: 32, font: 'sans-serif', bold: false, italic: false)
+      @nyle.drawText(x, y, text, {color: color, a: a, size: size, font: font, bold: bold, italic: italic})
+    end
+
+    module_function def draw_image(x, y, image, pos: :CORNER, a: 1.0)
+      @nyle.drawImage(x, y, image.id, {pos: pos, a: a})
     end
 
     module_function def load_image(id, cx: nil, cy: nil, cw: nil, ch: nil, sx: 1.0, sy: 1.0, color_key: :WHITE)
@@ -1334,8 +1366,8 @@ Opal.eval(`
     # module_function def load_sound(*args)       ; @nyle.loadSound(*args)   ; end
     # module_function def play_sound(*args)       ; @nyle.playSound(*args)   ; end
 
-    module_function def pixel(*args)            ; @nyle.pixel(*args)           ; end
-    module_function def pixel?(*args)           ; @nyle.isPixel(*args)         ; end
+    module_function def pixel(x, y)             ; @nyle.pixel(x, y)            ; end
+    module_function def pixel?(x, y, color)     ; @nyle.isPixel(x, y, color)   ; end
 
     module_function def mouse_x                 ; @nyle.getMouseX()            ; end
     module_function def mouse_y                 ; @nyle.getMouseY()            ; end
@@ -1351,9 +1383,9 @@ Opal.eval(`
     module_function def key_release?(key)       ; @nyle.isKeyRelease(_table_keys(key))          ; end
 
 
-    module_function def translate(*args)        ; @nyle.translate(*args)    ; end
-    module_function def rotate(*args)           ; @nyle.rotate(*args)       ; end
-    module_function def scale(*args)            ; @nyle.scale(*args)        ; end
+    module_function def translate(x, y)         ; @nyle.translate(x, y)     ; end
+    module_function def rotate(th)              ; @nyle.rotate(th)          ; end
+    module_function def scale(rx, ry)           ; @nyle.scale(rx, ry)       ; end
     module_function def save
       @nyle.save()
       yield
@@ -1362,9 +1394,13 @@ Opal.eval(`
 
     module_function def clear                   ; @nyle.clear()             ; end
     module_function def running_time            ; @nyle.runningTime()       ; end
+    module_function def quit                    ; @nyle.terminate()         ; end
 
-    module_function def screen_width            ; @nyle.screenWidth()       ; end
-    module_function def screen_height           ; @nyle.screenHeight()      ; end
+    module_function def screen_width            ; @nyle.getScreenWidth()    ; end
+    module_function def screen_height           ; @nyle.getScreenHeight()   ; end
+
+    module_function def color_info_hex(color)   ; @nyle.colorHex(color)     ; end
+    module_function def color_info_rgb(color)   ; @nyle.colorRGB(color)     ; end
 
     # alias
     alias_method :w, :screen_width
@@ -1373,14 +1409,14 @@ Opal.eval(`
     module_function :h
 
     # syntax sugar
-    module_function def create_screen(w = 640, h = 480, bgcolor: 'white', trace: false)
-      s = Screen.new({w: w, h: h, bgcolor: bgcolor, trace: trace})
+    module_function def create_screen(w = 640, h = 480, bgcolor: :WHITE, trace: false)
+      s = Screen.new(w, h, {bgcolor: bgcolor, trace: trace})
       s.extend(Nyle)
     end
 
     # Screen
     class Screen
-      def initialize(w: 640, h: 480, bgcolor: 'white', trace: false)
+      def initialize(w = 640, h = 480, bgcolor: :WHITE, trace: false)
         @nyle = Native(\`new Core({w: w, h: h, bgcolor: bgcolor, trace: trace})\`)
         @nyle.show()   # Nyle用canvas表示
         nyle = @nyle
@@ -1391,20 +1427,20 @@ Opal.eval(`
         @height = h
       end
 
-      def start(interval)
-        self.setup()
+      def start(interval = 16)
+        self.setup
         self.show_all(interval)
       end
 
-      def show_all(interval = 16)
+      private def show_all(interval = 16)
         @nyle.mainloop(interval) do
           Nyle.module_eval {
              @nyle.updateState
           }
           @nyle.clear unless @nyle.trace
           @nyle.save()      # 追加
-          self.update()
-          self.draw()
+          self.update
+          self.draw
           @nyle.restore()   # 追加
         end
       end
