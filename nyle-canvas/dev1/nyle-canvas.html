@@ -373,7 +373,9 @@
     console.log(`style: ${style}`);
     console.log(`protocol+host: ${location.protocol}//${location.host}`);
 
-    let srcjs = `${location.protocol}//${location.host}/${phase}/nyle-canvas.js`;
+    let srcjs = `${location.protocol}//${location.host}/nyle-canvas/${phase}/nyle-canvas.js`;
+    console.log(`srcjs: ${srcjs}`);
+
     let filename;
 
     let resPrefix  = '_____nyle__canvas__resources__';   // should not use characters that require escaping
