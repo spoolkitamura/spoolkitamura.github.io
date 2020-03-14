@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Input.y</h2>
+
+<h3>概要</h3>
+<p>
+カーソルキーの上下キーの入力をY座標の増分(-1, 0, 1のいずれか)として返します。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<table>
+<tr><td>Y座標の増分</td><td>-1 … 上カーソルキーが押された<br>&nbsp;0 … 上下いずれのカーソルキーも押されていない<br>&nbsp;1 … 下カーソルキーが押された</td></tr>
+</table>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+x = 320
+y = 240
+Window.loop do
+  # カーソルキーによって円の描画位置が動きます
+  x += Input.x
+  y += Input.y
+  Window.draw_circle(x, y, 50, DX::C_GREEN)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="input_x.html">Input.x</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

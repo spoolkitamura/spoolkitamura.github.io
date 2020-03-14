@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.clear</h2>
+
+<h3>概要</h3>
+<p>
+キャンバス上の描画内容をクリアします。<br><br>
+
+Nyle::Screenの trace属性が trueの場合に<br>
+描画されたキャンバス上の内容をクリアすることができます。<br>
+(ただし、bgcolorで指定された背景色はそのまま残ります)<br><br>
+
+Nyle::Screenの trace属性が falseの場合には<br>
+描画のたびにキャンバスが毎回書き換えられているので<br>
+clearによる効果はとくにありません。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+# キャンバスの trace属性を trueに設定
+s = Nyle.create_screen(640, 480, {bgcolor: :WHITE, trace: true})
+
+def s.draw
+  if Nyle.mouse_down?(:L)
+    # マウスの左ボタンを押しながら動かすと線が描画されます
+    Nyle.draw_circle(Nyle.mouse_x, Nyle.mouse_y, 5, {fill: true})
+  end
+  if Nyle.mouse_release?(:R)
+    # マウスの右ボタンをクリックするとキャンバスがクリアされます
+    Nyle.clear
+  end
+end
+
+</div>
+</pre>
+
+</div>
+
+
+</body>
+</html>

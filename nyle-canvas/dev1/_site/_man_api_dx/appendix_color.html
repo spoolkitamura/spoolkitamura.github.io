@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>色に関する情報</h2>
+
+<h3>仕様</h3>
+<p>
+[A, R, G, B]の形式の配列(＝色配列)で色の指定をおこないます。<br>
+
+それぞれの要素の内容は下記のとおりです。<br>
+</p>
+
+<table>
+  <tr><th>要素</th><th>内容</th><th>備考</th><th>値の範囲</th></tr>
+  <tr><td>A</td><td>α値</td><td>透明度を表す<br>(0は完全な透明、255は完全な不透明)</td><td>0～255</td></tr>
+  <tr><td>R</td><td>REDの値</td><td></td><td>0～255</td></tr>
+  <tr><td>G</td><td>BLUEの値</td><td></td><td>0～255</td></tr>
+  <tr><td>B</td><td>GREENの値</td><td></td><td>0～255</td></tr>
+</table>
+
+<h3>定数</h3>
+<p>
+Nyle-canvas(DXRubyスタイル)では、下記の色配列が定数として定義されています。
+</p>
+
+<table>
+  <tr><th>定数名</th><th>値</th><th>内容</th></tr>
+  <tr><td>DX::C_BLACK</td><td>[255, 0, 0, 0]</td><td>黒</td></tr>
+  <tr><td>DX::C_RED</td><td>[255, 255, 0, 0]</td><td>赤</td></tr>
+  <tr><td>DX::C_GREEN</td><td>[255, 0, 255, 0]</td><td>緑</td></tr>
+  <tr><td>DX::C_BLUE</td><td>[255, 0, 0, 255]</td><td>青</td></tr>
+  <tr><td>DX::C_YELLOW</td><td>[255, 255, 255, 0]</td><td>黄</td></tr>
+  <tr><td>DX::C_CYAN</td><td>[255, 0, 255, 255]</td><td>シアン</td></tr>
+  <tr><td>DX::C_MAGENTA</td><td>[255, 255, 0, 255]</td><td>マゼンダ</td></tr>
+  <tr><td>DX::C_WHITE</td><td>[255, 255, 255, 255]</td><td>白</td></tr>
+</table>
+
+<p></p>
+
+</div>
+
+
+</body>
+</html>

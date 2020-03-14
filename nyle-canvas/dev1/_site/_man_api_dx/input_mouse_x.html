@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Input.mouse_x</h2>
+
+<h3>別名</h3>
+<p>
+Input.mouse_pos_x
+</p>
+
+<h3>概要</h3>
+<p>
+マウスポインタのX座標を返します。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+マウスポインタのX座標
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+Window.loop do
+  # マウスポインタによって円の描画位置が動きます
+  Window.draw_circle(Input.mouse_x, Input.mouse_y, 50, DX::C_GREEN)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="input_mouse_y.html">Input.mouse_y</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

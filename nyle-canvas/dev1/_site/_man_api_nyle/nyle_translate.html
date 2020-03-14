@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.translate(tx, ty)</h2>
+
+<h3>概要</h3>
+<p>
+座標系を平行移動させます。<br>
+座標(tx, ty)の位置が新たな原点(0, 0)になります。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>tx</td><td>x方向の移動量</td><td></td><td></td></tr>
+  <tr><td>ty</td><td>y方向の移動量</td><td></td><td></td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.draw
+  # 座標系操作の範囲を限定します
+  Nyle.save do
+    Nyle.translate(50, 50)              # 座標系の原点座標を (50, 50)に移動
+    Nyle.rotate(Math::PI / 4)           # 座標系を 45度回転
+    Nyle.scale(3, 3)                    # 座標系を縦横それぞれ 3倍
+    Nyle.draw_line(10, 10, 100, 10)     # 直線を描画(上記の変換座標系で描画)
+  end
+  Nyle.draw_line(10, 10, 100, 10)       # 直線を描画(通常の座標系で描画)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_save.html">Nyle.save</a><br>
+<a href="nyle_rotate.html">Nyle.rotate</a><br>
+<a href="nyle_scale.html">Nyle.scale</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

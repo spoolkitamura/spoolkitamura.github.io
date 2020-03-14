@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Image#height</h2>
+
+<h3>概要</h3>
+<p>
+画像の高さを返します。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+画像の高さ
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  @img = Nyle.load_image("foo.png")
+end
+
+def s.draw
+  # 画像のサイズをキャンバスに描画します
+  Nyle.draw_text(320, 240, "#{@img.width} x #{@img.height}")
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_load_image.html">Nyle.load_image</a><br>
+<a href="nyle_load_image_tiles.html">Nyle.load_image_tiles</a><br>
+<a href="image_0x23_width.html">Image#width</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Nyle-canvas</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Nyle-canvas</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./_man_api_nyle/index.html" target="_blank">APIリファレンス (Nyleスタイル)</a></li>
+              <li><a href="./_man_api_dx/index.html" target="_blank">APIリファレンス (DXRubyスタイル)</a></li>
+              <li><a href="manual_editor.html">エディタの使い方</a></li>
+              <li><a href="#">よくある質問 [準備中]</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_nyle.html">サンプルプログラム (Nyleスタイル)</a></li>
+              <li><a href="./sample_dx.html">サンプルプログラム (DXRubyスタイル)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>エディタ操作方法</h3>
+              <h4 style="margin: 1em 0 0 1em;">(1)新規プログラム作成</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              「Nyle」に準じたライブラリ(Nyleスタイル)と<br>「DXRuby」に準じたライブラリ(DXRubyスタイル)の２つのうち、<br>
+              お好みのライブラリ(およびテンプレート)を使ってプログラミングをすることができます。<br>
+              それぞれ下記のリンク先にアクセスすることによって、<br>スタイルに応じたテンプレートが表示された状態でエディタが起動されます。<br>
+              </p>
+              <table border="0" style="margin: 1em 0 0 3em;">
+                <tr>
+                  <th >Nyleスタイル</th>
+                  <td style="padding-left: 10px;"><a href="../nyle-canvas.html" target="_blank">nyle-canvas.html</a></td>
+                </tr>
+                <tr>
+                  <th >DXRubyスタイル</th>
+                  <td style="padding-left: 10px;"><a href="../nyle-canvas.html?style=dx" target="_blank">nyle-canvas.html?style=dx</td>
+                </tr>
+              </table>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              なお、プログラムを最初から編集しなおす場合は、<br>エディタが開いている状態でブラウザのリロードをおこなってください。
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(2)プログラムの編集と実行</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              エディタ内にプログラムを記述し、エディタ上の[実行]ボタン(<img style="height: 28px; border: 1px solid;" src="image/btn_execute.png">)を押すとプログラムが実行されます。<br>
+              (下記「アニメーションGIFによるエディタ操作例」の<a href="#u_intro">「(1)プログラムの編集と実行」</a>を参照)
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(3)プログラムの編集と実行(画像ファイルの取込みあり)</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              画像ファイルは、エディタ内にドラッグアンドドロップすることによってプログラム上で扱うことができるようになります。<br>
+              それ以外のプログラムの編集および実行の操作については、前述と同じです。<br>
+              (下記「アニメーションGIFによるエディタ操作例」の<a href="#u_edit">「(2)プログラムの編集と実行(画像ファイルの取込みあり)」</a>を参照)
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(4)プログラムの保存(ダウンロード)</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              エディタ上の[保存(ダウンロード)]ボタン(<img style="height: 28px; border: 1px solid;" src="image/btn_save.png">)を押すとプログラムが HTMLファイルとして保存(ダウンロード)されます。<br>
+              ただし、ブラウザの種類や設定によって保存場所やファイル名の指定などの挙動が変わるのでご留意ください。<br>
+              (下記「アニメーションGIFによるエディタ操作例」の<a href="#u_save">「(2)プログラムの保存(ダウンロード)」</a>を参照)
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(5)プログラムの読込み</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              保存した HTMLファイルをエディタ内にドラッグアンドドロップすると、プログラムが読み込まれます。<br>
+              (下記「アニメーションGIFによるエディタ操作例」の<a href="#u_load">「(2)プログラムの読込み」</a>を参照)
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(6)ヘルプ</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              エディタ上の[ヘルプ]ボタン(<img style="height: 28px; border: 1px solid;" src="image/btn_help.png">)を押すと、スタイルに応じたライブラリの APIリファレンスが表示されます。
+              </p>
+              <h4 style="margin: 1em 0 0 1em;">(7)文字サイズ変更</h4>
+              <p style="font-size: 14px; margin: 1em 0 0 2em;">
+              エディタ上の[フォントサイズサイズ]ボタン(<img style="height: 28px; border: 1px solid;" src="image/btn_fontsize.png">)を押すと「大・中・小」の３種類からフォントサイズを選ぶことができます。<br>
+              (エディタ起動時の初期設定は「中」)
+              </p>
+            </div>
+          </p>
+        </div>
+        <br>
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>アニメーションGIFによるエディタ操作例</h3>
+              <h4 id="u_intro" style="margin: 2em 0 0 1em;">(1)プログラムの編集と実行</h4>
+              <img src="./image/u_intro.gif" style="width: 600px; height: 654px; border: 1px solid; margin: 10px 0 5px 30px;">
+              <h4 id="u_edit" style="margin: 2em 0 0 1em;">(2)プログラムの編集と実行(画像ファイルの取込みあり)</h4>
+              <img src="./image/u_edit.gif" style="width: 600px; height: 654px; border: 1px solid; margin: 10px 0 5px 30px;">
+              <h4 id="u_save" style="margin: 2em 0 0 1em;">(3)プログラムの保存(ダウンロード)</h4>
+              <img src="./image/u_save.gif" style="width: 600px; height: 654px; border: 1px solid; margin: 10px 0 5px 30px;">
+              <h4 id="u_load" style="margin: 2em 0 0 1em;">(4)プログラムの読込み</h4>
+              <img src="./image/u_load.gif" style="width: 600px; height: 654px; border: 1px solid; margin: 10px 0 5px 30px;">
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+
+
+
+  <!-- +++++ Footer Section +++++ -->
+
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

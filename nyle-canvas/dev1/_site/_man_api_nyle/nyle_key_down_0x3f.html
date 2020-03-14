@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.key_down?(key_code)</h2>
+
+<h3>概要</h3>
+<p>
+キーボードの指定のキーが押されているあいだ真を返します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>key_code</td><td><a href=""><a href="appendix_key.html">キーコードに関する情報</a>を参照</a></td><td></td><td></td></tr>
+</table>
+
+<h3>戻値</h3>
+<table>
+<tr><td>キーの状態</td><td>true&nbsp; … 指定のキーが押されている<br>false … 指定のキーが押されていない</td></tr>
+</table>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.draw
+  # スペースキーが押されている間だけキャンバスに円を描画します
+  if Nyle.key_down?(:SPACE)
+    Nyle.draw_circle(320, 240, 100)
+  end
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_key_press_0x3f.html">Nyle.key_press?</a><br>
+<a href="nyle_key_release_0x3f.html">Nyle.key_release?</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

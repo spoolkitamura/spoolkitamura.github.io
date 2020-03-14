@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Nyle-canvas</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Nyle-canvas</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./_man_api_nyle/index.html" target="_blank">APIリファレンス (Nyleスタイル)</a></li>
+              <li><a href="./_man_api_dx/index.html" target="_blank">APIリファレンス (DXRubyスタイル)</a></li>
+              <li><a href="manual_editor.html">エディタの使い方</a></li>
+              <li><a href="#">よくある質問 [準備中]</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_nyle.html">サンプルプログラム (Nyleスタイル)</a></li>
+              <li><a href="./sample_dx.html">サンプルプログラム (DXRubyスタイル)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+        <div>
+          <p>
+
+<h3>サンプルプログラム (Nyleスタイル)</h3>
+<p>
+[起動方法]<br>
+&nbsp;リンクをクリックすると、新しいタブが開いてサンプルが実行されます。<br>
+[編集方法]<br>
+&nbsp;リンク先のファイルを保存して、<a href="../nyle-canvas.html" target="_blank">エディタ</a>内にドラッグアンドドロップして編集してください。<br>
+</p>
+<h4>
+<div class="samples">
+<table>
+  <tr>
+    <th>1</th>
+    <td><a href="_sample_nyle/nyle_app_001_color_chart.html" target="_blank">カラーチャート (color)</a></td>
+    <td><img src="image/sample_nyle_001.png"></td>
+  </tr>
+  <tr>
+    <th>2</th>
+    <td><a href="_sample_nyle/nyle_app_002_pixel.html" target="_blank">ピクセルデータ (pixel)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_002.png"></td>
+  </tr>
+  <tr>
+    <th>3</th>
+    <td><a href="_sample_nyle/nyle_app_003_circle.html" target="_blank">円の描画 (circle)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_003.png"></td>
+  </tr>
+  <tr>
+    <th>4</th>
+    <td><a href="_sample_nyle/nyle_app_004_line.html" target="_blank">線の描画 (line)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_004.png"></td>
+  </tr>
+  <tr>
+    <th>5</th>
+    <td><a href="_sample_nyle/nyle_app_005_rect.html" target="_blank">矩形の描画 (rect)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_005.png"></td>
+  </tr>
+  <tr>
+    <th>6</th>
+    <td><a href="_sample_nyle/nyle_app_006_shape.html" target="_blank">図形の描画 (shape)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_006.png"></td>
+  </tr>
+  <tr>
+    <th>7</th>
+    <td><a href="_sample_nyle/nyle_app_007_text.html" target="_blank">文字の表示 (text)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_007.png"></td>
+  </tr>
+  <tr>
+    <th>8</th>
+    <td><a href="_sample_nyle/nyle_app_008_image_click.html" target="_blank">モグラたたき (image click)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_008.png"></td>
+  </tr>
+  <tr>
+    <th>9</th>
+    <td><a href="_sample_nyle/nyle_app_009_image_rotate.html" target="_blank">画像の回転 (image rotate)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_009.png"></td>
+  </tr>
+  <tr>
+    <th>10</th>
+    <td><a href="_sample_nyle/nyle_app_010_image_rpg.html" target="_blank">RPG風のキャラクタ移動 (image tile)</a><br><div style="font-size: 8px">画像提供: (c)2016 NISHIDA Ryota - http://dev.eyln.com (zlib License)</div></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_010.png"></td>
+  </tr>
+  <tr>
+    <th>11</th>
+    <td><a href="_sample_nyle/nyle_app_011_keyboard.html" target="_blank">キーイベント (keyboard)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_011.png"></td>
+  </tr>
+  <tr>
+    <th>12</th>
+    <td><a href="_sample_nyle/nyle_app_012_pause.html" target="_blank">経過時間による制御 (running time)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_012.png"></td>
+  </tr>
+  <tr>
+    <th>13</th>
+    <td><a href="_sample_nyle/nyle_app_013a_random_walk.html" target="_blank">ランダムウォーク (random walk)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_013.png"></td>
+  </tr>
+  <tr>
+    <th>14</th>
+    <td><a href="_sample_nyle/nyle_app_013b_random_walk_trace.html" target="_blank">ランダムウォーク (random walk [trace])</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_014.png"></td>
+  </tr>
+  <tr>
+    <th>15</th>
+    <td><a href="_sample_nyle/nyle_app_013c_random_walk_trace_fadeout.html" target="_blank">ランダムウォーク (random walk [fadeout])</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_015.png"></td>
+  </tr>
+  <tr>
+    <th>16</th>
+    <td><a href="_sample_nyle/nyle_app_014_rotate.html" target="_blank">周回 (rotate)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_016.png"></td>
+  </tr>
+  <tr>
+    <th>17</th>
+    <td><a href="_sample_nyle/nyle_app_a01_block.html" target="_blank">ブロック崩し (block)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_017.png"></td>
+  </tr>
+  <tr>
+    <th>18</th>
+    <td><a href="_sample_nyle/nyle_app_a02_clock.html" target="_blank">アナログ時計 (clock)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_018.png"></td>
+  </tr>
+  <tr>
+    <th>19</th>
+    <td><a href="_sample_nyle/nyle_app_a03_falling.html" target="_blank">落ちものゲーム (falling)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_019.png"></td>
+  </tr>
+  <tr>
+    <th>20</th>
+    <td><a href="_sample_nyle/nyle_app_a04_flight.html" target="_blank">フライトシミュレーター (flight)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_020.png"></td>
+  </tr>
+  <tr>
+    <th>21</th>
+    <td><a href="_sample_nyle/nyle_app_a05_pendulum.html" target="_blank">振り子 (pendulum)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_021.png"></td>
+  </tr>
+  <tr>
+    <th>22</th>
+    <td><a href="_sample_nyle/nyle_app_a06_fourier_series.html" target="_blank">フーリエ級数 (fourier_series)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_022.png"></td>
+  </tr>
+  <tr>
+    <th>23</th>
+    <td><a href="_sample_nyle/nyle_app_a08_sugar.html" target="_blank">砂糖 (sugar)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_023.png"></td>
+  </tr>
+  <tr>
+    <th>24</th>
+    <td><a href="_sample_nyle/nyle_app_a09_tree.html" target="_blank">フラクタル (tree)</a></td>
+    <td style="vertical-align: center;"><img style="height: 50px;" src="image/sample_nyle_024.png"></td>
+  </tr>
+</tr>
+</table>
+</div>
+</h4>
+
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- /container -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

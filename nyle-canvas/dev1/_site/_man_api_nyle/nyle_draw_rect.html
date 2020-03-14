@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.draw_rect(x, y, width, height, option={})</h2>
+
+<h3>概要</h3>
+<p>
+基点座標と大きさを指定して矩形を描きます。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>x</td><td>基点(矩形の左上頂点)のX座標</td><td></td><td></td></tr>
+  <tr><td>y</td><td>基点(矩形の左上頂点)のY座標</td><td></td><td></td></tr>
+  <tr><td>width</td><td>矩形の幅</td><td></td><td></td></tr>
+  <tr><td>height</td><td>矩形の高さ</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:weight</td><td>線の太さ</td><td>1以上の整数値</td><td>2</td></tr>
+  <tr><td>:color</td><td>描画色</td><td>色を表すシンボルまたは「#RRGGBB形式」コード<br>(<a href="appendix_color.html">色に関する情報</a>を参照)</td><td>:BLACK</td></tr>
+  <tr><td>:a</td><td>描画色のα値<br>(透明度)</td><td>0.0～1.0</td><td>1.0</td></tr>
+  <tr><td>:fill</td><td>塗りつぶし</td><td>true&nbsp;&nbsp;&nbsp;矩形を塗りつぶす<br>false&nbsp;&nbsp;矩形を塗りつぶさない</td><td>false</td></tr>
+  <tr><td>:round</td><td>角の丸み</td><td>0以上の整数値</td><td>0</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+  なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.draw
+  # 座標(100, 100)を基点とした440×280の大きさの矩形(太さ10で先端丸み5)を描画します
+  Nyle.draw_rect(100, 100, 440, 280, {color: :BLUE, weight: 10, round: 5})
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_draw_line.html">Nyle.draw_line</a><br>
+<a href="nyle_draw_circle.html">Nyle.draw_circle</a><br>
+<a href="nyle_draw_shape.html">Nyle.draw_shape</a><br>
+<a href="nyle_draw_text.html">Nyle.draw_text</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyleモジュール</h2>
+
+<h3>概要</h3>
+<p>Nyle-canvasのコアとなるモジュールです。</p>
+
+<h3>モジュールメソッド</h3>
+<table>
+  <tr><th>メソッド名</th><th>処理内容</th></tr>
+  <tr><td><a href="nyle_draw_line.html" target="content">.draw_line</a></td><td>直線を描画</td></tr>
+  <tr><td><a href="nyle_draw_rect.html" target="content">.draw_rect</a></td><td>矩形を描画</td></tr>
+  <tr><td><a href="nyle_draw_circle.html" target="content">.draw_circle</a></td><td>円を描画</td></tr>
+  <tr><td><a href="nyle_draw_shape.html" target="content">.draw_shape</a></td><td>任意の図形を描画</td></tr>
+  <tr><td><a href="nyle_draw_text.html" target="content">.draw_text</a></td><td>	文字列を描画</td></tr>
+  <tr><td><a href="nyle_draw_image.html" target="content">.draw_image</a></td><td>画像を描画</td></tr>
+  <tr><td><a href="nyle_load_image.html" target="content">.load_image</a></td><td>画像をロードして Imageオブジェクトを生成</td></tr>
+  <tr><td><a href="nyle_load_image_tiles.html" target="content">.load_image_tiles</a></td><td>画像をロードして指定個数に分割された Imageオブジェクトの配列を生成</td></tr>
+  <tr><td><a href="nyle_pixel.html" target="content">.pixel</a></td><td>指定座標の色情報を取得</td></tr>
+  <tr><td><a href="nyle_pixel_0x3f.html" target="content">.pixel?</a></td><td>指定座標の色情報を判定</td></tr>
+  <tr><td><a href="nyle_clear.html" target="content">.clear</a></td><td>描画内容をクリア</td></tr>
+  <tr><td><a href="nyle_translate.html" target="content">.translate</a></td><td>座標系を平行移動</td></tr>
+  <tr><td><a href="nyle_rotate.html" target="content">.rotate</a></td><td>座標系を回転</td></tr>
+  <tr><td><a href="nyle_scale.html" target="content">.scale</a></td><td>座標系を拡大</td></tr>
+  <tr><td><a href="nyle_save.html" target="content">.save</a></td><td>座標系の状態を保持</td></tr>
+  <tr><th>メソッド名</th><th>処理内容</th></tr>
+  <tr><td><a href="nyle_screen_width.html" target="content">.screen_width [.w]</a></td><td>画面幅を取得</td></tr>
+  <tr><td><a href="nyle_screen_height.html" target="content">.screen_height [.h]</a></td><td>	画面高さを取得</td></tr>
+  <tr><td><a href="nyle_mouse_x.html" target="content">.mouse_x</a></td><td>マウスポインタのX座標を取得</td></tr>
+  <tr><td><a href="nyle_mouse_y.html" target="content">.mouse_y</a></td><td>マウスポインタのY座標を取得</td></tr>
+  <tr><td><a href="nyle_mouse_down_0x3f.html" target="content">.mouse_down?</a></td><td>指定したマウスボタンが押されているかどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_mouse_press_0x3f.html" target="content">.mouse_press?</a></td><td>指定したマウスボタンが押された瞬間かどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_mouse_release_0x3f.html" target="content">.mouse_release?</a></td><td>指定したマウスボタンが離された瞬間かどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_key_down_0x3f.html" target="content">.key_down?</a></td><td>指定したキーが押されているかどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_key_press_0x3f.html" target="content">.key_press?</a></td><td>指定したキーが押された瞬間かどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_key_release_0x3f.html" target="content">.key_release?</a></td><td>指定したキーが離された瞬間かどうかの状態を取得</td></tr>
+  <tr><td><a href="nyle_cursor_x.html" target="content">.cursor_x</a></td><td>左右カーソルキーの入力状態を取得</td></tr>
+  <tr><td><a href="nyle_cursor_y.html" target="content">.cursor_y</a></td><td>上下カーソルキーの入力状態を取得</td></tr>
+  <tr><td><a href="nyle_running_time.html" target="content">.running_time</a></td><td>経過時間を取得</td></tr>
+  <tr><td><a href="nyle_color_info_hex.html" target="content">.color_info_hex</a></td><td>色を表すシンボルの色情報(16進コード)を取得</td></tr>
+  <tr><td><a href="nyle_color_info_rgb.html" target="content">.color_info_rgb</a></td><td>色を表すシンボルの色情報(rgb配列)を取得</td></tr>
+  <tr><th>メソッド名</th><th>処理内容</th></tr>
+  <tr><td><a href="nyle_quit.html" target="content">.quit</a></td><td>メインループの描画処理を停止</td></tr>
+  <tr><td><a href="nyle_cr.html" target="content">.cr</a></td><td>表示中のCanvasの Contextを取得</td></tr>
+  <tr><td><a href="nyle_create_screen.html" target="content">.create_screen</a></td><td>Canvasをラップしたスクリーンを生成</td></tr>
+</table>
+
+
+
+
+<p></p>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Font.new(size, font_name="sans-serif", option={})</h2>
+
+<h3>概要</h3>
+<p>
+指定した属性の Fontオブジェクトを生成して返します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>size</td><td>フォントサイズ</td><td>ピクセル</td><td></td></tr>
+  <tr><td>font_name</td><td>フォント名</td><td><a href="appendix_font.html">フォントに関する情報</a>を参照</td><td>sans-serif (ゴシック)</td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:weight</td><td>太字にするかどうか</td><td>true&nbsp; ... 太字にする<br>false ... 太字にしない</td><td>false</td></tr>
+  <tr><td>:italic</td><td>斜字体にするかどうか</td><td>true&nbsp; ... 斜字体にする<br>false ... 斜字体にしない</td><td>false</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Fontオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+Window.bgcolor = DX::C_RED
+Window.loop do
+  # "こんにちは Ruby!"の文字列を 32ピクセルの明朝体の太字で描画します
+  Window.draw_font(200, 240, "こんにちは Ruby!", Font.new(32, "serif", {weight: true}))
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="font_default.html">Font.default</a><br>
+<a href="window_draw_font.html">Window.draw_font</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

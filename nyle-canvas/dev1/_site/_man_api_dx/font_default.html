@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Font.default</h2>
+
+<h3>概要</h3>
+<p>
+デフォルトとして設定されている Fontオブジェクトを返します。<br>
+(「Font.new(24)」で生成された Fontオブジェクト)
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+Fontオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+Window.bgcolor = DX::C_RED
+Window.loop do
+  # "こんにちは Ruby!"の文字列をデフォルトのフォントで描画します
+  Window.draw_font(200, 240, "こんにちは Ruby!", Font.default)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="font_new.html">Font.new</a><br>
+<a href="window_draw_font.html">Window.draw_font</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Window.draw_font(x, y, string, font, option={})</h2>
+
+<h3>概要</h3>
+<p>
+指定したフォントで文字列を描画します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>x</td><td>X座標</td><td></td><td></td></tr>
+  <tr><td>y</td><td>Y座標</td><td></td><td></td></tr>
+  <tr><td>string</td><td>描画する文字列</td><td></td><td></td></tr>
+  <tr><td>font</td><td>フォントオブジェクト</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:color</td><td>描画色</td><td>[A, R, G, B]形式の色配列<br>(<a href="appendix_color.html">色に関する情報</a>を参照)</td><td>[255, 255, 255, 255] (白)</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+Window.loop do
+  # "こんにちは Ruby!"の文字列を黄色で描画します
+  Window.draw_font(220, 240, "こんにちは Ruby!", Font.default, {color: [255, 255, 0]})
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="font_new.html">Font.new</a><br>
+<a href="font_default.html">Font.default</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

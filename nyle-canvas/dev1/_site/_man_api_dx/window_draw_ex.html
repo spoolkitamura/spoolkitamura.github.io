@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Window.draw_ex(x, y, image, option={})</h2>
+
+<h3>概要</h3>
+<p>
+Image.load()メソッドまたは Image.load_tiles()メソッドでロードした画像に対して<br>
+拡大率および回転角度を指定してキャンバスに描画します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>x</td><td>X座標</td><td></td><td></td></tr>
+  <tr><td>y</td><td>Y座標</td><td></td><td></td></tr>
+  <tr><td>image</td><td>画像オブジェクト</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:scale_x</td><td>X方向(横方向)の拡大率</td><td>0より大きな値</td><td>1</td></tr>
+  <tr><td>:scale_y</td><td>Y方向(縦方向)の拡大率</td><td>0より大きな値</td><td>1</td></tr>
+  <tr><td>:angle</td><td>回転角度</td><td>0を基準として時計回りに360で一周</td><td>0</td></tr>
+  <tr><td>:center_x</td><td>拡大する際の中心となるX座標</td><td>画像の左上を原点とする相対座標<br>(nilの場合は画像の中央)</td><td>nil</td></tr>
+  <tr><td>:center_y</td><td>拡大する際の中心となるY座標</td><td>画像の左上を原点とする相対座標<br>(nilの場合は画像の中央)</td><td>nil</td></tr>
+  <tr><td>:alpha</td><td>透明度(α値)</td><td>0～255</td><td>255</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+  なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+img = Image.load('logo.png')
+Window.loop do
+  # 画像の中央を基準にして
+  # 横方向に2.0倍、縦方向に0.5倍に拡大した上で
+  # 45度回転させて半透明(α=128)で描画します
+  Window.draw_ex(320, 240, img, {scale_x: 2.0, scale_y: 0.5, angle: 45, alpha: 128})
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="window_draw.html">Window.draw</a><br>
+<a href="window_draw_scale.html">Window.draw_scale</a><br>
+<a href="window_draw_rot.html">Window.draw_rot</a><br>
+<a href="image_load.html">Image.load</a><br>
+<a href="image_load_tiles.html">Image.load_tiles</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

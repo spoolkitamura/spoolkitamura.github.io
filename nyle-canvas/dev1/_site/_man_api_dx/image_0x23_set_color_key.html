@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Image#set_color_key(color) 【未実装】</h2>
+
+<h3>概要</h3>
+<p>
+画像データについて、指定された色と同じ色を透明(α値＝0)にします。<br>
+<br>
+【注意】<br>
+&nbsp;&nbsp;&nbsp;&nbsp;内部処理がまだ実装されていないため、<br>
+&nbsp;&nbsp;&nbsp;&nbsp;このメソッドを実行しても指定色は透明化されません。<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;その代わりに、Image.loadおよび Image.load_tilesメソッド内で<br>
+&nbsp;&nbsp;&nbsp;&nbsp;暫定的に白色を自動的に透明にするようになっています。<br>
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>color</td><td>透過指定色</td><td>[A, R, G, B]形式の色配列<br>(<a href="appendix_color.html">色に関する情報</a>を参照)</td><td></td></tr>
+</table>
+
+
+<h3>戻値</h3>
+<p>
+なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+# 画像を読み込んで、白色の部分を透明にしてキャンバスに描画します
+img = Image.load("logo.png")
+img.set_color_key(DX::C_WHITE)   # 未実装
+Window.loop do
+  Window.draw(320, 240, img)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="image_load.html">Image.load</a><br>
+<a href="image_load_tiles.html">Image.load_tiles</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

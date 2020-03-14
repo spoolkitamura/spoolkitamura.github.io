@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+include Nyle
+
+class Walker
+  RADIUS = 4
+  def initialize(max_x, max_y, color = :YELLOW)
+    @max_x = max_x
+    @max_y = max_y
+    @x = max_x / 2.0
+    @y = max_y / 2.0
+    @step = 5
+    @color = color
+  end
+
+  # Randomly move up, down, left, right
+  def move
+    stepx = rand(3) - 1
+    stepy = rand(3) - 1
+    @x += stepx * @step
+    @y += stepy * @step
+
+    # x,y limitter
+    @x = 0      if @x < 0
+    @x = @max_x if @x > @max_x
+    @y = 0      if @y < 0
+    @y = @max_y if @y > @max_y
+  end
+
+  def draw
+    Nyle.draw_circle(@x, @y, RADIUS, {color: @color, fill: true})
+  end
+end
+
+
+s = Nyle.create_screen(320, 240, {bgcolor: :BLACK, trace: true})
+
+def s.setup
+  @walker = Walker.new(@width, @height)
+end
+
+def s.draw
+  @walker.draw
+  Nyle.draw_rect(0, 0, @width, @height, {fill: true, color: :BLACK, a: 0.02})
+end
+
+def s.update
+  @walker.move
+end
+
+s.start(30)
+</script>
+</body>
+</html>

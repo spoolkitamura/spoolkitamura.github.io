@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+# 初期設定用のコード (your setup code here)
+Window.width   = 640
+Window.height  = 480
+Window.bgcolor = DX::C_BLACK
+
+Window.loop do
+  # 画面描画用のコード (your draw code here)
+  Window.draw_line( 20, 410, 620, 410, [128, 128, 128, 128])
+  Window.draw_line( 20, 440, 620, 440, [128, 128, 128, 128])
+  Window.draw_font( 80, 410, "'Nyle-canvas'", Font.default)
+  Window.draw_font(120, 440, "using Opal and HTML5 Canvas", Font.default)
+
+  Window.draw_line( 20,  50, 620,  50, [128, 128, 128, 128])
+  Window.draw_font( 80,  50, "Nyle", Font.new(18, "sans-serif"))
+  Window.draw_font(140,  50, "Nyle", Font.new(24, "sans-serif"))
+  Window.draw_font(220,  50, "Nyle", Font.new(32, "sans-serif", weight: true))
+  Window.draw_font(320,  50, "Nyle", Font.new(42, "sans-serif", italic: true))
+  Window.draw_font(440,  50, "Nyle", Font.new(48, "sans-serif", italic: true, weight: true))
+
+  Window.draw_line( 20, 110, 620, 110, [128, 128, 128, 128])
+  Window.draw_font( 80, 110, "Nyle", Font.new(18, "sans-serif"), color: [255, 255, 255, 255])
+  Window.draw_font(140, 110, "Nyle", Font.new(24, "sans-serif"), color: [224, 255, 255, 255])
+  Window.draw_font(220, 110, "Nyle", Font.new(32, "sans-serif", weight: true), color: [192, 255, 255, 255])
+  Window.draw_font(320, 110, "Nyle", Font.new(42, "sans-serif", italic: true), color: [160, 255, 255, 255])
+  Window.draw_font(440, 110, "Nyle", Font.new(48, "sans-serif", italic: true, weight: true), color: [128, 255, 255, 255])
+
+  Window.draw_line( 20, 170, 620, 170, [128, 128, 128, 128])
+  Window.draw_font( 80, 170, "Nyle", Font.new(18, "serif"), color: DX::C_RED)
+  Window.draw_font(140, 170, "Nyle", Font.new(24, "serif"), color: DX::C_RED)
+  Window.draw_font(220, 170, "Nyle", Font.new(32, "serif", weight: true), color: DX::C_RED)
+  Window.draw_font(320, 170, "Nyle", Font.new(42, "serif", italic: true), color: DX::C_RED)
+  Window.draw_font(440, 170, "Nyle", Font.new(48, "serif", italic: true, weight: true), color: DX::C_RED)
+
+  Window.draw_line( 20, 230, 620, 230, [128, 128, 128, 128])
+  Window.draw_font( 80, 230, "Nyle", Font.new(18, "serif"), color: [255, 34, 139, 34])
+  Window.draw_font(140, 230, "Nyle", Font.new(24, "serif"), color: [255, 34, 139, 34])
+  Window.draw_font(220, 230, "Nyle", Font.new(32, "serif", weight: true), color: [255, 34, 139, 34])
+  Window.draw_font(320, 230, "Nyle", Font.new(42, "serif", italic: true), color: [255, 34, 139, 34])
+  Window.draw_font(440, 230, "Nyle", Font.new(48, "serif", italic: true, weight: true), color: [255, 34, 139, 34])
+
+  Window.draw_line( 20, 290, 620, 290, [128, 128, 128, 128])
+  Window.draw_font( 80, 290, "Nyle", Font.new(18, "monospace"), color: [255, 0, 0, 205])
+  Window.draw_font(140, 290, "Nyle", Font.new(24, "monospace"), color: [255, 0, 0, 205])
+  Window.draw_font(220, 290, "Nyle", Font.new(32, "monospace", weight: true), color: [255, 0, 0, 205])
+  Window.draw_font(320, 290, "Nyle", Font.new(42, "monospace", italic: true), color: [255, 0, 0, 205])
+  Window.draw_font(440, 290, "Nyle", Font.new(48, "monospace", italic: true, weight: true), color: [255, 0, 0, 205])
+
+  Window.draw_line( 20, 350, 620, 350, [128, 128, 128, 128])
+  Window.draw_font( 80, 350, "Nyle", Font.new(18, "monospace"), color: [255, 255, 218, 0])
+  Window.draw_font(140, 350, "Nyle", Font.new(24, "monospace"), color: [255, 255, 218, 0])
+  Window.draw_font(220, 350, "Nyle", Font.new(32, "monospace", weight: true), color: [255, 255, 218, 0])
+  Window.draw_font(320, 350, "Nyle", Font.new(42, "monospace", italic: true), color: [255, 255, 218, 0])
+  Window.draw_font(440, 350, "Nyle", Font.new(48, "monospace", italic: true, weight: true), color: [255, 255, 218, 0])
+  
+end
+</script>
+</body>
+</html>

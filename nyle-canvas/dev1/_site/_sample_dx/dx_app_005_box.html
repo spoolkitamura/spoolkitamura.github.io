@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+# 初期設定用のコード (your setup code here)
+Window.width   = 640
+Window.height  = 480
+Window.bgcolor = DX::C_BLACK
+
+Window.loop do
+  # 画面描画用のコード (your draw code here)
+  Window.draw_box( 90,  40,  90 + 60, 40 + 40, DX::C_WHITE)
+  Window.draw_box(190,  40, 190 + 60, 40 + 40, DX::C_WHITE)
+  Window.draw_box(290,  40, 290 + 60, 40 + 40, DX::C_WHITE)
+  Window.draw_box(390,  40, 390 + 60, 40 + 40, DX::C_WHITE)
+  Window.draw_box(490,  40, 490 + 60, 40 + 40, DX::C_WHITE)
+
+  Window.draw_box( 90, 100,  90 + 60, 100 + 40, [128, 255, 255, 255])
+  Window.draw_box(190, 100, 190 + 60, 100 + 40, [160, 255, 255, 255])
+  Window.draw_box(290, 100, 290 + 60, 100 + 40, [192, 255, 255, 255])
+  Window.draw_box(390, 100, 390 + 60, 100 + 40, [224, 255, 255, 255])
+  Window.draw_box(490, 100, 490 + 60, 100 + 40, [255, 255, 255, 255])
+
+  Window.draw_box_fill( 90, 160,  90 + 60, 160 + 40, [128, 255, 255, 255])
+  Window.draw_box_fill(190, 160, 190 + 60, 160 + 40, [160, 255, 255, 255])
+  Window.draw_box_fill(290, 160, 290 + 60, 160 + 40, [192, 255, 255, 255])
+  Window.draw_box_fill(390, 160, 390 + 60, 160 + 40, [224, 255, 255, 255])
+  Window.draw_box_fill(490, 160, 490 + 60, 160 + 40, [255, 255, 255, 255])
+
+  Window.draw_box_fill( 90, 220,  90 + 60, 220 + 40, [128, 255, 0, 0])
+  Window.draw_box_fill(190, 220, 190 + 60, 220 + 40, [160, 255, 0, 0])
+  Window.draw_box_fill(290, 220, 290 + 60, 220 + 40, [192, 255, 0, 0])
+  Window.draw_box_fill(390, 220, 390 + 60, 220 + 40, [224, 255, 0, 0])
+  Window.draw_box_fill(490, 220, 490 + 60, 220 + 40, [255, 255, 0, 0])
+
+  Window.draw_box_fill( 90, 280,  90 + 60, 280 + 40, [128, 34, 139, 34])
+  Window.draw_box_fill(190, 280, 190 + 60, 280 + 40, [160, 34, 139, 34])
+  Window.draw_box_fill(290, 280, 290 + 60, 280 + 40, [192, 34, 139, 34])
+  Window.draw_box_fill(390, 280, 390 + 60, 280 + 40, [224, 34, 139, 34])
+  Window.draw_box_fill(490, 280, 490 + 60, 280 + 40, [255, 34, 139, 34])
+
+  Window.draw_box_fill( 90, 340,  90 + 60, 340 + 40, [128, 0, 0, 205])
+  Window.draw_box_fill(190, 340, 190 + 60, 340 + 40, [160, 0, 0, 205])
+  Window.draw_box_fill(290, 340, 290 + 60, 340 + 40, [192, 0, 0, 205])
+  Window.draw_box_fill(390, 340, 390 + 60, 340 + 40, [224, 0, 0, 205])
+  Window.draw_box_fill(490, 340, 490 + 60, 340 + 40, [255, 0, 0, 205])
+
+  Window.draw_box_fill( 90, 400,  90 + 60, 400 + 40, [128, 255, 218, 0])
+  Window.draw_box_fill(190, 400, 190 + 60, 400 + 40, [160, 255, 218, 0])
+  Window.draw_box_fill(290, 400, 290 + 60, 400 + 40, [192, 255, 218, 0])
+  Window.draw_box_fill(390, 400, 390 + 60, 400 + 40, [224, 255, 218, 0])
+  Window.draw_box_fill(490, 400, 490 + 60, 400 + 40, [255, 255, 218, 0])
+  
+end
+</script>
+</body>
+</html>

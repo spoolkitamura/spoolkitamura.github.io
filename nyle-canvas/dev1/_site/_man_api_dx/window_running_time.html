@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Window.running_time</h2>
+
+<h3>概要</h3>
+<p>
+キャンバスを生成してからの経過時間をミリ秒単位で返します。<br>
+</p>
+
+<h3>引数</h3>
+<p>
+  なし
+</p>
+
+<h3>戻値</h3>
+<p>
+  経過時間(ミリ秒)
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+Window.loop do
+  # 2秒経過後に、画面に "OK"の文字列を表示します
+  if (Window.running_time > 2000)
+     Window.draw_font(320, 240, "OK", Font.default)
+  end
+end
+
+</div>
+</pre>
+
+</div>
+
+
+</body>
+</html>

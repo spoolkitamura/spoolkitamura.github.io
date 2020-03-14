@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+include Nyle
+
+s = Nyle.create_screen(600, 600, {bgcolor: :WHITE})
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  @L1 = 100
+  @L2 = 100
+  @M1 =  15
+  @M2 =  15
+  @G  = 1.0
+  @cx = Nyle.screen_width / 2
+  @cy = 300
+  @a1 = Math::PI / 2
+  @a2 = Math::PI / 2
+  @a1_v = 0
+  @a2_v = 0
+  @points = []
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  x1 = @L1 * Math.sin(@a1)
+  y1 = @L1 * Math.cos(@a1)
+  x2 = x1 + @L2 * Math.sin(@a2)
+  y2 = y1 + @L2 * Math.cos(@a2)
+
+  Nyle.save do
+   Nyle.translate(@cx, @cy)
+   Nyle.draw_shape(@points, {weight: 1, color: :BLUE}) unless @points.empty?   ### add unless!
+  end
+  @points << [x2, y2]
+  @points.shift if @points.length > 3000
+
+  Nyle.save do
+    Nyle.translate(@cx, @cy)
+    # draw No1_pendulum
+    Nyle.draw_line(0, 0, x1, y1)
+    Nyle.draw_circle(x1, y1, @M1, {color: :BLACK, fill: true})
+
+    # draw No2_pendulum
+    Nyle.draw_line(x1, y1, x2, y2)
+    Nyle.draw_circle(x2, y2, @M2, {color: :BLACK, fill: true})
+  end
+
+  @a1_v += @a1_a
+  @a2_v += @a2_a
+  @a1 += @a1_v
+  @a2 += @a2_v
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  #calc a1_a
+  num1 = -@G * (2 * @M1 + @M2) * Math.sin(@a1)
+  num2 = -@M2 * @G * Math.sin(@a1 - 2 * @a2)
+  num3 = -2 * Math.sin(@a1 - @a2) * @M2
+  num4 = @a2_v * @a2_v * @L2 + @a1_v * @a1_v * @L1 * Math.cos(@a1 - @a2)
+  den = @L1 * (2 * @M1 + @M2 - @M2 * Math.cos(2 * @a1 - 2 * @a2))
+
+  @a1_a = (num1 + num2 + num3 * num4) / den
+ 
+  #calc a2_a
+  num1 = 2 * Math.sin(@a1 - @a2)
+  num2 = (@a1_v * @a1_v * @L1 * (@M1 + @M2))
+  num3 = @G * (@M1 + @M2) * Math.cos(@a1)
+  num4 = @a2_v * @a2_v * @L2 * @M2 * Math.cos(@a1 - @a2)
+  den = @L2 * (2 * @M1 + @M2 - @M2 * Math.cos(2 * @a1 - 2.0 * @a2))
+
+  @a2_a = (num1 * (num2 + num3 + num4)) / den
+end
+
+s.start
+</script>
+</body>
+</html>

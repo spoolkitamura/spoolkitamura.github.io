@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Image.load_titles(id, xcount, ycount)</h2>
+
+<h3>概要</h3>
+<p>
+画像を読み込んで「横 xcount個」「縦 ycount個」の同一サイズの画像に分割します。<br><br>
+左上から横方向に向かう順序で右下まで、合計「xcount×ycount個」の Imageオブジェクトを生成して<br>
+１次元の配列として返します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>id</td><td>画像ID</td><td>画像ファイルをエディタ上に取り込んだ際の文字列</td><td></td></tr>
+  <tr><td>xcount</td><td>X方向(横方向)の分割数</td><td></td><td></td></tr>
+  <tr><td>ycount</td><td>Y方向(縦方向)の分割数</td><td></td><td></td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Imageオブジェクトを収録した１次元の配列
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+# 画像を読み込んで横３×縦４に分割し、キャンバスに横一列に描画します
+img = Image.load_tiles("chara.png", 3, 4)
+Window.loop do
+  img.each_with_index do |x, i|
+    Window.draw(i * 30 + 20, 240, x)
+  end
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="image_load.html">Image.load</a><br>
+<a href="image_0x23_width.html">Image#width</a><br>
+<a href="image_0x23_height.html">Image#height</a><br>
+<a href="image_0x23_set_color_key.html">Image#set_color_key</a><br>
+<a href="window_draw.html">Window.draw</a><br>
+<a href="window_draw_scale.html">Window.draw_scale</a><br>
+<a href="window_draw_rot.html">Window.draw_rot</a><br>
+<a href="window_draw_ex.html">Window.draw_ex</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>
