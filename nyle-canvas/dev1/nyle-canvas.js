@@ -1207,6 +1207,7 @@ Opal.eval(`
 
     def set_color_key(color)
       # dummy
+      return self
     end
   end
 
