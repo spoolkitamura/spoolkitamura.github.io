@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Window.height</h2>
+
+<h3>概要</h3>
+<p>
+キャンバスの画面高さを返します。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+キャンバスの画面高さ
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+include DX
+Window.loop do
+  # キャンバスの中央に円を描画します
+  Window.draw_circle(Window.width / 2, Window.height / 2, 50, C_GREEN)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="window_width.html">Window.width</a><br>
+<a href="window_width_0x3d.html">Window.width=</a><br>
+<a href="window_height_0x3d.html">Window.height=</a><br>
+<a href="window_bgcolor_0x3d.html">Window.bgcolor=</a><br>
+<a href="window_fps_0x3d.html">Window.fps=</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

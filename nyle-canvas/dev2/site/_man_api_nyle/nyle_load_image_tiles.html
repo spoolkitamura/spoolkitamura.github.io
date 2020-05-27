@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.load_image_tiles(image_name, m, n, option={})</h2>
+
+<h3>概要</h3>
+<p>
+指定された画像データを読み込んで m×n個の要素に分割します。<br>
+<br>
+画像データは、あらかじめ Nyle-canvasのエディタ上に<br>
+ドラッグアンドドロップしておいてください。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>image_name</td><td>画像データ名</td><td></td><td></td></tr>
+  <tr><td>m</td><td>横方向の分割数</td><td></td><td></td></tr>
+  <tr><td>n</td><td>縦方向の分割数</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:color_key</td><td>透過色</td><td>色を表すシンボルまたは「#RRGGBB」形式のコード<br>(<a href="appendix_color.html">色に関する情報</a>を参照)<br>※実装途中のため :WHITE限定対応</td><td>:WHITE</td></tr>
+  <tr><td>:sx</td><td>拡大率(X方向)</td><td>0.1以上の値</td><td>1.0</td></tr>
+  <tr><td>:sy</td><td>拡大率(Y方向)</td><td>0.1以上の値</td><td>1.0</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Imageクラスのオブジェクトを収録した２次元配列
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  # 画像データ "picture.png"を読み込み、
+  # 横3×縦4個に分割して 120%に拡大した計12個のオブジェクトを
+  # 2次元配列として収録します
+  @image = Nyle.load_image_tiles("n_i_chara.png", 3, 4, {sx: 1.2, sy: 1.2})
+end
+
+def s.draw
+  3.times do |i|
+    4.times do |j|
+      Nyle.draw_image(10 + 40 * i,  10 + 40 * j, @image[i][j])
+    end
+  end
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_load_image.html">Nyle.load_image</a><br>
+<a href="nyle_draw_image.html">Nyle.draw_image</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

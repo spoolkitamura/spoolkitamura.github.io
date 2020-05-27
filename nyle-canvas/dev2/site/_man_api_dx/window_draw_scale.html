@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Window.draw_scale(x, y, image, scale_x, scale_y, center_x=nil, center_y=nil)</h2>
+
+<h3>概要</h3>
+<p>
+Image.load()メソッドまたは Image.load_tiles()メソッドでロードした画像に対して<br>
+縦、横の拡大率を指定してキャンバスに描画します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>x</td><td>X座標</td><td></td><td></td></tr>
+  <tr><td>y</td><td>Y座標</td><td></td><td></td></tr>
+  <tr><td>image</td><td>画像オブジェクト</td><td></td><td></td></tr>
+  <tr><td>scale_x</td><td>X方向(横方向)の拡大率</td><td>0より大きな値</td><td></td></tr>
+  <tr><td>scale_y</td><td>Y方向(縦方向)の拡大率</td><td>0より大きな値</td><td></td></tr>
+  <tr><td>center_x</td><td>拡大する際の中心となるX座標</td><td>画像の左上を原点とする相対座標<br>(nilの場合は画像の中央)</td><td>nil</td></tr>
+  <tr><td>center_y</td><td>拡大する際の中心となるY座標</td><td>画像の左上を原点とする相対座標<br>(nilの場合は画像の中央)</td><td>nil</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+  なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+img = Image.load('logo.png')
+Window.loop do
+  # 画像の中央を基準にして
+  # 横方向に2.0倍、縦方向に0.5倍に拡大して描画します
+  Window.draw_scale(320, 240, img, 2.0, 0.5)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="window_draw.html">Window.draw</a><br>
+<a href="window_draw_rot.html">Window.draw_rot</a><br>
+<a href="window_draw_ex.html">Window.draw_ex</a><br>
+<a href="image_load.html">Image.load</a><br>
+<a href="image_load_tiles.html">Image.load_tiles</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

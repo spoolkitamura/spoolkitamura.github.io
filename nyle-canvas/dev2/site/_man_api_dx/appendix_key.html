@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>キーコードに関する情報</h2>
+
+<h3>定数</h3>
+<p>
+Nyle-canvas(DXRubyスタイル)では、キーコードとして<br>
+下記の定数が定義されています。
+</p>
+
+<table>
+  <tr><th>定数名</th><th>値</th><th>内容</th></tr>
+  <tr><td>K_SPACE</td><td><div class="num">32</div></td><td>スペース</td></tr>
+  <tr><td>K_BACK</td><td><div class="num">8</div></td><td>バックスペース</td></tr>
+  <tr><td>K_BACKSPACE</td><td><div class="num">8</div></td><td>バックスペース</td></tr>
+  <tr><td>K_TAB</td><td><div class="num">9</div></td><td>タブ</td></tr>
+  <tr><td>K_RETURN</td><td><div class="num">13</div></td><td>エンター</td></tr>
+  <tr><td>K_ESCAPE</td><td><div class="num">27</div></td><td>エスケープ</td></tr>
+  <tr><td>K_END</td><td><div class="num">35</div></td><td>エンド</td></tr>
+  <tr><td>K_HOME</td><td><div class="num">36</div></td><td>ホーム</td></tr>
+  <tr><td>K_LEFT</td><td><div class="num">37</div></td><td>カーソル(←)</td></tr>
+  <tr><td>K_UP</td><td><div class="num">38</div></td><td>カーソル(↑)</td></tr>
+  <tr><td>K_RIGHT</td><td><div class="num">39</div></td><td>カーソル(→)</td></tr>
+  <tr><td>K_DOWN</td><td><div class="num">40</div></td><td>カーソル(↓)</td></tr>
+  <tr><td>K_PGUP</td><td><div class="num">33</div></td><td>ページアップ</td></tr>
+  <tr><td>K_PGDN</td><td><div class="num">34</div></td><td>ページダウン</td></tr>
+  <tr><td>K_INSERT</td><td><div class="num">45</div></td><td>インサート</td></tr>
+  <tr><td>K_DELETE</td><td><div class="num">46</div></td><td>デリート</td></tr>
+  <tr><td>K_F1</td><td><div class="num">112</div></td><td>F1</td></tr>
+  <tr><td>K_F2</td><td><div class="num">113</div></td><td>F2</td></tr>
+  <tr><td>K_F3</td><td><div class="num">114</div></td><td>F3</td></tr>
+  <tr><td>K_F4</td><td><div class="num">115</div></td><td>F4</td></tr>
+  <tr><td>K_F5</td><td><div class="num">116</div></td><td>F5</td></tr>
+  <tr><td>K_F6</td><td><div class="num">117</div></td><td>F6</td></tr>
+  <tr><td>K_F7</td><td><div class="num">118</div></td><td>F7</td></tr>
+  <tr><td>K_F8</td><td><div class="num">119</div></td><td>F8</td></tr>
+  <tr><td>K_F9</td><td><div class="num">120</div></td><td>F9</td></tr>
+  <tr><td>K_F10</td><td><div class="num">121</div></td><td>F10</td></tr>
+  <tr><td>K_F11</td><td><div class="num">122</div></td><td>F11</td></tr>
+  <tr><td>K_F12</td><td><div class="num">123</div></td><td>F12</td></tr>
+  <tr><td>K_LSHIFT</td><td><div class="num">16</div></td><td>シフト(左右区別なし)</td></tr>
+  <tr><td>K_RSHIFT</td><td><div class="num">16</div></td><td>シフト(左右区別なし)</td></tr>
+  <tr><td>K_LCONTROL</td><td><div class="num">17</div></td><td>コントロール(左右区別なし)</td></tr>
+  <tr><td>K_RCONTROL</td><td><div class="num">17</div></td><td>コントロール(左右区別なし)</td></tr>
+  <tr><td>K_LALT</td><td><div class="num">18</div></td><td>ALT(左右区別なし)</td></tr>
+  <tr><td>K_RALT</td><td><div class="num">18</div></td><td>ALT(左右区別なし)</td></tr>
+  <tr><td>K_LWIN</td><td><div class="num">91</div></td><td>メタ(左右区別なし)</td></tr>
+  <tr><td>K_RWIN</td><td><div class="num">91</div></td><td>メタ(左右区別なし)</td></tr>
+  <tr><td>K_0</td><td><div class="num">48</div></td><td>0</td></tr>
+  <tr><td>K_1</td><td><div class="num">49</div></td><td>1</td></tr>
+  <tr><td>K_2</td><td><div class="num">50</div></td><td>2</td></tr>
+  <tr><td>K_3</td><td><div class="num">51</div></td><td>3</td></tr>
+  <tr><td>K_4</td><td><div class="num">52</div></td><td>4</td></tr>
+  <tr><td>K_5</td><td><div class="num">53</div></td><td>5</td></tr>
+  <tr><td>K_6</td><td><div class="num">54</div></td><td>6</td></tr>
+  <tr><td>K_7</td><td><div class="num">55</div></td><td>7</td></tr>
+  <tr><td>K_8</td><td><div class="num">56</div></td><td>8</td></tr>
+  <tr><td>K_9</td><td><div class="num">57</div></td><td>9</td></tr>
+  <tr><td>K_A</td><td><div class="num">65</div></td><td>A</td></tr>
+  <tr><td>K_B</td><td><div class="num">66</div></td><td>B</td></tr>
+  <tr><td>K_C</td><td><div class="num">67</div></td><td>C</td></tr>
+  <tr><td>K_D</td><td><div class="num">68</div></td><td>D</td></tr>
+  <tr><td>K_E</td><td><div class="num">69</div></td><td>E</td></tr>
+  <tr><td>K_F</td><td><div class="num">70</div></td><td>F</td></tr>
+  <tr><td>K_G</td><td><div class="num">71</div></td><td>G</td></tr>
+  <tr><td>K_H</td><td><div class="num">72</div></td><td>H</td></tr>
+  <tr><td>K_I</td><td><div class="num">73</div></td><td>I</td></tr>
+  <tr><td>K_J</td><td><div class="num">74</div></td><td>J</td></tr>
+  <tr><td>K_K</td><td><div class="num">75</div></td><td>K</td></tr>
+  <tr><td>K_L</td><td><div class="num">76</div></td><td>L</td></tr>
+  <tr><td>K_M</td><td><div class="num">77</div></td><td>M</td></tr>
+  <tr><td>K_N</td><td><div class="num">78</div></td><td>N</td></tr>
+  <tr><td>K_O</td><td><div class="num">79</div></td><td>O</td></tr>
+  <tr><td>K_P</td><td><div class="num">80</div></td><td>P</td></tr>
+  <tr><td>K_Q</td><td><div class="num">81</div></td><td>Q</td></tr>
+  <tr><td>K_R</td><td><div class="num">82</div></td><td>R</td></tr>
+  <tr><td>K_S</td><td><div class="num">83</div></td><td>S</td></tr>
+  <tr><td>K_T</td><td><div class="num">84</div></td><td>T</td></tr>
+  <tr><td>K_U</td><td><div class="num">85</div></td><td>U</td></tr>
+  <tr><td>K_V</td><td><div class="num">86</div></td><td>V</td></tr>
+  <tr><td>K_W</td><td><div class="num">87</div></td><td>W</td></tr>
+  <tr><td>K_X</td><td><div class="num">88</div></td><td>X</td></tr>
+  <tr><td>K_Y</td><td><div class="num">89</div></td><td>Y</td></tr>
+  <tr><td>K_Z</td><td><div class="num">90</div></td><td>Z</td></tr>
+</table>
+
+<p></p>
+
+</div>
+
+
+</body>
+</html>

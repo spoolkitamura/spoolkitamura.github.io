@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<!--
+  'Nyle-canvas editor'
+
+  Copyright (c) 2019 Koki Kitamura
+  Released under the MIT license
+  https://opensource.org/licenses/mit-license.php
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Nyle-canvas editor</title>
+  <link href="./jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">   <!-- 3.3.5 -->
+  <style type="text/css">
+    .li {
+      display: flex;
+      margin: 5px auto;
+      border: 1px solid #cccccc;
+    }
+    .cell {
+      margin: auto 5px;
+      padding: 3px;
+    }
+    .last {
+      margin-left: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="btn-group">
+    <div class="btn-group"  style="margin-left: 0px">
+      <button id="help" class="btn btn-primary" title="ヘルプ ; help">Help <span class="badge">?</span></button>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="フォントサイズ; font-size"><i class="glyphicon glyphicon-text-width"></i> <span class="caret"></span></button>
+      <ul class="dropdown-menu" id="font-size">
+        <li><a href="#" data-size="14">フォント (小) ; font-size small</a></li>
+        <li><a href="#" data-size="16">フォント (中) ; font-size normal</a></li>
+        <li><a href="#" data-size="18">フォント (大) ; font-size large</a></li>
+      </ul>
+    </div>
+    <button id="download" class="btn btn-default" title="保存(ダウンロード) ; save(download)"><i class="glyphicon glyphicon-save"></i></button>
+    <button id="execute"  class="btn btn-default" title="実行 ; execute">                     <i class="glyphicon glyphicon-play"></i></button>
+  </div>
+
+  <div id="editor"     style="height: 600px; width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+  <div id="thumbnails" style="height: 100%;  width: 100%" ondragover="onDragOver(event)" ondrop="onDrop(event)"></div>
+
+  <script src="./jslib/jquery/jquery-3.5.1.min.js"></script>     <!-- 3.5.1 -->
+  <script src="./jslib/bootstrap/js/bootstrap.min.js"></script>  <!-- 3.3.7 -->
+  <script src="./jslib/ace/ace.js"></script>                     <!-- 1.2.0 -->
+
+  <script>
+    // ---------------------------------------------------------------
+    //  Startup parameter(s)
+    // ---------------------------------------------------------------
+    // Startup parameters
+    const getQueryString = () => {
+      if (1 < document.location.search.length) {
+        let query = document.location.search.substring(1);      // except first letter('?')
+        let parameters = query.split('&');                      // split the parameters
+        let result = new Object();
+        for (let i = 0; i < parameters.length; i++) {
+          let element    = parameters[i].split('=');            // split into key and value
+          let paramName  = decodeURIComponent(element[0]);
+          let paramValue = decodeURIComponent(element[1]);
+          result[paramName] = decodeURIComponent(paramValue);   // add key and value to hash
+        }
+        return result;
+      }
+      return null;
+    }
+
+
+    // ---------------------------------------------------------------
+    //  Image(s)
+    // ---------------------------------------------------------------
+    // Count images
+    const _countImages = () => {
+      let pattern = new RegExp(`^${resPrefix}.*${resSuffix}`);
+      let count = 0;
+      for (let key in localStorage) {
+        console.log('Exists : ' + key)
+        if (key.match(pattern)) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    // Remove image
+    const _removeImage = (id) => {
+      if (!confirm(`${id}\n画像をリストから除外しますか？ ; Remove the image from the list?`)) return;
+      localStorage.removeItem(resPrefix + id + resSuffix);
+      localStorage.removeItem(resPrefix + id + resSuffixW);
+      localStorage.removeItem(resPrefix + id + resSuffixH);
+      _showImageList();
+    }
+
+
+    // Remove all images
+    const _removeAllImages = () => {
+      let pattern = new RegExp(`^${resPrefix}`);   // no need suffix
+      for (let key in localStorage) {
+        console.log('Exists : ' + key)
+        if (key.match(pattern)) {
+          localStorage.removeItem(key);
+          console.log('Remove : ' + key)
+        }
+      }
+    }
+
+    // Sort image list
+    const _sortImageList = () => {
+      let pattern = new RegExp(`^${resPrefix}(.*)${resSuffix}$`);
+      let array   = [];
+      for (let i = 0;i < localStorage.length; i++) {
+        let match = localStorage.key(i).match(pattern);
+        if (match) {
+          // if key starts ${resPrefix} and ends ${resSuffix}, then delete prefix and push into array
+          array.push(match[1]);
+        }
+      }
+      return array.sort();
+    }
+
+    // Control callback
+    const _isAllLoaded = (images, callback) => {
+      if (images.length == 0) {
+        callback();
+      } else {
+        let count = 0;
+        for (let i = 0; i < images.length; i++) {
+          images[i].onload = () => {
+            count++;
+            if (count == images.length) {
+              // all images have been loaded
+              callback();
+            }
+          };
+        }
+      }
+    }
+
+    // Show image list (internal)
+    const _$showImageList = () => {
+      thumbnails.textContent = null;  // clear thumbnails
+      let sortedArray = _sortImageList();
+      for (let key of sortedArray) {
+        let value = localStorage.getItem(resPrefix + key + resSuffix);
+
+        let li     = document.createElement('li');
+        let img    = document.createElement('img');
+        let p      = document.createElement('p');
+        let p2     = document.createElement('p');
+        let button = document.createElement('input');
+
+        img.src = value;
+
+        let w = img.width;
+        let h = img.height;
+      //console.log(key, w, h);
+        img.width  = 50;
+        img.height = 50;
+        img.classList.add('cell')
+      //console.log(key, img.complete, img.width, img.height);
+
+        let imgname = document.createTextNode(`"${key}"`);
+        p.appendChild(imgname);
+        p.classList.add('cell')
+
+        localStorage.setItem(resPrefix + key + resSuffixW, w);
+        localStorage.setItem(resPrefix + key + resSuffixH, h);
+
+        let imgsize = document.createTextNode(`(${w} x ${h})`);
+        p2.appendChild(imgsize);
+        p2.classList.add('cell')
+        p2.classList.add('last')
+
+        button.type  = 'button';
+        button.value = '取消 (cancel)';
+        button.onclick = () => { _removeImage(key); };
+        button.classList.add('cell')
+      //button.classList.add('last')
+
+        li.appendChild(img);
+        li.appendChild(p);
+        li.appendChild(p2);
+        li.appendChild(button);
+        li.classList.add('li')
+        thumbnails.appendChild(li);
+      }
+      document.body.appendChild(thumbnails);
+    }
+
+    // Show image list
+    const _showImageList = () => {
+      let sortedArray = _sortImageList();
+      let images = [];
+      for (let key of sortedArray) {
+        images.push(new Image());
+      }
+      _isAllLoaded(images, _$showImageList)
+      for (let i = 0; i < images.length; i++) {
+        let key = sortedArray[i];
+        let value = localStorage.getItem(resPrefix + key + resSuffix);
+        images[i].src = value;
+      }
+    }
+
+
+    // ---------------------------------------------------------------
+    //  HTML
+    // ---------------------------------------------------------------
+    // Loading animation
+    const _buildHtmlLoading = () => {
+      let loading = '';
+      if (_countImages() != 0) {
+        loading = `<\script>\n`
+                + `  let css = document.createElement('style');\n`
+                + `  let ready = '@keyframes ready {' +\n`
+                + `    '  0% { opacity: 1 }' +\n`
+                + `    '100% { opacity: 0 }';\n`
+                + `  let rules = document.createTextNode(ready);\n`
+                + `  css.type = 'text/css';\n`
+                + `  css.appendChild(rules);\n`
+                + `  document.head.appendChild(css);\n`
+                + `  let showloading = document.createElement('div');\n`
+                + `  showloading.textContent     = 'L O A D I N G'\n`
+                + `  showloading.style.color     = '#ccccff';\n`
+                + `  showloading.style.fontSize  = '36px';\n`
+                + `  showloading.style.animation = 'ready .5s infinite alternate';\n`
+                + `  document.body.appendChild(showloading);\n`
+                + `<\/script>\n`;
+      }
+      return loading;
+    }
+
+    // Resource contents
+    const _buildHtmlResource = () => {
+      let sortedArray = _sortImageList();
+      let regist = '';
+      for (let i = 0; i < sortedArray.length; i++) {
+        let key   = sortedArray[i];
+        let w     = localStorage.getItem(resPrefix + key + resSuffixW);
+        let h     = localStorage.getItem(resPrefix + key + resSuffixH);
+        let value = localStorage.getItem(resPrefix + key + resSuffix);
+        regist += `Store.createImage('${key}', ${w}, ${h}, '${value}')\n`;
+      }
+      let resource = `<script type="text/javascript">\n`
+                   + `${regist}`
+                   + `<\/script>\n`;
+      //console.log(resource);
+      return resource;
+    }
+
+    // HTML contents
+    const _buildHtml = () => {
+      let htmlContent = `<!DOCTYPE html>\n`
+                      + `<html lang="ja">\n`
+                      + `<head>\n`
+                      + `<meta charset="UTF-8">\n`
+                      + `<title>Nyle-canvas</title>\n`
+                      + `<!-- Nyle-canvas editor v${version} -->\n`
+                      + `</head>\n`
+                      + `<body>\n`
+                      + _buildHtmlLoading()    // Loading animation
+                      + `<script type="text/javascript" src="${src_opal}" onload="Opal.load('opal')"><\/script>\n`
+                      + `<script type="text/javascript" src="${src_opal_parser}" onload="Opal.load('opal-parser')"><\/script>\n`
+                      + `<script type="text/javascript" src="${src_opal_native}" onload="Opal.load('native')"><\/script>\n`
+                      + `<script type="text/javascript" src="${srcjs}"><\/script>\n`
+                      + _buildHtmlResource()   // Recources(Images)
+                      + `<script type="text/ruby">\n`
+                      + editor.getValue()   // Ruby code
+                      + `<\/script>\n`
+                      + `</body>\n`
+                      + `</html>\n`;
+      return htmlContent;
+    }
+
+
+    // ---------------------------------------------------------------
+    //  Syntax
+    // ---------------------------------------------------------------
+    const _convCharacter = (id) => {
+      let table = {
+        "EQL"       : "="  ,
+        "AMPER2"    : "&"  ,
+        "PIPE"      : "|"  ,
+        "BANG"      : "!"  ,
+        "CARET"     : "^"  ,
+        "PLUS"      : "+"  ,
+        "MINUS"     : "-"  ,
+        "STAR2"     : "*"  ,
+        "DIVIDE"    : "/"  ,
+        "PERCENT"   : "%"  ,
+        "TILDE"     : "~"  ,
+        "COMMA"     : ","  ,
+        "SEMI"      : ";"  ,
+        "DOT"       : "."  ,
+        "DOT2"      : ".." ,
+        "DOT3"      : "...",
+        "LBRACK2"   : "["  ,
+        "RBRACK"    : "]"  ,
+        "LPAREN2"   : "("  ,
+        "RPAREN"    : ")"  ,
+        "EH"        : "?"  ,
+        "COLON"     : ":"  ,
+        "ANDOP"     : "&&" ,
+        "OROP"      : "||" ,
+        "UMINUS"    : "-@" ,
+        "UPLUS"     : "+@" ,
+        "TILDE"     : "~@" ,
+        "POW"       : "**" ,
+        "LAMBDA"    : "->" ,
+        "MATCH"     : "=~" ,
+        "NMATCH"    : "!~" ,
+        "EQ"        : "==" ,
+        "NEQ"       : "!=" ,
+        "GT"        : ">"  ,
+        "RSHFT"     : ">>" ,
+        "GEQ"       : ">=" ,
+        "LT"        : "<"  ,
+        "LSHFT"     : "<<" ,
+        "LEQ"       : "<=" ,
+        "ASSOC"     : "=>" ,
+        "COLON2"    : "::" ,
+        "EQQ"       : "===",
+        "CMP"       : "<=>",
+        "AREF"      : "[]" ,
+        "ASET"      : "[]=",
+        "LCURLY"    : "{"  ,
+        "RCURLY"    : "}"  ,
+        "BACK_REF2" : "`"  ,
+        "BANG"      : "!@" ,
+        "ANDDOT"    : "&."
+      };
+      return (id in table ? table[id] : id);
+    }
+
+    const _checkSyntaxRuby = () => {
+      // console.clear();
+      let code = editor.getValue();
+      try {
+        Opal.Parser.Ruby23.$parse(code);
+        console.log('-- passed --');
+        return true;
+      } catch (e) {
+        console.log(e);
+        // console.log(e.diagnostic);
+        // console.log(e.diagnostic.$render());
+        let err_name      = e.name;
+        let err_message   = e.message;
+        let render1       = e.diagnostic.$render()[1].split(':');          // e.g.  (string):3: zzzzza = '
+        let render2       = e.diagnostic.$render()[2].split(':');          // e.g.  (string):3:          ^
+        let err_line      = `${render1[1]}行目 (line no. ${render1[1]})`
+        let err_statement = render1[2].replace(/\r?\n/g,"")                // delete (CR)LF
+        let err_marker    = render2[2];
+        let err_jp;
+        switch (true) {
+        case /unterminated string meets end of file/.test(e.message):
+          err_jp = `文字列が正しく閉じられていません`;
+          break;
+        case /unexpected token \$end/.test(e.message):
+          err_jp = `endの対応が一致していないか、\nプログラムや構文の記述が途中で終わっています`;
+          break;
+        case /unexpected token kEND/.test(e.message):
+          err_jp = `endの対応が一致していないか、\ndo～endブロックの中の記述が正しくありません`;
+          break;
+        case /unexpected token tIDENTIFIER/.test(e.message):
+          err_jp = `変数などの名前が正しくないか、\n全角文字などの使用できない文字が含まれています`;
+          break;
+        case /unexpected token tINTEGER/.test(e.message):
+          err_jp = `予期しない数字が含まれています`;
+          break;
+        case /unexpected token tCONSTANT/.test(e.message):
+          err_jp = `予期しない定数が含まれています`;
+          break;
+        case /unexpected token t.*/.test(e.message):
+          result = /unexpected token t(.*)/.exec(e.message);
+          err_jp = `予期しない文字(${_convCharacter(result[1])})が含まれています`;
+          break;
+        default:
+          err_jp = 'エラー内容の詳細は不明です';
+          break;
+        }
+        console.error(err_name);
+        console.error(err_message);
+        console.error(err_line);
+        console.error(err_statement);
+        console.error(err_marker);
+        console.error(err_jp);
+        alert(`${err_name}\n${err_message}\n\n${err_line}\n${err_statement}\n\n${err_jp}`);
+        return false;
+      }
+    }
+
+
+    // ---------------------------------------------------------------
+    //  Template(s)
+    // ---------------------------------------------------------------
+    // Template(Nyle)
+    const _buildTemplateNyle = () => {
+      let template = `include Nyle\n`
+                   + `\n`
+                   + `s = Nyle.create_screen(640, 480, {bgcolor: :WHITE})\n`
+                   + `\n`
+                   + `def s.setup\n`
+                   + `  # 初期設定用のコード (your setup code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.draw\n`
+                   + `  # 画面描画用のコード (your draw code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `def s.update\n`
+                   + `  # データ更新用のコード (your update code here)\n`
+                   + `  \n`
+                   + `end\n`
+                   + `\n`
+                   + `s.start\n`;
+      return template;
+    }
+
+    // Template(DX)
+    const _buildTemplateDX = () => {
+      let template = `include DX\n`
+                   + `# 初期設定用のコード (your setup code here)\n`
+                   + `Window.width   = 640\n`
+                   + `Window.height  = 480\n`
+                   + `Window.bgcolor = C_BLACK\n`
+                   + `\n`
+                   + `Window.loop do\n`
+                   + `  # 画面描画用のコード (your draw code here)\n`
+                   + `  \n`
+                   + `end\n`;
+      return template;
+    }
+
+    // Template (internal)
+    const _buildTemplate = (style) => {
+      if (style == 'dx') {
+        return _buildTemplateDX();
+      } else {
+        return _buildTemplateNyle();
+      }
+    }
+
+    // Template
+    const template = (style) => {
+      let code = _buildTemplate(style);
+      editor.setValue(code, -1);
+      filename = null;
+      console.log(`filename: ${filename}`);
+
+      // initialize localStrage (delete files named 'resPrefix(.*)')
+      _removeAllImages();
+      _showImageList();
+    }
+
+
+    // ---------------------------------------------------------------
+    //  Main
+    // ---------------------------------------------------------------
+    let version = '0.8.0';
+
+    // let site  = 'web';      // default
+    let phase = 'dev2';     // default (linked to the version)
+    let mode  = 'ruby';     // default
+    let style = 'nyle';     // default
+
+    let qs = getQueryString();
+    if (qs) {
+      if (qs['phase']) {
+        phase = qs['phase']
+      }
+      if (qs['mode']) {
+        mode  = qs['mode']
+      }
+      if (qs['style']) {
+        style = qs['style']
+      }
+    }
+    console.log(`phase: ${phase}`);
+    console.log(`mode : ${mode}`);
+    console.log(`style: ${style}`);
+    console.log(`protocol+host: ${location.protocol}//${location.host}`);
+
+    let src_opal        = `${location.protocol}//${location.host}/nyle-canvas/${phase}/jslib/opal/opal.min.js`;                  // 0.11.4
+    let src_opal_parser = `${location.protocol}//${location.host}/nyle-canvas/${phase}/jslib/opal/opal-parser_patched.min.js`;   // 0.11.4 + patch
+    let src_opal_native = `${location.protocol}//${location.host}/nyle-canvas/${phase}/jslib/opal/native.min.js`;                // 0.11.4
+    let srcjs           = `${location.protocol}//${location.host}/nyle-canvas/${phase}/nyle-canvas.js`;
+    console.log(`srcjs: ${srcjs}`);
+
+    let filename;
+
+    let resPrefix  = '_____nyle__canvas__resources__';   // should not use characters that require escaping
+    let resSuffix  = '_____data';
+    let resSuffixW = '_____w';
+    let resSuffixH = '_____h';
+
+    let editor = ace.edit("editor");
+    editor.$blockScrolling = Infinity;
+    editor.setTheme("ace/theme/chrome");
+    editor.getSession().setMode("ace/mode/ruby");
+    editor.getSession().setTabSize(2);
+    editor.setFontSize(16);
+
+    template(style);
+
+
+    // ---------------------------------------------------------------
+    //  Action on UI
+    // ---------------------------------------------------------------
+    // Font size
+    $('#font-size').click((e) => {
+      editor.setFontSize($(e.target).data('size'));
+    });
+
+    // Download
+    $('#download').click((e) => {
+      if (!filename) {
+        let current = new Date();
+        let yyyy = current.getFullYear();
+        let mm = ('0' + (current.getMonth() + 1)).slice(-2);
+        let dd = ('0' +  current.getDate()).slice(-2);
+        let hh = ('0' +  current.getHours()).slice(-2);
+        let ms = ('0' +  current.getMinutes()).slice(-2);
+        let ss = ('0' +  current.getSeconds()).slice(-2);
+        let timestamp = `${yyyy}${mm}${dd}_${hh}${ms}${ss}`;
+        filename = `rb_${timestamp}.html`;
+      }
+      console.log(`filename: ${filename}`);
+      let code = _buildHtml();
+      let blob = new Blob([code], {type: 'text/html'});   // for html
+      let link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+
+      if (!confirm(`ファイルを保存(ダウンロード)しますか？ ; Save(Download) the file?\n\n -->  ${link.download}`)) {
+        filename = undefined
+        return;
+      }
+      link.click()
+    });
+
+    // Execute
+    $('#execute').click((e) => {
+      let res  = true;
+      if (mode == 'ruby') {
+        res = _checkSyntaxRuby();
+      }
+      if (res) {
+        let code = _buildHtml();
+        let blob = new Blob([code], {type: 'text/html'});   // for html
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob, '__nyle-canvas__.html');
+        } else if (window.URL) {
+          window.open(window.URL.createObjectURL(blob), '_blank');
+        } else if (window.webkitURL) {
+          window.open(window.webkitURL.createObjectURL(blob), '_blank');
+        }
+      }
+    });
+
+    // Help
+    $('#help').click((e) => {
+      if (style == 'dx') {
+        window.open('site/_man_api_dx/index.html', '_blank');
+      } else {
+        window.open('site/_man_api_nyle/index.html', '_blank');
+      }
+    });
+
+    // ---------------------------------------------------------------
+    //  Action on Drop
+    // ---------------------------------------------------------------
+    // Drop for text
+    const _dropTypeText = (event, file) => {
+      if (!confirm(`${file.name}\n\nドロップされたファイルを読み込みますか？ ; Load the dropped file?`)) {
+        event.preventDefault();   // suppress file expansion behavior on browser
+        return;
+      }
+      let reader = new FileReader();
+      reader.onerror = (e) => {
+        alert('Error: unable to read the file');
+      }
+      reader.onload = (e) => {
+        let pattern = /<script type="text\/ruby">\n([\s\S]*)<\/script>/i;   // across multi-line
+        let code = reader.result;
+        let match = code.match(pattern);
+        if (match) {
+          code = match[1];   // extract Ruby code
+        }
+        editor.setValue(code, -1);
+        filename = file.name;
+        console.log(`filename: ${filename}`);
+
+        // localStrageの初期化(resPrefix付きのファイルを削除)
+        _removeAllImages();
+        _showImageList();
+
+        // read resources in the dropped file
+        // e.g. Store.createImage('foo.jpg', 'data:image/jpeg;base64,/9j/4AAQS...')
+        let resPattern1 = /Store.createImage\('(.*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*)'/g;
+        let resPattern2 = /Store.createImage\('(.*)'\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*'(.*)'/;
+        let resMatch = reader.result.match(resPattern1);
+        if (resMatch) {   // resMatch is an Array because it is affected by the 'g' option
+          // console.log(resMatch);
+          for (let i = 0; i < resMatch.length; i++) {
+            // console.log(resMatch[i]);
+            let resKeyval = resMatch[i].match(resPattern2);
+            if (resKeyval) {
+              let resKey = resKeyval[1];   // key
+              let resW   = resKeyval[2];   // w
+              let resH   = resKeyval[3];   // h
+              let resVal = resKeyval[4];   // value
+              // console.log(resKey);
+              // console.log(resVal);
+              localStorage.setItem(resPrefix + resKey + resSuffix,  resVal);
+              localStorage.setItem(resPrefix + resKey + resSuffixW, resW);
+              localStorage.setItem(resPrefix + resKey + resSuffixH, resH);
+            }
+          }
+          _showImageList();
+        }
+      }
+      reader.readAsText(file, 'utf-8');   // get file contents
+    }
+
+    // Drop for image
+    const _dropTypeImage = (event, file) => {
+      let reader = new FileReader();
+      reader.onerror = (e) => {
+        alert('Error: unable to read the file');
+      }
+      reader.onload = (evt) => {
+        //console.log(evt.target.fileName);
+        //console.log(evt.target.result);
+        localStorage.setItem(resPrefix + evt.target.fileName.toLowerCase() + resSuffix, evt.target.result);
+        _showImageList();
+      }
+      reader.fileName = file.name;
+      reader.readAsDataURL(file);
+    }
+
+    // Drop
+    const onDrop = (event) => {
+      let textDropped = false;   // only one file in the first
+      let files = event.dataTransfer.files;
+      for (let i=0; i< files.length; i++) {
+        let file = files[i];
+        if (file.type.match('text.*') && !textDropped) {
+          _dropTypeText(event, file);
+          textDropped = true;
+        }
+        if (file.type.match('image.*')) {
+          _dropTypeImage(event, file);
+        }
+        event.preventDefault();   // suppress file expansion behavior on browser
+      }
+    }
+
+
+    // ---------------------------------------------------------------
+    //  Action on Drag Over
+    // ---------------------------------------------------------------
+    // DragOver
+    const onDragOver = (event) => {
+      event.preventDefault();   // suppress file expansion behavior on browser
+    }
+  </script>
+
+  <!-- for checking ruby syntax -->
+  <script src="./jslib/opal/opal.min.js"                onload="Opal.load('opal')"></script>
+  <script src="./jslib/opal/opal-parser_patched.min.js" onload="Opal.load('parser/ruby23');"></script>
+
+</body>
+</html>
+

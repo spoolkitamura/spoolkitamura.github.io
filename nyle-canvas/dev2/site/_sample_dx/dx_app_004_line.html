@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+include DX
+# 初期設定用のコード (your setup code here)
+Window.width   = 640
+Window.height  = 480
+Window.bgcolor = C_BLACK
+
+Window.loop do
+  # 画面描画用のコード (your draw code here)
+  Window.draw_line( 40,  70, 100,  10, C_WHITE)
+  Window.draw_line( 90,  70, 150,  10, C_WHITE)
+  Window.draw_line(140,  70, 200,  10, C_WHITE)
+  Window.draw_line(190,  70, 250,  10, C_WHITE)
+  Window.draw_line(240,  70, 300,  10, C_WHITE)
+  Window.draw_line(310,  70, 370,  10, C_WHITE)
+  Window.draw_line(360,  70, 420,  10, C_WHITE)
+  Window.draw_line(410,  70, 470,  10, C_WHITE)
+  Window.draw_line(460,  70, 520,  10, C_WHITE)
+  Window.draw_line(510,  70, 570,  10, C_WHITE)
+
+  Window.draw_line( 40, 150, 100,  90, [128, 255, 255, 255])
+  Window.draw_line( 90, 150, 150,  90, [160, 255, 255, 255])
+  Window.draw_line(140, 150, 200,  90, [192, 255, 255, 255])
+  Window.draw_line(190, 150, 250,  90, [224, 255, 255, 255])
+  Window.draw_line(240, 150, 300,  90, [255, 255, 255, 255])
+  Window.draw_line(310, 150, 370,  90, [128, 255, 255, 255])
+  Window.draw_line(360, 150, 420,  90, [160, 255, 255, 255])
+  Window.draw_line(410, 150, 470,  90, [192, 255, 255, 255])
+  Window.draw_line(460, 150, 520,  90, [224, 255, 255, 255])
+  Window.draw_line(510, 150, 570,  90, [255, 255, 255, 255])
+
+  Window.draw_line( 40, 230, 100, 170, [128, 255, 0, 0])
+  Window.draw_line( 90, 230, 150, 170, [160, 255, 0, 0])
+  Window.draw_line(140, 230, 200, 170, [192, 255, 0, 0])
+  Window.draw_line(190, 230, 250, 170, [224, 255, 0, 0])
+  Window.draw_line(240, 230, 300, 170, [255, 255, 0, 0])
+  Window.draw_line(310, 230, 370, 170, [128, 255, 0, 0])
+  Window.draw_line(360, 230, 420, 170, [160, 255, 0, 0])
+  Window.draw_line(410, 230, 470, 170, [192, 255, 0, 0])
+  Window.draw_line(460, 230, 520, 170, [224, 255, 0, 0])
+  Window.draw_line(510, 230, 570, 170, [255, 255, 0, 0])
+
+  Window.draw_line( 40, 310, 100, 250, [128, 34, 139, 34])
+  Window.draw_line( 90, 310, 150, 250, [160, 34, 139, 34])
+  Window.draw_line(140, 310, 200, 250, [192, 34, 139, 34])
+  Window.draw_line(190, 310, 250, 250, [224, 34, 139, 34])
+  Window.draw_line(240, 310, 300, 250, [255, 34, 139, 34])
+  Window.draw_line(310, 310, 370, 250, [128, 34, 139, 34])
+  Window.draw_line(360, 310, 420, 250, [160, 34, 139, 34])
+  Window.draw_line(410, 310, 470, 250, [192, 34, 139, 34])
+  Window.draw_line(460, 310, 520, 250, [224, 34, 139, 34])
+  Window.draw_line(510, 310, 570, 250, [255, 34, 139, 34])
+
+  Window.draw_line( 40, 390, 100, 330, [128, 0, 0, 205])
+  Window.draw_line( 90, 390, 150, 330, [160, 0, 0, 205])
+  Window.draw_line(140, 390, 200, 330, [192, 0, 0, 205])
+  Window.draw_line(190, 390, 250, 330, [224, 0, 0, 205])
+  Window.draw_line(240, 390, 300, 330, [255, 0, 0, 205])
+  Window.draw_line(310, 390, 370, 330, [128, 0, 0, 205])
+  Window.draw_line(360, 390, 420, 330, [160, 0, 0, 205])
+  Window.draw_line(410, 390, 470, 330, [192, 0, 0, 205])
+  Window.draw_line(460, 390, 520, 330, [224, 0, 0, 205])
+  Window.draw_line(510, 390, 570, 330, [255, 0, 0, 205])
+
+  Window.draw_line( 40, 470, 100, 410, [128, 255, 218, 0])
+  Window.draw_line( 90, 470, 150, 410, [160, 255, 218, 0])
+  Window.draw_line(140, 470, 200, 410, [192, 255, 218, 0])
+  Window.draw_line(190, 470, 250, 410, [224, 255, 218, 0])
+  Window.draw_line(240, 470, 300, 410, [255, 255, 218, 0])
+  Window.draw_line(310, 470, 370, 410, [128, 255, 218, 0])
+  Window.draw_line(360, 470, 420, 410, [160, 255, 218, 0])
+  Window.draw_line(410, 470, 470, 410, [192, 255, 218, 0])
+  Window.draw_line(460, 470, 520, 410, [224, 255, 218, 0])
+  Window.draw_line(510, 470, 570, 410, [255, 255, 218, 0])
+end
+</script>
+</body>
+</html>

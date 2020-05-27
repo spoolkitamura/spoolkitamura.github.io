@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+include Nyle
+
+s = Nyle.create_screen()
+
+def s.setup
+  
+end
+
+def s.draw
+  Nyle.draw_circle(120,  60, 30)
+  Nyle.draw_circle(220,  60, 30, {weight:  4})
+  Nyle.draw_circle(320,  60, 30, {weight:  6})
+  Nyle.draw_circle(420,  60, 30, {weight:  8})
+  Nyle.draw_circle(520,  60, 30, {weight: 10})
+
+  Nyle.draw_circle(120, 130, 30, {fill: true, a: 0.2})
+  Nyle.draw_circle(220, 130, 30, {fill: true, a: 0.4})
+  Nyle.draw_circle(320, 130, 30, {fill: true, a: 0.6})
+  Nyle.draw_circle(420, 130, 30, {fill: true, a: 0.8})
+  Nyle.draw_circle(520, 130, 30, {fill: true, a: 1.0})
+
+  Nyle.draw_circle(120, 200, 30, {fill: true, a: 0.2, color: :RED})
+  Nyle.draw_circle(220, 200, 30, {fill: true, a: 0.4, color: :RED})
+  Nyle.draw_circle(320, 200, 30, {fill: true, a: 0.6, color: :RED})
+  Nyle.draw_circle(420, 200, 30, {fill: true, a: 0.8, color: :RED})
+  Nyle.draw_circle(520, 200, 30, {fill: true, a: 1.0, color: :RED})
+
+  Nyle.draw_circle(120, 270, 30, {fill: true, a: 0.2, color: :FORESTGREEN})
+  Nyle.draw_circle(220, 270, 30, {fill: true, a: 0.4, color: :FORESTGREEN})
+  Nyle.draw_circle(320, 270, 30, {fill: true, a: 0.6, color: :FORESTGREEN})
+  Nyle.draw_circle(420, 270, 30, {fill: true, a: 0.8, color: :FORESTGREEN})
+  Nyle.draw_circle(520, 270, 30, {fill: true, a: 1.0, color: :FORESTGREEN})
+
+  Nyle.draw_circle(120, 340, 30, {fill: true, a: 0.2, color: :MEDIUMBLUE})
+  Nyle.draw_circle(220, 340, 30, {fill: true, a: 0.4, color: :MEDIUMBLUE})
+  Nyle.draw_circle(320, 340, 30, {fill: true, a: 0.6, color: :MEDIUMBLUE})
+  Nyle.draw_circle(420, 340, 30, {fill: true, a: 0.8, color: :MEDIUMBLUE})
+  Nyle.draw_circle(520, 340, 30, {fill: true, a: 1.0, color: :MEDIUMBLUE})
+
+  Nyle.draw_circle(120, 410, 30, {fill: true, a: 0.2, color: '#ffd800'})
+  Nyle.draw_circle(220, 410, 30, {fill: true, a: 0.4, color: '#ffd800'})
+  Nyle.draw_circle(320, 410, 30, {fill: true, a: 0.6, color: '#ffd800'})
+  Nyle.draw_circle(420, 410, 30, {fill: true, a: 0.8, color: '#ffd800'})
+  Nyle.draw_circle(520, 410, 30, {fill: true, a: 1.0, color: '#ffd800'})
+end
+
+def s.update
+  
+end
+
+s.start
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.cursor_y</h2>
+
+<h3>概要</h3>
+<p>
+カーソルキーの上下キーの入力をY座標の増分(-1, 0, 1のいずれか)として返します。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<table>
+<tr><td>Y座標の増分</td><td>-1 … 上カーソルキーが押された<br>&nbsp;0 … 上下いずれのカーソルキーも押されていない<br>&nbsp;1 … 下カーソルキーが押された</td></tr>
+</table>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  @x = 320
+  @y = 240
+end
+
+def s.draw
+  # カーソルキーによって円の描画位置が動きます
+  @x += Nyle.cursor_x
+  @y += Nyle.cursor_y
+  Nyle.draw_circle(@x, @y, 50)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_cursor_x.html">Nyle.cursor_x</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Nyle-canvas</title>
+<!-- Nyle-canvas editor v0.7.0 -->
+</head>
+<body>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal.min.js" onload="Opal.load('opal')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/opal-parser.min.js" onload="Opal.load('opal-parser')"></script>
+<script type="text/javascript" src="https://cdn.opalrb.com/opal/0.11.4/native.min.js" onload="Opal.load('native')"></script>
+<script type="text/javascript" src="https://spoolkitamura.github.io/nyle-canvas/dev1/nyle-canvas.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/ruby">
+include Nyle
+
+s = Nyle.create_screen(400, 200, {bgcolor: :IVORY})
+
+def s.setup
+  # 初期設定用のコード (your setup code here)
+  
+end
+
+def s.draw
+  # 画面描画用のコード (your draw code here)
+  if Nyle.mouse_down?(:LEFT)
+    Nyle.draw_text(30, 100, "左クリック", {size: 24, color: :FORESTGREEN})
+  end
+  if Nyle.mouse_down?(:R)
+    Nyle.draw_text(30, 100, "右クリック", {size: 24, color: :FORESTGREEN})
+  end
+
+  stat  = ""
+
+  stat += "[space]"     if Nyle.key_down?(:SPACE)
+  stat += "[backspace]" if Nyle.key_down?(:BACKSPACE)
+  stat += "[tab]"       if Nyle.key_down?(:TAB)
+  stat += "[enter]"     if Nyle.key_down?(:RETURN)
+  stat += "[escape]"    if Nyle.key_down?(:ESCAPE)
+  stat += "[left]"      if Nyle.key_down?(:LEFT)
+  stat += "[up]"        if Nyle.key_down?(:UP)
+  stat += "[down]"      if Nyle.key_down?(:DOWN)
+  stat += "[right]"     if Nyle.key_down?(:RIGHT)
+  stat += "[pageup]"    if Nyle.key_down?(:PAGEUP)
+  stat += "[pagedown]"  if Nyle.key_down?(:PAGEDOWN)
+  stat += "[insert]"    if Nyle.key_down?(:INSERT)
+  stat += "[delete]"    if Nyle.key_down?(:DELETE)
+  stat += "[home]"      if Nyle.key_down?(:HOME)
+  stat += "[end]"       if Nyle.key_down?(:END)
+  stat += "[f1]"        if Nyle.key_down?(:F1)
+  stat += "[f2]"        if Nyle.key_down?(:F2)
+  stat += "[f3]"        if Nyle.key_down?(:F3)
+  stat += "[f4]"        if Nyle.key_down?(:F4)
+  stat += "[f5]"        if Nyle.key_down?(:F5)
+  stat += "[f6]"        if Nyle.key_down?(:F6)
+  stat += "[f7]"        if Nyle.key_down?(:F7)
+  stat += "[f8]"        if Nyle.key_down?(:F8)
+  stat += "[f9]"        if Nyle.key_down?(:F9)
+  stat += "[f10]"       if Nyle.key_down?(:F10)
+  stat += "[f11]"       if Nyle.key_down?(:F11)
+  stat += "[f12]"       if Nyle.key_down?(:F12)
+  stat += "[shift]"     if Nyle.key_down?(:SHIFT)
+  stat += "[ctrl]"      if Nyle.key_down?(:CONTROL)
+  stat += "[meta]"      if Nyle.key_down?(:META)
+  stat += "[alt]"       if Nyle.key_down?(:ALT)
+  stat += "[0]"         if Nyle.key_down?(:_0)
+  stat += "[1]"         if Nyle.key_down?(:_1)
+  stat += "[2]"         if Nyle.key_down?(:_2)
+  stat += "[3]"         if Nyle.key_down?(:_3)
+  stat += "[4]"         if Nyle.key_down?(:_4)
+  stat += "[5]"         if Nyle.key_down?(:_5)
+  stat += "[6]"         if Nyle.key_down?(:_6)
+  stat += "[7]"         if Nyle.key_down?(:_7)
+  stat += "[8]"         if Nyle.key_down?(:_8)
+  stat += "[9]"         if Nyle.key_down?(:_9)
+  stat += "[a/A]"       if Nyle.key_down?(:A)
+  stat += "[b/B]"       if Nyle.key_down?(:B)
+  stat += "[c/C]"       if Nyle.key_down?(:C)
+  stat += "[d/D]"       if Nyle.key_down?(:D)
+  stat += "[e/E]"       if Nyle.key_down?(:E)
+  stat += "[f/F]"       if Nyle.key_down?(:F)
+  stat += "[g/G]"       if Nyle.key_down?(:G)
+  stat += "[h/H]"       if Nyle.key_down?(:H)
+  stat += "[i/I]"       if Nyle.key_down?(:I)
+  stat += "[j/J]"       if Nyle.key_down?(:J)
+  stat += "[k/K]"       if Nyle.key_down?(:K)
+  stat += "[l/L]"       if Nyle.key_down?(:L)
+  stat += "[m/M]"       if Nyle.key_down?(:M)
+  stat += "[n/N]"       if Nyle.key_down?(:N)
+  stat += "[o/O]"       if Nyle.key_down?(:O)
+  stat += "[p/P]"       if Nyle.key_down?(:P)
+  stat += "[q/Q]"       if Nyle.key_down?(:Q)
+  stat += "[r/R]"       if Nyle.key_down?(:R)
+  stat += "[s/S]"       if Nyle.key_down?(:S)
+  stat += "[t/T]"       if Nyle.key_down?(:T)
+  stat += "[u/U]"       if Nyle.key_down?(:U)
+  stat += "[v/V]"       if Nyle.key_down?(:V)
+  stat += "[w/W]"       if Nyle.key_down?(:W)
+  stat += "[x/X]"       if Nyle.key_down?(:X)
+  stat += "[y/Y]"       if Nyle.key_down?(:Y)
+  stat += "[z/Z]"       if Nyle.key_down?(:Z)
+
+  Nyle.draw_text(10,  60, "Press any key!" , {size: 24})
+  Nyle.draw_text(30, 100, stat, {size: 24, color: :FORESTGREEN})
+end
+
+def s.update
+  # データ更新用のコード (your update code here)
+  
+end
+
+s.start
+</script>
+</body>
+</html>

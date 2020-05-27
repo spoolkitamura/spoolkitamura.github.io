@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.draw_image(x, y, image, option={})</h2>
+
+<h3>概要</h3>
+<p>
+基点座標に画像を描画します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>x</td><td>基点のX座標</td><td></td><td></td></tr>
+  <tr><td>y</td><td>基点のY座標</td><td></td><td></td></tr>
+  <tr><td>image</td><td>Imageクラスのオブジェクト</td><td>Nyle.load_image または<br>Nyle.load_image_tiles メソッドで<br>読み込まれたオブジェクト</td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:pos</td><td>基点のポジション</td><td>:CORNER &nbsp;&nbsp;&nbsp; imageの左上座標<br>:CENTER &nbsp;&nbsp;&nbsp; imageの中心座標</td><td>:CORNER</td></tr>
+  <tr><td>:a</td><td>画像描画時のα値<br>(透明度)</td><td>0.0～1.0</td><td>1.0</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Imageクラスのオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  # 画像データ "picture.png"の読み込み
+  @image = Nyle.load_image("picture.png")
+end
+
+def s.draw
+  # 画像の中心が座標(320, 240)になるように半透明で描画します
+  Nyle.draw_image(320, 240, @image, {pos: :CENTER, a: 0.5})
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_load_image_tiles.html">Nyle.load_image_tiles</a><br>
+<a href="nyle_load_image.html">Nyle.load_image</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

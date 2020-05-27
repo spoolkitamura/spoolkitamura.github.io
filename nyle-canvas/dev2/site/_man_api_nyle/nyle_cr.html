@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.cr</h2>
+
+<h3>概要</h3>
+<p>
+表示中のCanvasの Contextを取得します。<br>
+Contextのメソッドを直接呼び出す場合に使用してください。
+</p>
+
+<h3>引数</h3>
+<p>
+なし
+</p>
+
+<h3>戻値</h3>
+<p>
+Contextオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.draw
+  # Contextの「bezierCurveTo」メソッドを使ってベジェ曲線を描画します。
+  cr = Nyle.cr
+  cr.save
+  cr.moveTo(20, 20)
+  cr.bezierCurveTo(20, 100, 200, 100, 200, 200)
+  cr.stroke
+  cr.restore
+end
+
+</div>
+</pre>
+
+</div>
+
+
+</body>
+</html>

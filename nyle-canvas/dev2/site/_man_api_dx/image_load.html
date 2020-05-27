@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (DXRubyスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Image.load(id, x=nil, y=nil, width=nil, height=nil)</h2>
+
+<h3>概要</h3>
+<p>
+画像を読み込み、Imageオブジェクトを生成して返します。<br><br>
+x, y, width, heightを指定した場合、画像ファイルの<br>一部分のみを切り出して Imageオブジェクトを生成します。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>id</td><td>画像ID</td><td>画像ファイルをエディタ上に取り込んだ際の文字列</td><td></td></tr>
+  <tr><td>x</td><td>切り出し範囲の左上X座標</td><td></td><td>nil</td></tr>
+  <tr><td>y</td><td>切り出し範囲の左上Y座標</td><td></td><td>nil</td></tr>
+  <tr><td>width</td><td>切り出し範囲の幅</td><td></td><td>nil</td></tr>
+  <tr><td>height</td><td>切り出し範囲の鷹さ</td><td></td><td>nil</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Imageオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+# 画像を読み込んでキャンバスに描画します
+img = Image.load("logo.png")
+Window.loop do
+  Window.draw(320, 240, img)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="image_load_tiles.html">Image.load_tiles</a><br>
+<a href="image_0x23_width.html">Image#width</a><br>
+<a href="image_0x23_height.html">Image#height</a><br>
+<a href="image_0x23_set_color_key.html">Image#set_color_key</a><br>
+<a href="window_draw.html">Window.draw</a><br>
+<a href="window_draw_scale.html">Window.draw_scale</a><br>
+<a href="window_draw_rot.html">Window.draw_rot</a><br>
+<a href="window_draw_ex.html">Window.draw_ex</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.load_image(image_name, option={})</h2>
+
+<h3>概要</h3>
+<p>
+指定された画像データを読み込みます。<br>
+<br>
+画像データは、あらかじめ Nyle-canvasのエディタ上に<br>
+ドラッグアンドドロップしておいてください。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>image_name</td><td>画像データ名</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:color_key</td><td>透過色</td><td>色を表すシンボルまたは「#RRGGBB」形式のコード<br>(<a href="appendix_color.html">色に関する情報</a>を参照)<br>※実装途中のため :WHITE限定対応</td><td>:WHITE</td></tr>
+  <tr><td>:sx</td><td>拡大率(X方向)</td><td>0.1以上の値</td><td>1.0</td></tr>
+  <tr><td>:sy</td><td>拡大率(Y方向)</td><td>0.1以上の値</td><td>1.0</td></tr>
+  <tr><td>:cx</td><td>抽出範囲の左上X座標</td><td></td><td>nil</td></tr>
+  <tr><td>:cy</td><td>抽出範囲の左上Y座標</td><td></td><td>nil</td></tr>
+  <tr><td>:cw</td><td>抽出範囲の幅</td><td></td><td>nil</td></tr>
+  <tr><td>:ch</td><td>抽出範囲の高さ</td><td></td><td>nil</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+Imageクラスのオブジェクト
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  # 画像データ "picture.png"を読み込み、
+  # 縦横のサイズを 70%に縮小します
+  @image1 = Nyle.load_image("picture.png", {sx: 0.7, sy: 0.7})
+
+  # 画像データ "picture.png"を読み込み、
+  # 座標(10, 10)を基点にして100×100の範囲を抽出します
+  @image2 = Nyle.load_image("picture.png", {cx: 10, cy: 10, cw: 100, ch: 100})
+end
+
+def s.draw
+  Nyle.draw_image(10,  10, @image1)
+  Nyle.draw_image(10, 120, @image2)
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_load_image_tiles.html">Nyle.load_image_tiles</a><br>
+<a href="nyle_draw_image.html">Nyle.draw_image</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>

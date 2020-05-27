@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Nyle-canvas</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Nyle-canvas</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./_man_api_nyle/index.html" target="_blank">APIリファレンス (Nyleスタイル)</a></li>
+              <li><a href="./_man_api_dx/index.html" target="_blank">APIリファレンス (DXRubyスタイル)</a></li>
+              <li><a href="manual_editor.html">エディタの使い方</a></li>
+              <li><a href="#">よくある質問 [準備中]</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_nyle.html">サンプルプログラム (Nyleスタイル)</a></li>
+              <li><a href="./sample_dx.html">サンプルプログラム (DXRubyスタイル)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>特徴</h3>
+              <ul>
+                <li style="margin-bottom: 15px;">ブラウザだけで手軽にプログラミングをはじめることができます。</li>
+                <li style="margin-bottom: 15px;">Rubyの構文により、HTML5の Canvas APIの機能を利用することができます。</li>
+                <li style="margin-bottom: 15px;">グラフィックアートやインフォメーショングラフィックなどのほか、<br>
+                    ゲームなどのインタラクティブなアプリケーションも作成することができます。</li>
+                <li style="margin-bottom: 15px;">作成したプログラムは、画像データも含めた単一の HTMLファイルとして<br>保存することができます。</li>
+                <li style="margin-bottom: 15px;">プログラムが保存された HTMLファイルは、Nyle-canvas用のエディタを介さずに<br>
+                    そのままブラウザ上で実行することができます。</li>
+                <li style="margin-bottom: 15px;">グラフィックライブラリのインターフェースとして、<br>
+                    下記の２つのスタイルが用意されています。
+                    (お好みの方でプログラミングをしてください)<br><br>
+                    <table border="1">
+                      <tr>
+                        <th style="padding: 5px;">Nyleスタイル</th>
+                        <td style="padding: 5px;">Ruby/GTK3ベースのグラフィックライブラリ<a href="https://github.com/spoolkitamura/nyle-doc-jp/wiki" target="_blank">「Nyle」</a>に準じたAPI構成およびテンプレート</td>
+                      </tr>
+                      <tr>
+                        <th style="padding: 5px;">DXRubyスタイル</th>
+                        <td style="padding: 5px;">Rubyのゲームライブラリ<a href="http://dxruby.osdn.jp/" target="_blank">「DXRuby」</a>に準じたAPI構成(サブセット)およびテンプレート</td>
+                      </tr>
+                    </table>
+                    <br>
+                    いずれも、若干の部分的な調整をすることによって<br>
+                    Nyleや DXRubyを使ったデスクトップアプリケーションのプログラムが<br>
+                    ほぼそのままブラウザ上で動作します。</li>
+              </ul>
+            </div>
+          </p>
+        </div>
+
+        <img src="./image/ov_001.png">
+
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>留意事項</h3>
+              <ul>
+                <li style="margin-bottom: 15px;">速さが求められるゲームや大量の描画要素が出現するようなものには適していません。</li>
+                <li style="margin-bottom: 15px;">Canvas APIのすべての機能がラップされているわけではないため、<br>
+                    こまかな描画処理などは Contextのメソッドなどを直接呼び出す必要があります。</li>
+                <li style="margin-bottom: 15px;">エディタ上でのファイルの保存や読込みなどの挙動はブラウザの種類や<br>
+                    設定内容に依存するため、ブラウザ間で操作性が同じにならないケースがあります。</li>
+                <li style="margin-bottom: 15px;">Opalを用いて Rubyから JavaScriptへの変換をしているため、<br>
+                    本来の Rubyの言語仕様とは異なる挙動になるケースがあります。</li>
+                <li style="margin-bottom: 15px;">エラーメッセージなどのハンドリングにまだ課題が残るため、<br>
+                    デバッグの作業がしづらいものになっています(今後改善予定)。</li>
+              </ul>
+            </div>
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>おもな機能</h3>
+              <ul>
+                <li>基本図形の描画</li>
+                <li>画像の読み込みおよび描画</li>
+                <li>文字列の表示</li>
+                <li>マウスおよびキーボードのイベント処理</li>
+                <li>座標系の移動・回転・拡大/縮小およびそれらの状態保持</li>
+              </ul>
+            </div>
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <div style="margin-left: 1em;">
+              <h3>動作環境</h3>
+              <table border="1" style="margin-left: 1em;">
+                <tr>
+                  <th style="text-align: center; padding: 1em;">OS</th>
+                  <th style="text-align: center; padding: 1em;">ブラウザ</th>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Windows</td>
+                  <td style="padding: 10px;">Chrome(推奨) / Firefox / Edge</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">macOS</td>
+                  <td style="padding: 10px;">Chrome(推奨) / Firefox / Safari</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Linux</td>
+                  <td style="padding: 10px;">Chrome(推奨) / Firefox</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Android<br>(試験確認)</td>
+                  <td style="padding: 10px;">Chrome<br>(タップなどの操作には未対応)</td>
+                </tr>
+              </table>
+            </div>
+          </p>
+        </div>
+
+        <hr>
+        <div>
+          <p>
+            <div style="margin: 3em 0 0 1em;">
+              <h3>【参考】内部構成の概略</h3>
+            </div>
+          </p>
+        </div>
+        <img src="./image/ov_002.png" style="border: 1px solid; margin: 10px 0 5px 30px;">
+        <img src="./image/ov_003.png" style="border: 1px solid; margin: 10px 0 5px 30px;">
+        <img src="./image/ov_004.png" style="border: 1px solid; margin: 10px 0 5px 30px;">
+      </div>
+    </div>
+
+
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+
+
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

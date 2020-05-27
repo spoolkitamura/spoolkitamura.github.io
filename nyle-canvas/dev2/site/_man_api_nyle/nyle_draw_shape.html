@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nyle-canvas API (Nyleスタイル)</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+<body>
+
+<div id="outer">
+
+<h2>Nyle.draw_shape(points, option={})</h2>
+
+<h3>概要</h3>
+<p>
+複数の頂点座標を直線で結んで図形を描きます。
+</p>
+
+<h3>引数</h3>
+<table>
+  <tr><th>引数名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>points</td><td>頂点座標[x, y]の配列</td><td></td><td></td></tr>
+</table>
+
+<h3>オプション(option)</h3>
+<table>
+  <tr><th>オプション名</th><th>内容</th><th>備考</th><th>デフォルト値</th></tr>
+  <tr><td>:weight</td><td>線の太さ</td><td>1以上の整数値</td><td>2</td></tr>
+  <tr><td>:color</td><td>描画色</td><td>色を表すシンボルまたは「#RRGGBB」形式のコード<br>(<a href="appendix_color.html">色に関する情報</a>を参照)</td><td>:BLACK</td></tr>
+  <tr><td>:a</td><td>描画色のα値<br>(透明度)</td><td>0.0～1.0</td><td>1.0</td></tr>
+  <tr><td>:fill</td><td>塗りつぶし</td><td>true&nbsp;&nbsp;&nbsp;矩形を塗りつぶす<br>false&nbsp;&nbsp;矩形を塗りつぶさない</td><td>false</td></tr>
+  <tr><td>:close</td><td>閉鎖図形<br>(始点と終点の結合)</td><td>true&nbsp;&nbsp;&nbsp;閉鎖図形にする<br>false&nbsp;&nbsp;閉鎖図形にしない</td><td>false</td></tr>
+  <tr><td>:cap</td><td>先端の形状</td><td>:BUTT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通常<br>:ROUND&nbsp;&nbsp;丸み<br>:SQUARE&nbsp;&nbsp;角</td><td>:BUTT</td></tr>
+</table>
+
+<h3>戻値</h3>
+<p>
+  なし
+</p>
+
+<h3>サンプル</h3>
+<pre>
+<div id="code">
+def s.setup
+  @points = [[100, 50], [200, 50], [180, 170]]
+end
+
+def s.draw
+  # 座標(100, 50), (200, 50), (180, 170)を直線で結んで囲まれた青い図形を描きます。
+  Nyle.draw_shape(@points, {color: :BLUE, close: true, weight: 5})
+end
+
+</div>
+</pre>
+
+<h3>関連メソッド</h3>
+<h5>
+<a href="nyle_draw_line.html">Nyle.draw_line</a><br>
+<a href="nyle_draw_rect.html">Nyle.draw_rect</a><br>
+<a href="nyle_draw_circle.html">Nyle.draw_circle</a><br>
+<a href="nyle_draw_text.html">Nyle.draw_text</a><br>
+</h5>
+
+</div>
+
+
+</body>
+</html>
