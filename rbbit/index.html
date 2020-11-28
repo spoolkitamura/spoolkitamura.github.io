@@ -107,7 +107,7 @@
         <ul>
           <li>macOS および Linux</li>
           <div style="margin: 1em 2em 0 0em;">
-          <pre><code style="font-size: 16px">$ gem install rbbit</code></pre>
+          <pre><code style="font-size: 16px">$ sudo gem install rbbit</code></pre>
           </div>
         </ul>
       </p>
@@ -194,6 +194,10 @@
           <li>Linux <span style="color: #00f;">(シリアルデバイスが /dev/ttyACM1の場合の設定例)</span></li>
           <div style="margin: 1em 2em 0 0;">
           <pre><code style="font-size: 16px">$ export MB_PORT=/dev/ttyACM1</code></pre>
+          </div>
+          ※Linuxの場合、さらに下記のコマンドでシリアルデバイスに R/W権限を付与してください。<br>
+          <div style="margin: 0 2em 0 0;">
+          <pre><code style="font-size: 16px">$ sudo chmod 666 /dev/ttyACM1</code></pre>
           </div>
         </ul>
       </p>

@@ -136,11 +136,15 @@
                   <tr>
                     <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
                     <td style="padding: 0 5px 5px 25px;">
-                      micro:bitの接続先を指定するために、環境変数に設定する方法と<br>
-                      プログラム実行のつど引数として指定する方法があります。<br>
-                      サンプルプログラムの実行方法についての詳細は、下記のページを参照してください。<br>
-                      <a href="sample_web.html" target="_blank">「サンプルプログラム(WebSocketサーバ)」</a><br>
-                      <a href="sample_console.html" target="_blank">「サンプルプログラム(Rubyクラスライブラリ)」</a><br>
+                      micro:bitの接続先を指定するための方法には、<br>
+                      環境変数に設定する方法と<br>
+                      プログラム実行のつど引数として指定する方法とがあります。<br><br>
+                      プログラムを続けて動かす場合には環境変数を設定しておいた方が効率的ですが、<br>
+                      必須ではありません。<br><br>
+                      サンプルプログラムの実行方法についての詳細は<br>
+                      下記のページを参照してください。<br>
+                      <a href="sample_web.html" target="_blank">&nbsp;&nbsp;「サンプルプログラム(WebSocketサーバ)」</a><br>
+                      <a href="sample_console.html" target="_blank">&nbsp;&nbsp;「サンプルプログラム(Rubyクラスライブラリ)」</a><br>
                     </td>
                   </tr>
                 </table>
@@ -214,7 +218,7 @@
                   <tr>
                     <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
                     <td style="padding: 0 5px 5px 25px;">
-                      (1)WebSocketサーバによって micro:bitとの接続が占有されている可能性がありますので、<br>
+                      (1)WebSocketサーバによって micro:bitとの接続が占有されている可能性があるので、<br>
                       &nbsp;&nbsp;&nbsp;&nbsp;WebSocketサーバが稼働している場合は<code>rbbit</code>コマンドのプロンプトから<br>
                       &nbsp;&nbsp;&nbsp;&nbsp;<code>exit</code>を入力して停止させてください。<br>
                     </td>
@@ -222,8 +226,24 @@
                   <tr>
                     <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
                     <td style="padding: 5px 5px 5px 25px;">
-                      (2)micro:bitの接続先のシリアルポート(デバイス)が正しく指定されていない可能性がありますので、<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;引数として与えている内容や環境変数「MB_PORT」の設定内容を確認してください。
+                      (2)micro:bitの接続先のシリアルポート(デバイス)が正しく指定されていない可能性があるので、<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;引数として与えている内容や環境変数<code>「MB_PORT」</code>の設定内容を確認してください。
+                    </td>
+                  </tr>
+                   <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      (3)micro:bitとの通信タイミングに起因する問題である可能性があるので、<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;メソッドの呼び出しのあとに、<code>sleep 1</code>などで<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;若干の待ち時間を入れてみてください。
+                    </td>
+                  </tr>
+                   <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      (4)上記のいずれでも状況が変わらない場合や<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;micro:bitが反応していないと思われる場合は、<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;いったん USBケーブルを抜いて PCとの接続をやり直してみてください。
                     </td>
                   </tr>
                 </table>
@@ -243,15 +263,41 @@
                   <tr>
                     <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
                     <td style="padding: 5px 5px 5px 5px;">
-                      macOS上では、PCと micro:bitの通信が切断されるときにブレーク信号が送出され、<br>
-                      これを受けてmicro:bitはリセットの動作をおこなうようです。<br>
+                      macOS上では、PCと micro:bitの通信が切断されるとき<br>
+                      (あるいはプログラムが終了したとき)にブレーク信号が送出されるようです。
                     </td>
                   </tr>
                   <tr>
                     <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
                     <td style="padding: 5px 5px 5px 25px;">
+                      このブレーク信号を受けて micro:bitはリセットの動作をおこないますが、<br>
                       <code>close</code>メソッドの引数で切断までの遅延時間を指定することができますので、<br>
                       その値を長めにとって micro:bit側の処理が終わるまで待つようにしてみてください。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">
+                      Linux環境でシリアルデバイスへのアクセスが拒否されてしまいます。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      <code>sudo chmod 666 [シリアルデバイス名]</code>で R/Wの権限を付与してください。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
                     </td>
                   </tr>
                 </table>
@@ -301,7 +347,7 @@
                   <tr>
                     <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
                     <td style="padding: 5px 5px 5px 5px;">
-                      エッジコネクターの部分に凹みがあるかないかで判別できます。
+                      エッジコネクターの部分に凹みがあるかないかで判別することができます。
                     </td>
                   </tr>
                   <tr>
