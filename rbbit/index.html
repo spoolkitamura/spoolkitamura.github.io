@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+        <div>
+          <!--p-->
+          <div style="font-size: 18px; margin: 1em 0 0 1em;">
+          <span style="font-weight: bold;">rb:-:bit</span>は、micro:bit(イギリスの BBCが開発した教育向けマイコンボード)を使って<br>
+          プログラミングをおこなうためのツールです。<br><br>
+
+          Rubyのクラスライブラリとしての機能と WebSocketサーバの機能とをもっており、<br>
+          Rubyのコンソールプログラムから micro:bitをコントロールしたり、<br>
+          ブラウザ上で micro:bitと連携したプログラムを作成したりすることができます。<br>
+          <!--/p-->
+          </div>
+        </div>
+        <img src="image/mb_365.png" alt="micro:bit" style="margin: 1em; border: none; font-size: 12px;">(写真は micro:bit用電源ボードを装着した状態)<br>
+      </div>
+    </div>
+    <!-- /container -->
+
+    <p>
+      <a id="index_c1"></a>
+      <div style="margin-top: 10px;">
+        <hr>
+        <h3>1. 準備作業 (How to setup)</h3>
+      </div>
+
+      <h4 style="margin: 1em 0 0 1em;">(1)Rubyのインストール</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        rb:-:bitは Rubyの gemとして作られているので、まず Rubyのインストールが必要になります。<br>
+        ここではその手順の詳細は省きますが、Windows環境で Ruby Installerを使用する場合は<br>
+       「Devkit」付きのものを選択してインストールしてください。
+      </p>
+
+      <h4 style="margin: 1em 0 0 1em;">(2)gem(rbbit)のインストール</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        コンソール(ターミナル)から gemコマンドを実行して rbbitをインストールしてください。<br>
+        OSによって下記のように必要なコマンドが異なりますので注意してください。<br>
+      </p>
+      <p>
+        <ul>
+          <li>Windows</li>
+          <div style="color: #00f;">
+            &nbsp;&nbsp;※rbbitのインストール後、eventmachineをいったんアンインストールしてから<br>
+            &nbsp;&nbsp;&nbsp;「--platform ruby」オプションを付けてインストールしなおします。
+          </div>
+          <div style="margin: 1em 2em 0 0em;">
+          <pre><code style="font-size: 16px;">> gem install rbbit
+
+> gem uninstall eventmachine
+> gem   install eventmachine --platform ruby</code></pre>
+          </div>
+        </ul>
+        <br>
+        <ul>
+          <li>macOS および Linux</li>
+          <div style="margin: 1em 2em 0 0em;">
+          <pre><code style="font-size: 16px">$ gem install rbbit</code></pre>
+          </div>
+        </ul>
+      </p>
+
+      <h4 style="margin: 1em 0 0 1em;">(3)micro:bitへのプログラム転送(書き込み)</h4>
+      <div style="font-size: 16px; margin: 1em 1em 1em 2em; padding: 2px 2px 2px 2px">
+        1) 下記の micro:bit用のプログラムファイルをダウンロードして、<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PCの適当なフォルダーに保存してください。<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※「よくある質問」の<a href="faq.html#faq_c3_2" target="_blank">「micro:bitのバージョン(v1.5 と v2.0)の見分け方を教えてください」</a>を参照して、<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;micro:bitのバージョンに応じた適切なファイルをダウンロードしてください。<br><br>
+        <div style="margin: 5px 0 5px 0">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="image/download.png" alt="download_v1.5"> <a href="microbit/microbit-rbbit_20201127_v1.5.hex" download>microbit-rbbit_20201127_v1.5.hex</a> &nbsp;&nbsp;&nbsp;(micro:bit v1.5用)<br>
+        </div>
+        <div style="margin: 5px 0 5px 0">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="image/download.png" alt="download_v2.0"> <a href="microbit/microbit-rbbit_20201127_v2.0.hex" download>microbit-rbbit_20201127_v2.0.hex</a> &nbsp;&nbsp;&nbsp;(micro:bit v2.0用) <span style="color: #00f;">※2020/11/25 日本で発売開始</span><br><br>
+        </div>
+        2) PCと micro:bitを USBケーブルで接続して、<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PCにダウンロードした上記のファイルをドラッグ＆ドロップなどの操作で<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; micro:bitに転送(書き込み)してください。<br>
+        <img src="image/dnd_hex.png" alt="dnd_hex" style="margin: 1em; border: thin solid"><br>
+        3) 正しく転送(書き込み)がおこなわれると、<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;micro:bit内でプログラムが起動して下記のようなパターンで LEDが点灯します。<br>
+        <img src="image/init_pattern.png" alt="init_pattern" style="margin: 1em; border: none"><br>
+      </div>
+
+      <a id="index_c1_s4"></a>
+      <h4 style="margin: 1em 0 0 1em;">(4)シリアルポート(デバイス)の確認</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        OSに応じて下記のコマンドなどを実行して、<br>
+        micro:bitが接続されているシリアルポート(デバイス)を確認してください。<br>
+      </p>
+      <p>
+        <ul>
+          <li>Windows</li>
+              <img src="image/port_win.png" alt="port_win" style="margin: 1em; border: thin solid"><br>
+              (1)[Windows]＋[x]キーを押し、メニューから「デバイスマネージャー」を選んでください。<br>
+              (2)デバイスマネージャーに表示された一覧の中から「ポート(COMとLPT)」をクリックし、<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;その中から「mbed Serial Port」と記載されているもののポート番号を確認してください。<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;(上記の状態の場合、「<span style="font-weight: bold;">COM5</span>」が micro:bitのポート番号になります)
+        </ul>
+        <br>
+        <ul>
+          <li>macOS</li>
+              <img src="image/port_mac.png" alt="port_mac" style="margin: 1em; border: thin solid"><br>
+              (1)ターミナルから<code>ls -l /dev/tty.*</code>を実行してください。<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;その中から「usbmodem」というワードを含むデバイスを確認してください。<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;(上記の状態の場合、「<span style="font-weight: bold;">/dev/tty.usbmodem14132</span>」が micro:bitのデバイス名になります)
+        </ul>
+        <br>
+        <ul>
+          <li>Linux</li>
+              <img src="image/port_linux.png" alt="port_linux" style="margin: 1em; border: thin solid"><br>
+              (1)ターミナルから<code>ls -l /dev/serial/by-id</code>を実行してください。<br>
+              (2)出力された一覧の中から「BBC_micro:bit」というワードを含むデバイスを確認してください。<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;(上記の状態の場合、「<span style="font-weight: bold;">/dev/ttyACM1</span>」が micro:bitのデバイス名になります)
+        </ul>
+      </p>
+
+      <a id="index_c1_s5"></a>
+      <h4 style="margin: 1em 0 0 1em;">(5)環境変数の設定</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        コンソール(ターミナル)を開き、上記(4)で確認したシリアルポート(デバイス)を<br>環境変数「MB_PORT」に設定してください。<br>
+        <span style="color: #000;">
+          &nbsp;&nbsp;※プログラム実行のつどシリアルポート(デバイス)を指定する方法もありますが、<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ここでは環境変数にシリアルポート(デバイス)を設定する方法を紹介します。<br>
+        </span>
+      </p>
+      <p>
+        <ul>
+          <li>Windows <span style="color: #00f;">(シリアルポートが COM5の場合の設定例)</span></li>
+          <div style="margin: 1em 2em 0 0;">
+          <pre><code style="font-size: 16px">> set MB_PORT=COM5</code></pre>
+          </div>
+        </ul>
+        <br>
+        <ul>
+          <li>macOS <span style="color: #00f;">(シリアルデバイスが /dev/tty.usbmodem14132の場合の設定例)</span></li>
+          <div style="margin: 1em 2em 0 0;">
+          <pre><code style="font-size: 16px">$ export MB_PORT=/dev/tty.usbmodem14132</code></pre>
+          </div>
+        </ul>
+        <br>
+        <ul>
+          <li>Linux <span style="color: #00f;">(シリアルデバイスが /dev/ttyACM1の場合の設定例)</span></li>
+          <div style="margin: 1em 2em 0 0;">
+          <pre><code style="font-size: 16px">$ export MB_PORT=/dev/ttyACM1</code></pre>
+          </div>
+        </ul>
+      </p>
+
+      <div style="margin-top: 10px;">
+        <hr>
+        <h3>2. 簡易対話モードによる動作確認 (as Simple Interactive Mode)</h3>
+      </div>
+
+      <h4 style="margin: 1em 0 0 1em;">(1)rbbitコマンドの実行</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        上述の準備作業(1)～(5)までができたら、環境変数を設定したコンソール(ターミナル)上で<br><code>rbbit</code>コマンドを実行してください。<br>
+        下記のように<code>micro:bit> </code>というプロンプトが表示されます。<br>
+        (もしエラーなどが発生した場合は、準備作業(1)～(5)の内容を再確認してください)<br>
+        <img src="image/cmd_rbbit.png" alt="cmd_rbbit" style="margin: 1em; border: thin solid"><br>
+      </p>
+
+      <h4 style="margin: 1em 0 0 1em;">(2)プロンプトからの micro:bit操作</h4>
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        <code>micro:bit> </code>のプロンプトが表示されたら、<br>
+        下記の一覧に記載されている簡易コマンドで micro:bitを操作することができます。<br>
+        (<code>exit</code>で rbbitコマンドを終了)<br>
+
+        <table border="1" style="margin: 1em 0 0 2em;">
+          <tr>
+            <th style="padding: 5px;">コマンド</th>
+            <th style="padding: 5px;">内容</th>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">on [x y]</td>
+            <td style="padding: 5px;">LEDを点灯<br>(x, yは LEDの位置; x, yともに 0～4の範囲で指定、省略可)<br>&nbsp;&nbsp;&nbsp;<code>on</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... すべての LEDを点灯<br>&nbsp;&nbsp;&nbsp;<code>on 2 2</code> ... 中心の LEDを点灯</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">off [x y]</td>
+            <td style="padding: 5px;">LEDを消灯<br>(x, yは LEDの位置; x, yともに 0～4の範囲で指定、省略可)<br>&nbsp;&nbsp;&nbsp;<code>off</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... すべての LEDを消灯<br>&nbsp;&nbsp;&nbsp;<code>off 2 2</code> ... 中心の LEDを消灯</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">turn [x y]</td>
+            <td style="padding: 5px;">LEDの点灯状態を反転<br>(x, yは LEDの位置; x, yともに 0～4の範囲で指定、省略可)<br>&nbsp;&nbsp;&nbsp;<code>turn</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... 中心の LEDが点灯していたら消灯、消灯していたら点灯<br>&nbsp;&nbsp;&nbsp;<code>turn 0 0</code> ... 左上の LEDが点灯していたら消灯、消灯していたら点灯</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">puts [str]</td>
+            <td style="padding: 5px;">指定した文字列を表示<br>&nbsp;&nbsp;&nbsp;<code>puts</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ... 「Ruby!」という文字列を表示(str省略時)<br>&nbsp;&nbsp;&nbsp;<code>puts Hello</code> ... 「Hello」という文字列を表示</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">1</td>
+            <td style="padding: 5px;">LEDパターン１を表示<br>&nbsp;&nbsp;&nbsp;<code>1</code> ... <img src="image/p1.png" alt="pattern1"></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">2</td>
+            <td style="padding: 5px;">LEDパターン２を表示<br>&nbsp;&nbsp;&nbsp;<code>2</code> ... <img src="image/p2.png" alt="pattern2"></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">3</td>
+            <td style="padding: 5px;">LEDパターン３を表示<br>&nbsp;&nbsp;&nbsp;<code>3</code> ... <img src="image/p3.png" alt="pattern3"></td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">play</td>
+            <td style="padding: 5px;">音を出力(スピーカーの装着が必要)<br>&nbsp;&nbsp;&nbsp;<code>play</code> ... 「ドレミファソラシド」の音階を鳴らす</td>
+          </tr>
+
+
+          <tr>
+            <td style="padding: 5px;">scan</td>
+            <td style="padding: 5px;">micro:bitのセンサー値を表示(約10秒間)<br>&nbsp;&nbsp;&nbsp;<code>scan</code> ... 下記の値を約10秒間表示<br>
+              <table style="margin: 0 0 0 7em;">
+                <tr><td>x</td><td>: 加速度 x</td></tr>
+                <tr><td>y</td><td>: 加速度 y</td></tr>
+                <tr><td>z</td><td>: 加速度 z</td></tr>
+                <tr><td>pitch</td><td>: 傾き[前後](°)</td></tr>
+                <tr><td>roll</td><td>: 傾き[左右](°)</td></tr>
+                <tr><td>light</td><td>: 明るさ</td></tr>
+                <tr><td>temp</td><td>: 温度(℃)</td></tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">button</td>
+            <td style="padding: 5px;">micro:bitのボタン押下状態を表示(約10秒間)<br>&nbsp;&nbsp;&nbsp;<code>button</code> ... ボタン押下状態に応じて下記を表示(約10秒間で終了)
+              <table style="margin: 0 0 0 7em;">
+                <tr><td>[A] press!</td><td>: ボタン[A]が押された</td></tr>
+                <tr><td>[A] down</td><td>: ボタン[A]が押されている</td></tr>
+                <tr><td>[A] release!</td><td>: ボタン[A]が離された</td></tr>
+                <tr><td>[B] press!</td><td>: ボタン[B]が押された</td></tr>
+                <tr><td>[B] down</td><td>: ボタン[B]が押されている</td></tr>
+                <tr><td>[B] release!</td><td>: ボタン[B]が離された</td></tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">port</td>
+            <td style="padding: 5px;">ポート(デバイス)を表示<br>&nbsp;&nbsp;&nbsp;<code>port</code> ... micro:bitが接続されているポート(デバイス)を表示<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(COM5, /dev/tty.usbmodem14132, /dev/ttyACM1 など)</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">reset</td>
+            <td style="padding: 5px;">リセット<br>&nbsp;&nbsp;&nbsp;<code>reset</code> ... micro:bitをリセット</td>
+          </tr>
+          <tr>
+            <td style="padding: 5px;">exit</td>
+            <td style="padding: 5px;">終了<br>&nbsp;&nbsp;&nbsp;<code>exit</code> ... rbbitコマンドを終了</td>
+          </tr>
+
+
+        </table>
+        <br>
+
+      </p>
+
+      <div style="margin-top: 10px;">
+        <hr>
+        <h3>3. WebSocketサーバ (as WebSocket Server)</h3>
+      </div>
+
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        簡易対話モードによる動作確認ができたら、<br>
+        WebSocketサーバを使ったサンプルを試してみてください。<br>
+        &nbsp;&nbsp;<a href="sample_web.html" target="_blank">→ サンプルプログラム(WebSocketサーバ)</a><br><br>
+
+        また、WebSocketサーバに関する詳細については<br>
+        下記のページを参照してください。<br>
+        &nbsp;&nbsp;<a href="man_web.html" target="_blank">→ リファレンス(WebSocketサーバ)</a><br><br>
+      </p>
+
+      <div style="margin-top: 10px;">
+        <hr>
+        <h3>4. Rubyクラスライブラリ (as Ruby Class Library)</h3>
+      </div>
+
+      <p style="font-size: 16px; margin: 1em 0 0 2em;">
+        簡易対話モードによる動作確認ができたら、<br>
+        Rubyクラスライブラリを使ったサンプルを試してみてください。<br>
+        &nbsp;&nbsp;<a href="sample_console.html" target="_blank">→ サンプルプログラム(Rubyクラスライブラリ)</a><br><br>
+
+        また、Rubyクラスライブラリに関する詳細については<br>
+        下記のページを参照してください。<br>
+        &nbsp;&nbsp;<a href="man_console.html" target="_blank">→ リファレンス(Rubyクラスライブラリ)</a><br><br>
+      </p>
+
+    </p>
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/rbbit" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

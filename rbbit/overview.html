@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>特徴</h3>
+              <ul>
+                <li style="margin-bottom: 15px;">PCと micro:bitを USBケーブルで接続し、<br>シリアル通信によって PCから micro:bitにコマンドを送信することで micro:bitを操作します。</li>
+                <li style="margin-bottom: 15px;">簡易対話モードのほか、WebSocketサーバとしての利用や Rubyのクラスライブラリとしての利用ができます。</li>
+                <table border="1">
+                  <tr>
+                    <th style="padding: 5px;">機能</th>
+                    <th style="padding: 5px;">活用例</th>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px;">簡易対話モード</td>
+                    <td style="padding: 5px;">・PCと micro:bitとの疎通確認<br>
+                                              ・対話形式による micro:bitの操作
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px;">WebSocketサーバ</td>
+                    <td style="padding: 5px;">・WebSocketクライアント(ブラウザなど)に対して micro:bitのセンサー値などを配信<br>
+                                              ・WebSocketクライアント(ブラウザなど)からコマンドを発行して micro:bitを操作<br>
+                                              ・micro:bitを利用したブラウザベースのアプリケーションを作成
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px;">Rubyクラスライブラリ</td>
+                    <td style="padding: 5px;">・Rubyのコンソールプログラムで micro:bitを操作<br>
+                                              ・micro:bitを補助入出力装置としてプログラムに取り込み
+                    </td>
+                  </tr>
+                </table>
+              </ul>
+            </div>
+          <!--/p-->
+        </div>
+
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>留意事項</h3>
+              <ul>
+                <li style="margin-bottom: 15px;">rb:-:bitと micro:biとでコマンドやデータのやりとりをおこなうため、<br>
+                                                 micro:bit側には rb:-:bit用のプログラムを転送しておく必要があります。</li>
+                <li style="margin-bottom: 15px;">PCと micro:bitとの接続は USBケーブルによる有線接続のみで、<br>
+                                                 Bluetooth(BLE)による無線接続はサポートされていません。(今後拡張予定)</li>
+                <li style="margin-bottom: 15px;">シリアル通信によるコマンドの遅延や諸々のウェイト調整などにより、<br>
+                                                 動作が不安定になる場合があります。</li>
+              </ul>
+            </div>
+          <!--/p-->
+        </div>
+
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>おもな機能</h3>
+              <ul>
+                <li>LEDの点灯および消灯</li>
+                <li>LEDの点灯パターンの指定</li>
+                <li>LEDによる文字列表示</li>
+                <li>音の出力<span style="color: #f00;">(※)</span></li>
+                <li>音のボリューム調整<span style="color: #f00;">(※)</span></li>
+                <li>音のテンポ調整<span style="color: #f00;">(※)</span></li>
+                <li>センサー値の取得(加速度、傾き、明るさ、温度)</li>
+                <li>ボタン押下状態の取得</li>
+              </ul>
+              <span style="color: #f00;">&nbsp;&nbsp;&nbsp;&nbsp;(※)の機能は micro:bit(v1.5)にはスピーカーの装着が必要です。</span>
+            </div>
+          <!--/p-->
+        </div>
+
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>動作環境</h3>
+              <ul>
+                <li>Windows</li>
+                <li>macOS</li>
+                <li>Linux</li>
+              </ul>
+            </div>
+          <!--/p-->
+        </div>
+
+        <hr>
+        <div>
+          <!--p-->
+            <div style="margin: 3em 0 0 1em;">
+              <h3>【参考】内部構成の概略</h3>
+            </div>
+          <!--/p-->
+        </div>
+        <img src="./image/structure.png" alt="structure" style="border: 0px solid; margin: 10px 0 5px 30px;">
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

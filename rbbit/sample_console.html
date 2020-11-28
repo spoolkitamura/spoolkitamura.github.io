@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+
+        <h3>サンプルプログラム (Rubyクラスライブラリ)</h3>
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>1. 実行方法</h3>
+              <h4 style="margin: 1em 0 0 1em;">(1)サンプルプログラムのダウンロード</h4>
+              <div style="margin: 1em 0 0 2em;">
+                下記の zipファイルをダウンロードして、適当な作業用ディレクトリに各サンプルファイルを展開してください。<br>
+                (このページの「サンプル紹介」からも各プログラムのソースを参照することができます)<br>
+                <img src="image/download.png"></img> <a href="sample_console/sample_console.zip" download>sample_console.zip</a><br>
+              </div>
+              <h4 style="margin: 1em 0 0 1em;">(2)シリアルポート(デバイス)の確認と環境変数の設定</h4>
+              <div style="margin: 1em 0 0 2em;">
+                サンプルファイルをダウンロードした作業用ディレクトリでコンソール(ターミナル)を開き、<br>
+                下記の内容を参照して環境変数「MB_PORT」を設定してください。<br>
+                &nbsp;&nbsp;<a href="index.html#index_c1_s4" target="_blank">→ シリアルポート(デバイス)の確認</a><br>
+                &nbsp;&nbsp;<a href="index.html#index_c1_s5" target="_blank">→ 環境変数の設定</a><br>
+              </div>
+              <h4 style="margin: 1em 0 0 1em;">(3)各サンプルプログラムの実行</h4>
+              <div style="margin: 1em 0 0 2em;">
+                環境変数を設定したコンソール(ターミナル)上から<br>
+                Rubyコマンドで各サンプルプログラムを実行してください。<br><br>
+                &nbsp;&nbsp;※なお、rbbitコマンドによる WebSocketサーバの機能が動作している場合は<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>exit</code>で終了させておいてください。<br>
+              </div>
+              <!--p-->
+                <ul>
+                  <li>Windows <span style="color: #00f;">(シリアルポートが COM5の場合の「s1_heart.rb」実行例)</span></li>
+                    <pre><code style="font-size: 16px">> set MB_PORT=COM5
+> ruby s1_heart.rb</code></pre>
+                または
+                    <pre><code style="font-size: 16px">> ruby s1_heart.rb COM5     (この場合は環境変数の設定は不要)</code></pre>
+                </ul>
+                <br>
+                <ul>
+                  <li>macOS <span style="color: #00f;">(シリアルデバイスが /dev/tty.usbmodem14132の場合の「s1_heart.rb」実行例)</span></li>
+                    <pre><code style="font-size: 16px">$ export MB_PORT=/dev/tty.usbmodem14132
+$ ruby s1_heart.rb</code></pre>
+                または
+                    <pre><code style="font-size: 16px">$ ruby s1_heart.rb /dev/tty.usbmodem14132     (この場合は環境変数の設定は不要)</code></pre>
+                </ul>
+                <br>
+                <ul>
+                  <li>Linux <span style="color: #00f;">(シリアルデバイスが /dev/ttyACM1の場合の「s1_heart.rb」実行例)</span></li>
+                    <pre><code style="font-size: 16px">$ export MB_PORT=/dev/ttyACM1
+$ ruby s1_heart.rb</code></pre>
+                または
+                    <pre><code style="font-size: 16px">$ ruby s1_heart.rb /dev/ttyACM1     (この場合は環境変数の設定は不要)</code></pre>
+                </ul>
+              <!--/p-->
+              <br>
+
+              <h3>2. サンプルプログラム紹介</h3>
+
+              <h4 style="margin: 1em 0 0 1em;">(1)点滅するハート</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s1_heart.rb" target="_blank">s1_heart.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s1_heart.rb" target="_blank"><img src="image/s1.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>ハートマークが ５回点滅します。</td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(2)名札</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s2_myname.rb" target="_blank">s2_myname.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s2_myname.rb" target="_blank"><img src="image/s2.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>「rbbit」の文字が表示されます。</td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(3)スマイリー</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s3_smiley.rb" target="_blank">s3_smiley.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s3_smiley.rb" target="_blank"><img src="image/s3.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      [A]ボタンを押すと笑顔、[B]ボタンで渋面が表示されます。<br>
+                      [A]ボタンと[B]ボタンを同時に押すと「〇」が表示されます。<br>
+                      15秒後に自動的に終了します。
+                      
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(4)さいころ１</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s4_dice1.rb" target="_blank">s4_dice1.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s4_dice1.rb" target="_blank"><img src="image/s4-1.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      micro:bitを傾けたり軽く振ったりすると、１～６の数字がランダムに表示されます。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(5)さいころ２</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s4_dice2.rb" target="_blank">s4_dice2.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/s4_dice2.rb" target="_blank"><img src="image/s4-2.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      micro:bitを傾けたり軽く振ったりすると、さいころの目がランダムに表示されます。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(6)ブリンカー</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t1_blinker.rb" target="_blank">t1_blinker.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t1_blinker.rb" target="_blank"><img src="image/t1.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      大きい四角形と小さい四角形が交互に５回ずつ表示されます。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(7)ローテーション</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t2_rotation.rb" target="_blank">t2_rotation.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t2_rotation.rb" target="_blank"><img src="image/t2.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      点灯する LEDがグルグル走り回ります。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(8)タイマー</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t3_timer.rb" target="_blank">t3_timer.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t3_timer.rb" target="_blank"><img src="image/t3.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      LEDの表示が 9, 8, 7...とカウントダウンしていき、0までいくと終了します。<br>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(9)アルファベット</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t4_alphabet.rb" target="_blank">t4_alphabet.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t4_alphabet.rb" target="_blank"><img src="image/t4.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      [A]ボタンを押すたびに、アルファベットが１文字ずつランダムに表示されます。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(10)スイッチ</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t5_switch.rb" target="_blank">t5_switch.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t5_switch.rb" target="_blank"><img src="image/t5.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                      [A]ボタンを押している間は LEDが点灯し、[A]ボタンを離すと消灯します。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(11)ドラゴンクエスト演奏</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t6_dq.rb" target="_blank">t6_dq.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t6_dq.rb" target="_blank"><img src="image/t6.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td>
+                     「ドラゴンクエスト」のテーマ曲が演奏されます(約30秒間)。<br>
+                      micro:bitにスピーカーの装着が必要です。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(12)ボール</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t7_ball.rb" target="_blank">t7_ball.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t7_ball.rb" target="_blank"><img src="image/t7.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      micro:bitを前後左右に傾けると、点灯しているLEDが低い方に移動していきます。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(13)光量計</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t8_light.rb" target="_blank">t8_light.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t8_light.rb" target="_blank"><img src="image/t8.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      明るさに応じて LEDの点灯個数が変化します。<br>
+                      [B]ボタンを押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <h4 style="margin: 1em 0 0 1em;">(14)プログレスバー</h4>
+              <div style="margin: 5px 0 0 2em;">
+                <table border="0">
+                  <tr>
+                    <td><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t9_progress.rb" target="_blank">t9_progress.rb</a><br><a href="https://github.com/spoolkitamura/rbbit/blob/main/sample_console/t9_progress.rb" target="_blank"><img src="image/t9.png" width="120" style="padding: 5px 5px 5px 5px;"></img></a></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      [A]ボタンを押すと LEDの点灯領域が増えていきます。<br>
+                      [B]ボタンを押すと LEDの点灯領域が減っていきます。<br>
+                      [A]ボタンと[B]ボタンを同時に押すと終了します。
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          <!--/p-->
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

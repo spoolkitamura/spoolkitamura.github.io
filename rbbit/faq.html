@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 16px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 16px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+
+        <h3>よくある質問</h3>
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>1. 動作環境について</h3>
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">PCに rb:-:bitをインストールするだけで micro:bitを操作できますか？</td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      いいえ。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 0 5px 5px 25px;">
+                      rb:-:bitと通信をするためのプログラムを micro:bitに転送しておく必要があります。<br>
+                      詳しくは<a href="index.html#index_c1" target="_blank">「準備作業」</a>の内容を参照してください。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">PCと micro:bitは USBケーブルで接続した状態でないといけませんか？</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      はい。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 0 5px 5px 25px;">
+                      現状では、USBケーブルによる有線接続のみ対応しています。<br>
+                      Bluetooth(BLE)によるワイヤレス接続は今後対応予定です。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">micro:bitが接続されているシリアルポート(デバイス)がわかりません。</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      <a href="index.html#index_c1_s4" target="_blank">「シリアルポート(デバイス)の確認」</a>の内容を参照してください。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">サンプルプログラムを動かしたいのですが、環境変数の設定が必須ですか？</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      いいえ。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 0 5px 5px 25px;">
+                      micro:bitの接続先を指定するために、環境変数に設定する方法と<br>
+                      プログラム実行のつど引数として指定する方法があります。<br>
+                      サンプルプログラムの実行方法についての詳細は、下記のページを参照してください。<br>
+                      <a href="sample_web.html" target="_blank">「サンプルプログラム(WebSocketサーバ)」</a><br>
+                      <a href="sample_console.html" target="_blank">「サンプルプログラム(Rubyクラスライブラリ)」</a><br>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h3>2. プログラムの挙動について</h3>
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">micro:bitから音が出ません。</td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      サウンドの機能を使う場合には、micro:bitにスピーカーを装着してください。<br>
+                      (micro:bit v2.0ではスピーカーが標準装備されています)
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">
+                      rbbitコマンドで WebSocketサーバの起動/停止を繰り返したら、<br>
+                      ブラウザ上の WebSocketクライアントのプログラムが動かなくなってしまいました。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      ブラウザでリロードの操作をおこなってください。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 0 5px 5px 25px;">
+                      WebSocketサーバを停止させると WebSocketクライアントとの接続が切断されるので、<br>
+                      WebSocketサーバを再度起動した場合はブラウザでリロードの操作が必要になります。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">
+                      クラスライブラリのメソッドがうまく動作しません。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      下記の点について確認してみてください。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 0 5px 5px 25px;">
+                      (1)WebSocketサーバによって micro:bitとの接続が占有されている可能性がありますので、<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;WebSocketサーバが稼働している場合は<code>rbbit</code>コマンドのプロンプトから<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<code>exit</code>を入力して停止させてください。<br>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      (2)micro:bitの接続先のシリアルポート(デバイス)が正しく指定されていない可能性がありますので、<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;引数として与えている内容や環境変数「MB_PORT」の設定内容を確認してください。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">
+                      クラスライブラリを使ったプログラムで、micro:bitの処理途中にリセットされてしまいます。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      macOS上では、PCと micro:bitの通信が切断されるときにブレーク信号が送出され、<br>
+                      これを受けてmicro:bitはリセットの動作をおこなうようです。<br>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      <code>close</code>メソッドの引数で切断までの遅延時間を指定することができますので、<br>
+                      その値を長めにとって micro:bit側の処理が終わるまで待つようにしてみてください。
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h3>3. その他</h3>
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">複数の micro:bitを操作することはできますか？</td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      はい。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      PCに接続された micro:bitにはそれぞれ異なるシリアルポート(デバイス)が割り当てられるので、<br>
+                      そのシリアルポート(デバイス)を正しく指定することで複数の micro:bitを操作することが可能です。<br><br>
+                      また、WebSocketサーバ用のポート番号は任意に指定することができるので、<br>
+                      micro:bitごとに別のポートを割り当てることで<br>
+                      ブラウザなどからも複数の micro:bitを操作することができます。<br><br>
+                      (WebSocketサーバのポート指定方法については、<br>
+                      &nbsp;<a href="man_web.html" target="_blank">WebSocketサーバ リファレンス</a>のページを参照してください)
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <a id="faq_c3_2"></a>
+            <div style="margin-left: 1em;">
+              <div style="margin: 1em 0 0 2em;">
+                <table style="font-size: 16px;">
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_q.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px; font-weight: bold;">micro:bitのバージョン(v1.5 と v2.0)の見分け方を教えてください。</td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 5px 5px 5px 5px;"><img src="image/faq_a.png" width="30"></img></td>
+                    <td style="padding: 5px 5px 5px 5px;">
+                      エッジコネクターの部分に凹みがあるかないかで判別できます。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      凹みがなくまっすぐになっている方が「v1.5」(写真上側)で、<br>
+                      凹みのある方が「v2.0」(写真下側)です。
+                    </td>
+                  </tr>
+                  <tr>
+                    <td  width="50px" style="padding: 0 5px 5px 5px;"></td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      <img src="image/mb_version.png" width="500"></img>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+          <!--/p-->
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

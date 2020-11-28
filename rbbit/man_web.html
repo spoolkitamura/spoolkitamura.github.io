@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+
+        <h3>WebSocketサーバ リファレンス</h3>
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em; margin-right: 1em;">
+              <h3>1. 起動方法</h3>
+              <div style="margin: 1em 0 0 2em;">
+                <code style="font-size: 16px">rbbit</code>コマンドで WebSocketサーバの機能を起動します。<br><br>
+                起動時のコマンド書式は下記のとおりです。
+<pre><code style="font-size: 16px">rbbit [-r] [-s ws_port] [-h] [-v] MB_PORT</code></pre>
+                <br>
+
+                <h4>引数</h4>
+                <table>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 15px;">MB_PORT</td>
+                    <td style="padding: 5px 5px 5px 25px;">
+                      micro:bitが接続されているシリアルポート(デバイス)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 2px 5px 5px 15px;"></td>
+                    <td style="padding: 2px 5px 5px 25px;">
+                      &nbsp;&nbsp;&nbsp;引数 MB_PORTの指定が省略された場合、<br>
+                      &nbsp;&nbsp;&nbsp;<code style="font-size: 16px">環境変数「MB_PORT」</code>の設定値が代わりに参照されます。<br>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+
+                <h4>オプション</h4>
+                <table>
+                  <tr>
+                    <td style="padding: 15px 5px 5px 15px;">-r</td>
+                    <td style="padding: 15px 5px 5px 25px;">
+                      micro:bitをリセット
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 15px 5px 5px 15px;">-s ws_port</td>
+                    <td style="padding: 15px 5px 5px 25px;">
+                      ポート番号を指定して WebSocketサーバを起動
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 2px 5px 5px 15px;"></td>
+                    <td style="padding: 2px 5px 5px 25px;">
+                      &nbsp;&nbsp;&nbsp;-sオプションが指定されない場合、<br>
+                      &nbsp;&nbsp;&nbsp;デフォルトとして「50215」番のポートが使用されます。<br>
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 15px 5px 5px 15px;">-h</td>
+                    <td style="padding: 15px 5px 5px 25px;">
+                      ヘルプを表示
+                    </td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 15px 5px 5px 15px;">-v</td>
+                    <td style="padding: 15px 5px 5px 25px;">
+                      バージョンを表示
+                    </td>
+                    <td></td>
+                  </tr>
+                </table>
+                <br>
+
+                <h4>起動例</h4>
+                <code style="font-size: 16px">rbbit</code>コマンドは簡易対話モードと WebSocketサーバ機能との兼用になっており、<br>
+                簡易対話モードと WebSocketサーバ機能の両方がつねに同時に起動します。<br>
+                <br>
+
+<pre><code style="font-size: 16px">rbbit                       環境変数「MB_PORT」の設定値が micro:bitの接続先ポート(デバイス)とみなして
+                            簡易対話モードと WebSocketサーバを起動</code></pre>
+
+<pre><code style="font-size: 16px">rbbit COM5                  COM5として接続された micro:bitに対して
+                            簡易対話モードと WebSocketサーバを起動</code></pre>
+
+<pre><code style="font-size: 16px">rbbit -r COM5               COM5として接続された micro:bitをリセット
+                            (簡易対話モードも WebSocketサーバは起動しない)</code></pre>
+
+<pre><code style="font-size: 16px">rbbit -s 50222 COM5         COM5として接続された micro:bitに対して
+                            簡易対話モードと WebSocketサーバ(ポート番号 50222を使用)を起動</code></pre>
+
+              <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h3>2. 送信データのフォーマット</h3>
+              <div style="margin: 1em 0 0 2em;">
+                micro:bitから取得したセンサー値やボタン押下状態などのデータを<br>
+                JSON形式で WebSocketクライアントに送信します。<br>
+                (平均的に 20回/秒ほどの送信頻度になります)<br><br>
+                送信データに含まれる値は下記のとおりです。<br>
+                <table border="1" style="font-size: 14px;">
+                  <tr>
+                    <th width="50px"></th>
+                    <th width="200px">キー</th>
+                    <th width="200px">値</th>
+                    <th width="400px">データ型</th>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">1</td>
+                    <td style="padding: 5px 5px 5px 5px;">x</td>
+                    <td style="padding: 5px 5px 5px 5px;">加速度 x</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">2</td>
+                    <td style="padding: 5px 5px 5px 5px;">y</td>
+                    <td style="padding: 5px 5px 5px 5px;">加速度 y</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">3</td>
+                    <td style="padding: 5px 5px 5px 5px;">z</td>
+                    <td style="padding: 5px 5px 5px 5px;">加速度 z</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">4</td>
+                    <td style="padding: 5px 5px 5px 5px;">p</td>
+                    <td style="padding: 5px 5px 5px 5px;">傾き(前後)</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">5</td>
+                    <td style="padding: 5px 5px 5px 5px;">r</td>
+                    <td style="padding: 5px 5px 5px 5px;">傾き(左右)</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">6</td>
+                    <td style="padding: 5px 5px 5px 5px;">l</td>
+                    <td style="padding: 5px 5px 5px 5px;">明るさ</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">7</td>
+                    <td style="padding: 5px 5px 5px 5px;">t</td>
+                    <td style="padding: 5px 5px 5px 5px;">温度</td>
+                    <td style="padding: 5px 5px 5px 5px;">数値</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">8</td>
+                    <td style="padding: 5px 5px 5px 5px;">a_down</td>
+                    <td style="padding: 5px 5px 5px 5px;">[A]ボタンが押されている</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">9</td>
+                    <td style="padding: 5px 5px 5px 5px;">a_press</td>
+                    <td style="padding: 5px 5px 5px 5px;">[A]ボタンが押された</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">10</td>
+                    <td style="padding: 5px 5px 5px 5px;">a_release</td>
+                    <td style="padding: 5px 5px 5px 5px;">[A]ボタンが離された</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">11</td>
+                    <td style="padding: 5px 5px 5px 5px;">b_down</td>
+                    <td style="padding: 5px 5px 5px 5px;">[B]ボタンが押されている</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">12</td>
+                    <td style="padding: 5px 5px 5px 5px;">b_press</td>
+                    <td style="padding: 5px 5px 5px 5px;">[B]ボタンが押された</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">13</td>
+                    <td style="padding: 5px 5px 5px 5px;">b_release</td>
+                    <td style="padding: 5px 5px 5px 5px;">[B]ボタンが離された</td>
+                    <td style="padding: 5px 5px 5px 5px;">true / false</td>
+                  </tr>
+                </table>
+                <br>
+                送信データ例
+<pre><code style="font-size: 16px">{
+  "x":64,
+  "y":-32,
+  "z":-1008,
+  "p":-1,
+  "r":3,
+  "l":40,
+  "t":29,
+  "a_down":true,
+  "a_press":false,
+  "a_release":false,
+  "b_down":false,
+  "b_press":false,
+  "b_release":false
+}</code></pre>
+                <br>
+              </div>
+            </div>
+
+
+            <div style="margin-left: 1em;">
+              <h3>3. 受信データのフォーマット</h3>
+              <div style="margin: 1em 0 0 2em;">
+                WebSocketクライアントからのコマンドを JSON形式で受信し、<br>
+                micro:bitの制御をおこないます。<br><br>
+                すべてのコマンドは下記の形式に基づいていますが、<br>
+                コマンド識別子ごとに引数の定義などが異なりますので<br>
+                詳細は各コマンド識別子の記載を参照してください。<br>
+                <table border="1" style="font-size: 14px;">
+                  <tr>
+                    <th width="50px"></th>
+                    <th width="200px">キー</th>
+                    <th width="200px">値</th>
+                    <th width="400px">データ型</th>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">1</td>
+                    <td style="padding: 5px 5px 5px 5px;">command</td>
+                    <td style="padding: 5px 5px 5px 5px;">コマンド識別子<br>
+                    &nbsp;&nbsp;&nbsp;"on"<br>
+                    &nbsp;&nbsp;&nbsp;"off"<br>
+                    &nbsp;&nbsp;&nbsp;"turn"<br>
+                    &nbsp;&nbsp;&nbsp;"puts"<br>
+                    &nbsp;&nbsp;&nbsp;"show"<br>
+                    &nbsp;&nbsp;&nbsp;"play"<br>
+                    &nbsp;&nbsp;&nbsp;"rest"<br>
+                    &nbsp;&nbsp;&nbsp;"volume"<br>
+                    &nbsp;&nbsp;&nbsp;"tempo"
+                    </td>
+                    <td style="padding: 5px 5px 5px 5px;">文字列</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">2</td>
+                    <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                    <td style="padding: 5px 5px 5px 5px;">引数１</td>
+                    <td style="padding: 5px 5px 5px 5px;">コマンド識別子に依存</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 5px 5px 5px;" align="center">3</td>
+                    <td style="padding: 5px 5px 5px 5px;">arg2</td>
+                    <td style="padding: 5px 5px 5px 5px;">引数２</td>
+                    <td style="padding: 5px 5px 5px 5px;">コマンド識別子に依存</td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h4>(1)コマンド識別子一覧</h4>
+            </div>
+
+            <div style="margin: 1em 0 0 3em;">
+              <table border="1" style="font-size: 14px;">
+                <tr>
+                  <th width="50px">項番</th>
+                  <th width="200px">分類</th>
+                  <th width="200px">コマンド識別子</th>
+                  <th width="400px">概要</th>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">1</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_on">on</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの点灯<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">2</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_off">off</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの消灯<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">3</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_turn">turn</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの点灯状態反転<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">4</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_puts">puts</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">文字列の表示<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">5</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_show">show</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">パターンの表示<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">6</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_play">play</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音の出力<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">7</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_rest">rest</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">休符<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">8</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_volume">volume</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音量の設定<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">9</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#cmd_tempo">tempo</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音の長さの設定<br></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h4>(2)コマンド識別子ごと詳細仕様</h4>
+            </div>
+
+            <a id="cmd_on"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">on</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを点灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        arg1, arg2を省略した場合は<br>すべての LEDを点灯させます。
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg2</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        arg1, arg2を省略した場合は<br>すべての LEDを点灯させます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">いちばん右下にある LEDを点灯させます
+{
+  "command": "on",
+  "arg1": "0",
+  "arg2": "0"
+}</code></pre></td>
+                </tr>
+                <tr>
+                 <td><pre><code style="font-size: 16px;">すべての LEDを点灯させます
+{
+  "command": "on"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_off"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">off</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを消灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        arg1, arg2を省略した場合は<br>すべての LEDを消灯させます。
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg2</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        arg1, arg2を省略した場合は<br>すべての LEDを消灯させます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">いちばん右下にある LEDを消灯させます
+{
+  "command": "off",
+  "arg1": "0",
+  "arg2": "0"
+}</code></pre></td>
+                </tr>
+                <tr>
+                 <td><pre><code style="font-size: 16px;">すべての LEDを消灯させます
+{
+  "command": "off"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_turn"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">turn</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを点灯状態を反転させます。(点灯→消灯 / 消灯→点灯)</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg2</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置("0"～"4")<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">中心にある LEDを点灯または消灯させます
+{
+  "command": "turn",
+  "arg1": "2",
+  "arg2": "2"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_puts"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">puts</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDに文字列を表示させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        表示させる文字列
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        半角英数記号のみ指定可能です。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">"Hello"という文字列を表示させます
+{
+  "command": "puts",
+  "arg1": "Hello"
+}</code></pre></td>
+                </tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">"123@"という文字列を表示させます
+{
+  "command": "puts",
+  "arg1": "123@"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_show"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">show</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを指定したパターンで点灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        点灯させるパターン
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        ５×５の二元配列に<br>1(点灯) / 0(消灯)をセットして指定します。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">"□"のようなパターンで LEDを点灯させます
+{
+  "command": "show",
+   "arg1": [
+             [1, 1, 1, 1, 1],
+             [1, 0, 0, 0, 1],
+             [1, 0, 0, 0, 1],
+             [1, 0, 0, 0, 1],
+             [1, 1, 1, 1, 1]
+           ]
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_play"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">play</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定した周波数の音を指定した長さで鳴らします。(要スピーカー装着)</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        周波数を表す文字列
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        指定できる文字列の一覧<br><br>
+                        <table>
+                          <tr><td>"C3"</td><td>&nbsp;... 低い「ド」</td></tr>
+                          <tr><td>"Cs3"</td><td>&nbsp;... 低い「ド＃」</td></tr>
+                          <tr><td>"D3"</td><td>&nbsp;... 低い「レ」</td></tr>
+                          <tr><td>"Ds3"</td><td>&nbsp;... 低い「レ＃」</td></tr>
+                          <tr><td>"E3"</td><td>&nbsp;... 低い「ミ」</td></tr>
+                          <tr><td>"F3"</td><td>&nbsp;... 低い「ファ」</td></tr>
+                          <tr><td>"Fs3"</td><td>&nbsp;... 低い「ファ＃」</td></tr>
+                          <tr><td>"G3"</td><td>&nbsp;... 低い「ソ」</td></tr>
+                          <tr><td>"Gs3"</td><td>&nbsp;... 低い「ソ＃」</td></tr>
+                          <tr><td>"A3"</td><td>&nbsp;... 低い「ラ」</td></tr>
+                          <tr><td>"As3"</td><td>&nbsp;... 低い「ラ＃」</td></tr>
+                          <tr><td>"B3"</td><td>&nbsp;... 低い「シ」</td></tr>
+                        </table>
+                        <br>
+                        <table>
+                          <tr><td>"C4"</td><td>&nbsp;...「ド」</td></tr>
+                          <tr><td>"Cs4"</td><td>&nbsp;...「ド＃」</td></tr>
+                          <tr><td>"D4"</td><td>&nbsp;...「レ」</td></tr>
+                          <tr><td>"Ds4"</td><td>&nbsp;...「レ＃」</td></tr>
+                          <tr><td>"E4"</td><td>&nbsp;...「ミ」</td></tr>
+                          <tr><td>"F4"</td><td>&nbsp;...「ファ」</td></tr>
+                          <tr><td>"Fs4"</td><td>&nbsp;...「ファ＃」</td></tr>
+                          <tr><td>"G4"</td><td>&nbsp;...「ソ」</td></tr>
+                          <tr><td>"Gs4"</td><td>&nbsp;...「ソ＃」</td></tr>
+                          <tr><td>"A4"</td><td>&nbsp;...「ラ」</td></tr>
+                          <tr><td>"As4"</td><td>&nbsp;...「ラ＃」</td></tr>
+                          <tr><td>"B4"</td><td>&nbsp;...「シ」</td></tr>
+                        </table>
+                        <br>
+                        <table>
+                          <tr><td>"C5"</td><td>&nbsp;... 高い「ド」</td></tr>
+                          <tr><td>"Cs5"</td><td>&nbsp;... 高い「ド＃」</td></tr>
+                          <tr><td>"D5"</td><td>&nbsp;... 高い「レ」</td></tr>
+                          <tr><td>"Ds5"</td><td>&nbsp;... 高い「レ＃」</td></tr>
+                          <tr><td>"E5"</td><td>&nbsp;... 高い「ミ」</td></tr>
+                          <tr><td>"F5"</td><td>&nbsp;... 高い「ファ」</td></tr>
+                          <tr><td>"Fs5"</td><td>&nbsp;... 高い「ファ＃」</td></tr>
+                          <tr><td>"G5"</td><td>&nbsp;... 高い「ソ」</td></tr>
+                          <tr><td>"Gs5"</td><td>&nbsp;... 高い「ソ＃」</td></tr>
+                          <tr><td>"A5"</td><td>&nbsp;... 高い「ラ」</td></tr>
+                          <tr><td>"As5"</td><td>&nbsp;... 高い「ラ＃」</td></tr>
+                          <tr><td>"B5"</td><td>&nbsp;... 高い「シ」</td></tr>
+                          <tr><td>"C6"</td><td>&nbsp;... さらに高い「ド」</td></tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg2</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音の長さ
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>"4.0"</td><td>&nbsp;... ４拍分の長さ</td></tr>
+                          <tr><td>"2.0"</td><td>&nbsp;... ２拍分の長さ</td></tr>
+                          <tr><td>"1.0"</td><td>&nbsp;... １拍分の長さ</td></tr>
+                          <tr><td>"0.5"</td><td>&nbsp;... 1/2拍分の長さ</td></tr>
+                          <tr><td>"0.25"</td><td>&nbsp;... 1/4拍分の長さ</td></tr>
+                          <tr><td>"0.125"</td><td>&nbsp;... 1/8拍分の長さ</td></tr>
+                          <tr><td>上記未満</td><td>&nbsp;... 1/16拍分の長さ</td></tr>
+                        </table>
+                        <br> 
+                        記載されている値以外を指定した場合は、<br>時間の短い方の区分として扱われます。<br><br>
+                        なお、１拍分の長さは<br>「tempo」コマンド識別子で指定することができます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">「ド」の音を１拍分鳴らします
+{
+  "command": "play",
+  "arg1": "C4",
+  "arg2": "1.0"
+}</code></pre></td>
+                </tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">「ラ」の音を1/2拍分鳴らします
+{
+  "command": "play",
+  "arg1": "A4",
+  "arg2": "0.5"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_rest"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">rest</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定した長さの休符を入れます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音の長さ
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>"4.0"</td><td>&nbsp;... ４拍分の長さ</td></tr>
+                          <tr><td>"2.0"</td><td>&nbsp;... ２拍分の長さ</td></tr>
+                          <tr><td>"1.0"</td><td>&nbsp;... １拍分の長さ</td></tr>
+                          <tr><td>"0.5"</td><td>&nbsp;... 1/2拍分の長さ</td></tr>
+                          <tr><td>"0.25"</td><td>&nbsp;... 1/4拍分の長さ</td></tr>
+                          <tr><td>"0.125"</td><td>&nbsp;... 1/8拍分の長さ</td></tr>
+                          <tr><td>上記未満</td><td>&nbsp;... 1/16拍分の長さ</td></tr>
+                        </table>
+                        <br> 
+                        記載されている値以外を指定した場合は、<br>時間の短い方の区分として扱われます。<br><br>
+                        なお、１拍分の長さは<br>「tempo」コマンド識別子で指定することができます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">１拍分の休符を入れます
+{
+  "command": "rest",
+  "arg1": "1.0",
+}</code></pre></td>
+                </tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">1/2拍分の休符を入れます
+{
+  "command": "rest",
+  "arg1": "0.5",
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_volume"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">volume</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>音量を設定します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">argv</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音量("0"～"255")
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">音量を 64に設定します
+{
+  "command": "volume",
+  "arg1": "64"
+}</code></pre></td>
+                </tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">音量を 255に設定します
+{
+  "command": "volume",
+  "arg1": "255"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="cmd_tempo"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">tempo</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>１拍分の音の長さを設定します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">arg1</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        １泊分の音の長さ("4"～"400")
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        「１分間に何回拍子を打つか」という値のため<br>
+                        値が大きいほど１拍分の音の長さは短くなります。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>データ例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">１拍分の音の長さを 60に設定します(１分間に 60回の拍子を打つテンポ)
+{
+  "command": "tempo",
+  "arg1": "60"
+}</code></pre></td>
+                </tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">１拍分の音の長さを 200に設定します(１分間に 200回の拍子を打つテンポ)
+{
+  "command": "tempo",
+  "arg1": "200"
+}</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+
+          <!--/p-->
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

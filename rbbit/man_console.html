@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+
+        <h3>Rubyクラスライブラリ リファレンス</h3>
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em; margin-right: 1em;">
+              <h3>1. 使用方法</h3>
+              <div style="margin: 1em 0 0 2em;">
+                Rubyプログラムで rbbit.rbを requireメソッドでロードすることにより、<br>
+                micro:bit用に提供されたクラスライブラリ(Rbbit::Microbitクラス)を使うことができるようになります。
+              </div>
+              <ul>
+                  <pre><code style="font-size: 16px">require 'rbbit'</code></pre>
+              </ul>
+              <div style="margin: 1em 0 0 2em;">
+                requireのあと、Rbbit:Microbitのインスタンスを生成し<br>
+                各インスタンスメソッドを呼び出していく形でプログラミングをおこないます。
+              </div>
+              <ul>
+                  <pre><code style="font-size: 16px">require 'rbbit'
+mb = Rbbit::Microbit.new("COM5")
+mb.led_on
+mb.close</code></pre>
+              </ul>
+              <br>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h3>2. メソッド一覧</h3>
+            </div>
+            <div style="margin: 1em 0 0 3em;">
+              <table border="1" style="font-size: 14px;">
+                <tr>
+                  <th width="50px">項番</th>
+                  <th width="200px">分類</th>
+                  <th width="200px">メソッド名</th>
+                  <th width="400px">概要</th>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">1</td>
+                  <td style="padding: 5px 5px 5px 5px;">コンストラクタ</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_new">Rbbit::Microbit.new</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">インスタンスの生成<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">2</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_on">led_on</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの点灯<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">3</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_off">led_off</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの消灯<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">4</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_turn">led_turn</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">LEDの点灯状態反転<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">5</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_puts">led_puts</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">文字列の表示<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">6</td>
+                  <td style="padding: 5px 5px 5px 5px;">LED</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_show">led_show</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">パターンの表示<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">7</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_play">sound_play</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音の出力<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">8</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_rest">sound_rest</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">休符<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">9</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_volume">sound_volume</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音量の設定<br></td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">10</td>
+                  <td style="padding: 5px 5px 5px 5px;">サウンド</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_tempo">sound_tempo</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">音の長さの設定<br></td>
+                </tr>
+
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">11</td>
+                  <td style="padding: 5px 5px 5px 5px;">制御</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_mainloop">mainloop</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">繰り返し処理</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">12</td>
+                  <td style="padding: 5px 5px 5px 5px;">制御</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_break">break</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">繰り返し処理の終了</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">13</td>
+                  <td style="padding: 5px 5px 5px 5px;">制御</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_wait">wait</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">スリープ</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">14</td>
+                  <td style="padding: 5px 5px 5px 5px;">制御</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_close">close</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">通信の切断</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">15</td>
+                  <td style="padding: 5px 5px 5px 5px;">制御</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_reset">reset</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">リセット</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">16</td>
+                   <td style="padding: 5px 5px 5px 5px;">イベントハンドラ</td>
+                 <td style="padding: 5px 5px 5px 5px;"><a href="#method_on_press_a">on_press_a</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">Aボタンが押されたときにブロックを実行</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">17</td>
+                  <td style="padding: 5px 5px 5px 5px;">イベントハンドラ</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_on_release_a">on_release_a</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">Aボタンが離されたときにブロックを実行</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">18</td>
+                  <td style="padding: 5px 5px 5px 5px;">イベントハンドラ</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_on_press_b">on_press_b</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">Bボタンが押されたときにブロックを実行</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">19</td>
+                  <td style="padding: 5px 5px 5px 5px;">イベントハンドラ</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_on_release_b">on_release_b</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">Bボタンが離されたときにブロックを実行</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">20</td>
+                  <td style="padding: 5px 5px 5px 5px;">その他</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_button_down">button_down?</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">ボタンの押下状態の取得</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px;" align="center">21</td>
+                  <td style="padding: 5px 5px 5px 5px;">その他</td>
+                  <td style="padding: 5px 5px 5px 5px;"><a href="#method_port">port</a></td>
+                  <td style="padding: 5px 5px 5px 5px;">シリアルポート(デバイス)の取得</td>
+                </tr>
+
+              </table>
+              <br>
+            </div>
+
+            <div style="margin-left: 1em;">
+              <h3>3. メソッド詳細仕様</h3>
+            </div>
+
+            <div style="margin: 2em 0 0 2em;">
+              <h4>特異メソッド</h4>
+            </div>
+
+            <a id="method_new"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">Rbbit::Microbit.new(serialport = nil)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>Microbitクラスのインスタンスを生成します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">serialport</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        micro:bitが接続されている<br>シリアルポート(デバイス)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        省略した場合は<br>環境変数「MB_PORT」の値が参照されます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;"># シリアルポート「COM5」の micro:bitを操作するためのインスタンスを生成します
+mb = Rbbit::Microbit.new("COM5")
+
+# 環境変数「MB_PORT」に設定されているポート(デバイス)の
+# micro:bitを操作するためのインスタンスを生成します
+mb = Rbbit::Microbit.new</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <div style="margin: 2em 0 0 2em;">
+              <h4>インスタンスメソッド</h4>
+            </div>
+
+            <a id="method_on"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">led_on(x = nil, y = nil)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>on</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを点灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">x</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        x, yを省略した場合は<br>すべての LEDを点灯させます。
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">y</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        x, yを省略した場合は<br>すべての LEDを点灯させます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.led_on(4, 4)        # => いちばん右下にある LEDを点灯させます
+mb.led_on              # => すべての LEDを点灯させます
+mb.on                  # => すべての LEDを点灯させます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_off"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">led_off(x = nil, y = nil)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>off</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを消灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">x</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        x, yを省略した場合は<br>すべての LEDを消灯させます。
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">y</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        x, yを省略した場合は<br>すべての LEDを消灯させます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.led_off(0, 0)        # => いちばん左上にある LEDを消灯させます
+mb.led_off              # => すべての LEDを消灯させます
+mb.off                  # => すべての LEDを消灯させます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_turn"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">led_turn(x, y)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>turn</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを点灯状態を反転させます。(点灯→消灯 / 消灯→点灯)</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">x</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの x位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">y</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        LEDの y位置(0～4)<br>
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.led_turn(2, 2)        # => 中心にある LEDを点灯または消灯させます
+mb.turn(2, 2)            # => 中心にある LEDを点灯または消灯させます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_puts"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">led_puts(str)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>puts</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDに文字列を表示させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">str</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        表示させる文字列
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        半角英数記号のみ指定可能です。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.led_puts("Hello")        # => "Hello"という文字列を表示させます
+mb.puts("123@")             # => "123@"という文字列を表示させます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_show"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">led_show(pattern)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>show</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitの LEDを指定したパターンで点灯させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">pattern</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        点灯させるパターン
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        ５×５の二元配列に<br>1(点灯) / 0(消灯)をセットして指定します。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">pattern1 = [
+             [1, 1, 1, 1, 1],
+             [1, 0, 0, 0, 1],
+             [1, 0, 0, 0, 1],
+             [1, 0, 0, 0, 1],
+             [1, 1, 1, 1, 1]
+           ]
+mb.led_show(pattern1)     # => "□"のようなパターンで LEDを点灯させます
+mb.show(pattern1)         # => "□"のようなパターンで LEDを点灯させます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_play"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">sound_play(freq, beat)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>play</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定した周波数の音を指定した長さで鳴らします。(要スピーカー装着)</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">freq</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        周波数を表すシンボル
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        指定できるシンボルの一覧<br><br>
+                        <table>
+                          <tr><td>:C3</td><td>&nbsp;... 低い「ド」</td></tr>
+                          <tr><td>:Cs3</td><td>&nbsp;... 低い「ド＃」</td></tr>
+                          <tr><td>:D3</td><td>&nbsp;... 低い「レ」</td></tr>
+                          <tr><td>:Ds3</td><td>&nbsp;... 低い「レ＃」</td></tr>
+                          <tr><td>:E3</td><td>&nbsp;... 低い「ミ」</td></tr>
+                          <tr><td>:F3</td><td>&nbsp;... 低い「ファ」</td></tr>
+                          <tr><td>:Fs3</td><td>&nbsp;... 低い「ファ＃」</td></tr>
+                          <tr><td>:G3</td><td>&nbsp;... 低い「ソ」</td></tr>
+                          <tr><td>:Gs3</td><td>&nbsp;... 低い「ソ＃」</td></tr>
+                          <tr><td>:A3</td><td>&nbsp;... 低い「ラ」</td></tr>
+                          <tr><td>:As3</td><td>&nbsp;... 低い「ラ＃」</td></tr>
+                          <tr><td>:B3</td><td>&nbsp;... 低い「シ」</td></tr>
+                        </table>
+                        <br>
+                        <table>
+                          <tr><td>:C4</td><td>&nbsp;...「ド」</td></tr>
+                          <tr><td>:Cs4</td><td>&nbsp;...「ド＃」</td></tr>
+                          <tr><td>:D4</td><td>&nbsp;...「レ」</td></tr>
+                          <tr><td>:Ds4</td><td>&nbsp;...「レ＃」</td></tr>
+                          <tr><td>:E4</td><td>&nbsp;...「ミ」</td></tr>
+                          <tr><td>:F4</td><td>&nbsp;...「ファ」</td></tr>
+                          <tr><td>:Fs4</td><td>&nbsp;...「ファ＃」</td></tr>
+                          <tr><td>:G4</td><td>&nbsp;...「ソ」</td></tr>
+                          <tr><td>:Gs4</td><td>&nbsp;...「ソ＃」</td></tr>
+                          <tr><td>:A4</td><td>&nbsp;...「ラ」</td></tr>
+                          <tr><td>:As4</td><td>&nbsp;...「ラ＃」</td></tr>
+                          <tr><td>:B4</td><td>&nbsp;...「シ」</td></tr>
+                        </table>
+                        <br>
+                        <table>
+                          <tr><td>:C5</td><td>&nbsp;... 高い「ド」</td></tr>
+                          <tr><td>:Cs5</td><td>&nbsp;... 高い「ド＃」</td></tr>
+                          <tr><td>:D5</td><td>&nbsp;... 高い「レ」</td></tr>
+                          <tr><td>:Ds5</td><td>&nbsp;... 高い「レ＃」</td></tr>
+                          <tr><td>:E5</td><td>&nbsp;... 高い「ミ」</td></tr>
+                          <tr><td>:F5</td><td>&nbsp;... 高い「ファ」</td></tr>
+                          <tr><td>:Fs5</td><td>&nbsp;... 高い「ファ＃」</td></tr>
+                          <tr><td>:G5</td><td>&nbsp;... 高い「ソ」</td></tr>
+                          <tr><td>:Gs5</td><td>&nbsp;... 高い「ソ＃」</td></tr>
+                          <tr><td>:A5</td><td>&nbsp;... 高い「ラ」</td></tr>
+                          <tr><td>:As5</td><td>&nbsp;... 高い「ラ＃」</td></tr>
+                          <tr><td>:B5</td><td>&nbsp;... 高い「シ」</td></tr>
+                          <tr><td>:C6</td><td>&nbsp;... さらに高い「ド」</td></tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">beat</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音の長さ
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>4.0</td><td>&nbsp;... ４拍分の長さ</td></tr>
+                          <tr><td>2.0</td><td>&nbsp;... ２拍分の長さ</td></tr>
+                          <tr><td>1.0</td><td>&nbsp;... １拍分の長さ</td></tr>
+                          <tr><td>0.5</td><td>&nbsp;... 1/2拍分の長さ</td></tr>
+                          <tr><td>0.25</td><td>&nbsp;... 1/4拍分の長さ</td></tr>
+                          <tr><td>0.125</td><td>&nbsp;... 1/8拍分の長さ</td></tr>
+                          <tr><td>上記未満</td><td>&nbsp;... 1/16拍分の長さ</td></tr>
+                        </table>
+                        <br> 
+                        記載されている値以外を指定した場合は、<br>時間の短い方の区分として扱われます。<br><br>
+                        なお、１拍分の長さは<br>「sound_tempo=」メソッドで<br>指定することができます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.sound_play(:C4, 1.0)     # => 「ド」の音を１拍分鳴らします
+mb.play(:A4, 0.5)           # => 「ラ」の音を1/2拍分鳴らします</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_rest"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">sound_rest(beat)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>rest</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定した長さの休符を入れます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">beat</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音の長さ
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>4.0</td><td>&nbsp;... ４拍分の長さ</td></tr>
+                          <tr><td>2.0</td><td>&nbsp;... ２拍分の長さ</td></tr>
+                          <tr><td>1.0</td><td>&nbsp;... １拍分の長さ</td></tr>
+                          <tr><td>0.5</td><td>&nbsp;... 1/2拍分の長さ</td></tr>
+                          <tr><td>0.25</td><td>&nbsp;... 1/4拍分の長さ</td></tr>
+                          <tr><td>0.125</td><td>&nbsp;... 1/8拍分の長さ</td></tr>
+                          <tr><td>上記未満</td><td>&nbsp;... 1/16拍分の長さ</td></tr>
+                        </table>
+                        <br> 
+                        記載されている値以外を指定した場合は、<br>時間の短い方の区分として扱われます。<br><br>
+                        なお、１拍分の長さは<br>「sound_tempo=」メソッドで<br>指定することができます。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.sound_rest(1.0)     # => １拍分の休符を入れます
+mb.rest(0.5)           # => 1/2拍分の休符を入れます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_volume"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">sound_volume=(v)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>volume=</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>音量を設定します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">v</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        音量(0～255)
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        デフォルト値は 127
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.sound_volume = 64     # => 音量を 64に設定します
+mb.volume = 255          # => 音量を 255に設定します</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_tempo"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">sound_tempo=(bpm)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>別名(エイリアス)</th></tr>
+                <tr>
+                  <td>tempo=</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>１拍分の音の長さを設定します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">bpm</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        １泊分の音の長さ(4～400)
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        デフォルト値は 120<br><br>
+                        「１分間に何回拍子を打つか」という値のため<br>
+                        値が大きいほど１拍分の音の長さは短くなります。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.sound_tempo = 60     # => １拍分の音の長さを 60に設定します(１分間に 60回の拍子を打つテンポ)
+mb.tempo = 200          # => １拍分の音の長さを 200に設定します(１分間に 200回の拍子を打つテンポ)</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_mainloop"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">mainloop(&block)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定されたブロックをスリープを挟みながら繰り返し実行します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">&block</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        実行されるブロック
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        mainloopを終了するには<br>breakメソッドをコールしてください。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.mainloop do                      # => 以下のブロックを繰り返し実行
+  mb.turn(2, 2)                     # => 中心の LEDを点滅
+  mb.break if mb.button_down?(:a)   # => Aボタンが押されたらループ終了
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_break"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">break</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>mainloopによる繰り返し処理を終了させます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>なし</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.mainloop do                      # => 以下のブロックを繰り返し実行
+  mb.turn(2, 2)                     # => 中心の LEDを点滅
+  mb.break if mb.button_down?(:a)   # => Aボタンが押されたらループ終了
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_wait"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">wait(ms)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定された時間だけ micro:bitをスリープさせます。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">ms</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        スリープさせる時間(ミリ秒)
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.wait(1000)                      # => micro:bitを１秒スリープさせます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_close"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">close(delay)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitとの間のシリアル通信を切断します。
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">delay</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        通信を切断するまでの<br>遅延時間(ミリ秒)
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        macOSでは通信の切断時にブレーク信号が発生して<br>
+                        その瞬間に micro:bitがリセットされてしまうため、<br>
+                        切断までの遅延時間の設定ができるようになっています。
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td>
+                    <pre><code style="font-size: 16px;">mb.close                      # => micro:bitとの通信をすぐに切断します
+mb.close(3000)                # => micro:bitとの通信を３秒後に切断します</code></pre>
+                  </td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_reset"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">reset</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>micro:bitをリセットします。
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>なし</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td>
+                    <pre><code style="font-size: 16px;">mb.reset                      # => micro:bitをリセットします</code></pre>
+                  </td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_on_press_a"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">on_press_a(&block)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>Aボタンが押されたときに、指定されたブロックを実行します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">&block</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        実行されるブロック
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.on_press_a do            # => Aボタンが押されたときに以下のブロックを実行
+  mb.on                     # => すべての LEDを点灯
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_on_release_a"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">on_release_a(&block)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>Aボタンが離されたときに、指定されたブロックを実行します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">&block</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        実行されるブロック
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.on_release_a do          # => Aボタンが離されたときに以下のブロックを実行
+  mb.on                     # => すべての LEDを点灯
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_on_press_b"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">on_press_b(&block)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>Bボタンが押されたときに、指定されたブロックを実行します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">&block</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        実行されるブロック
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.on_press_a do            # => Bボタンが押されたときに以下のブロックを実行
+  mb.close                  # => 通信を切断
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_on_release_b"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">on_release_b(&block)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>Bボタンが離されたときに、指定されたブロックを実行します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">&block</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        実行されるブロック
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">mb.on_release_a do          # => Bボタンが離されたときに以下のブロックを実行
+  mb.close                  # => 通信を切断
+end</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_button_down"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">button_down?(button)</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>指定されたボタンが押されている状態かどうかを返します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>
+                  <table border="1">
+                    <tr>
+                      <th width="100px">名前</th>
+                      <th width="250px">内容</th>
+                      <th width="450px">備考</th>
+                    </tr>
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">button</td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        ボタンを表すシンボル
+                      </td>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>:a</td><td>&nbsp;... Aボタン</td></tr>
+                          <tr><td>:b</td><td>&nbsp;... Bボタン</td></tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>戻値</th></tr>
+                <tr>
+                  <td>
+                  <table border="0">
+                    <tr>
+                      <td style="padding: 5px 5px 5px 5px;">
+                        <table>
+                          <tr><td>true</td><td>&nbsp;... 指定されたボタンが押されている</td></tr>
+                          <tr><td>false</td><td>&nbsp;... 指定されたボタンが押されていない</td></tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;">puts mb.button_down?(:a)             # => Aボタンが押されていれば trueが表示されます
+puts "B!" if mb.button_down?(:b)     # => Bボタンが押されていれば "B!"が表示されます</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+            <a id="method_port"></a>
+            <h4 style="margin: 1em 0 0 2em; background-color: #ddf; padding: 5px 5px 5px 5px;">port</h4>
+            <div style="margin: 1em 0 0 2em;">
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>概要</th></tr>
+                <tr>
+                  <td>接続しているポート(デバイス)を返します。</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>引数</th></tr>
+                <tr>
+                  <td>なし</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>戻値</th></tr>
+                <tr>
+                  <td>シリアルポート(デバイス)</td>
+                </tr>
+              </table>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr><th>使用例</th></tr>
+                <tr>
+                  <td><pre><code style="font-size: 16px;"># OSや接続状態に応じて "COM5", "/dev/tty.usbmodem14132", "/dev/ttyACM1"などが表示されます
+puts mb.port</code></pre></td>
+                </tr>
+              </table>
+              <br>
+            </div>
+
+          <!--/p-->
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

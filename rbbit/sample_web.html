@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>rb:-:bit</title>
+
+  <!-- Favicons -->
+  <link href="image/favicon.ico" rel="icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Static navbar -->
+  <div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">rb:-:bit</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="overview.html">概要</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">マニュアル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./man_web.html">リファレンス (WebSocketサーバ)</a></li>
+              <li><a href="./man_console.html">リファレンス (Rubyクラスライブラリ)</a></li>
+              <li><a href="./faq.html">よくある質問</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">サンプル <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" style="font-size: 18px;">
+              <li><a href="./sample_web.html">サンプルプログラム (WebSocketサーバ)</a></li>
+              <li><a href="./sample_console.html">サンプルプログラム (Rubyクラスライブラリ)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- +++++ Welcome Section +++++ -->
+  <div id="ww">
+    <div class="container">
+      <div class="row">
+
+        <h3>サンプルプログラム (WebSocketサーバ)</h3>
+        <div>
+          <!--p-->
+            <div style="margin-left: 1em;">
+              <h3>1. 実行方法</h3>
+              <h4 style="margin: 1em 0 0 1em;">(1)WebSocketサーバの起動</h4>
+              <div style="margin: 1em 0 0 2em;">
+                まず、コンソール(ターミナル)から <code>rbbit</code>コマンドで WebSocketサーバを起動してください。
+              </div>
+              <div style="margin: 1em 0 1em 3em;">
+                ※シリアルポート(デバイス)の確認と環境変数の設定については、下記の記載を参照してください。<br>
+                &nbsp;&nbsp;<a href="index.html#index_c1_s4" target="_blank">→ シリアルポート(デバイス)の確認</a><br>
+                &nbsp;&nbsp;<a href="index.html#index_c1_s5" target="_blank">→ 環境変数の設定</a><br>
+              </div>
+              <!--p-->
+                <ul>
+                  <li>Windows <span style="color: #00f;">(シリアルポートが COM5の場合の起動例)</span></li>
+                    <pre><code style="font-size: 16px">> set MB_PORT=COM5
+> rbbit</code></pre>
+または
+<pre><code style="font-size: 16px">> rbbit COM5     (この場合は環境変数の設定は不要)</code></pre>
+                </ul>
+                <br>
+                <ul>
+                  <li>macOS <span style="color: #00f;">(シリアルデバイスが /dev/tty.usbmodem14132の場合の起動例)</span></li>
+                    <pre><code style="font-size: 16px">$ export MB_PORT=/dev/tty.usbmodem14132
+$ rbbit</code></pre>
+または
+<pre><code style="font-size: 16px">$ rbbit /dev/tty.usbmodem14132     (この場合は環境変数の設定は不要)</code></pre>
+                </ul>
+                <br>
+                <ul>
+                  <li>Linux <span style="color: #00f;">(シリアルデバイスが /dev/ttyACM1の場合の起動例)</span></li>
+                    <pre><code style="font-size: 16px">$ export MB_PORT=/dev/ttyACM1
+$ rbbit</code></pre>
+または
+<pre><code style="font-size: 16px">$ rbbit /dev/ttyACM1     (この場合は環境変数の設定は不要)</code></pre></code></pre>
+                </ul>
+              <!--/p-->
+
+              <h4 style="margin: 2em 0 0 1em;">(2)各サンプルプログラムの実行</h4>
+              <div style="margin: 1em 0 0 2em;">
+                WebSocketサーバの起動後、以下の各サンプルプログラムのリンクをクリックすると<br>
+                ブラウザ上に新しいタブが開いてサンプルプログラムが実行されます。<br>
+                <br>
+              </div>
+            </div>
+
+            <div style="margin: 1em 0 0 1em;">
+              <h3>2. サンプルプログラム紹介</h3>
+
+              <h4 style="margin: 1em 0 0 1em;">(1)ステータスモニタ</h4>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr>
+                  <td><a href="sample_web/monitor.html" target="_blank">monitor.html</a></td>
+                </tr>
+                <tr>
+                  <td>
+                    <br>
+                    JavaScriptのリアルタイムチャート用ライブラリ「Epoch.js」を使用して<br>
+                    micro:bitのセンサー値をグラフ表示するサンプルです。
+                  </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: center;"><a href="sample_web/monitor.html" target="_blank"><img style="height: 650px;" src="image/sample_w001.png"></img></a></td>
+                </tr>
+              </table>
+              <hr>
+
+              <h4 style="margin: 1em 0 0 1em;">(2)LEDパネル</h4>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr>
+                  <td><a href="sample_web/led.html" target="_blank">led.html</a></td>
+                </tr>
+                <tr>
+                  <td>
+                    <br>
+                    ５×５の各トグルボタンが micro:bitの LEDに対応しており、<br>
+                    ボタンを押した箇所の LEDが画面と同じように点灯または消灯します。<br><br>
+                    「All ON」「All OFF」「Reverse」のボタンを押すと、<br>
+                    それぞれ「全LEDの点灯」「全LEDの消灯」「点灯/消灯状態の反転」となります。
+                  </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: center;"><a href="sample_web/led.html" target="_blank"><img style="height: 400px;" src="image/sample_w002.png"></img></a></td>
+                </tr>
+              </table>
+              <hr>
+
+              <h4 style="margin: 1em 0 0 1em;">(3)サウンドプレーヤ</h4>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr>
+                  <td><a href="sample_web/sound.html" target="_blank">sound.html</a></td>
+                </tr>
+                <tr>
+                  <td>
+                    <br>
+                    画面上の鍵盤をクリックすると、対応する音が micro:bitから鳴ります。<span style="font-weight: bold;">(スピーカーの装着が必要です)</span><br>
+                    鍵盤の下にあるスライドバーにより、音量と音の長さを変えることができます。
+                  </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: center;"><a href="sample_web/sound.html" target="_blank"><img style="height: 350px;" src="image/sample_w003.png"></img></a></td>
+                </tr>
+              </table>
+              <hr>
+
+              <h4 style="margin: 1em 0 0 1em;">(4)アプリケーションサンプル</h4>
+              <table border="0" style="margin: 1em 0 0 2em;">
+                <tr>
+                  <td><a href="sample_web/rectangle.html" target="_blank">rectangle.html</a></td>
+                </tr>
+                <tr>
+                  <td>
+                    <br>
+                    micro:bitの傾きにより、左右の四角形の大きさや色の濃さが変化します。<br>
+                    また、[A]ボタンを押すと四角形の色が「青→赤→緑」と変化していきます。<br><br>
+                    ゲームのコントローラとして micro:bitが活用できるかもしれません。
+                  </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align: center;"><a href="sample_web/rectangle.html" target="_blank"><img style="height: 450px;" src="image/sample_w004.png"></img></a></td>
+                </tr>
+              </table>
+
+            </div>
+          <!--/p-->
+        </div>
+
+      </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /ww -->
+
+  <!-- +++++ Footer Section +++++ -->
+  <div id="copyrights">
+    <div class="container">
+      <div class="credits">
+        Link to <a href="https://github.com/spoolkitamura/spoolkitamura.github.io/tree/master/nyle-canvas" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
